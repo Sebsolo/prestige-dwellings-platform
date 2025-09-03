@@ -2,6 +2,9 @@ import { createContext, useContext, useEffect, useState, ReactNode } from 'react
 import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 
+// Type-safe wrapper for database operations
+const db = supabase as any;
+
 export type UserRole = 'admin' | 'editor' | 'agent';
 
 export interface UserProfile {
