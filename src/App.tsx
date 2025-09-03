@@ -9,7 +9,15 @@ import RequireRole from "./components/RequireRole";
 import Home from "./pages/Home";
 import Sales from "./pages/Sales";
 import Rentals from "./pages/Rentals";
+import PropertyDetail from "./pages/PropertyDetail";
+import JoinExp from "./pages/JoinExp";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
+import Valuation from "./pages/Valuation";
 import Contact from "./pages/Contact";
+import LegalNotice from "./pages/LegalNotice";
+import Privacy from "./pages/Privacy";
+import Cookies from "./pages/Cookies";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
@@ -26,9 +34,17 @@ const App = () => (
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/sales" element={<Sales />} />
-              <Route path="/rentals" element={<Rentals />} />
+              <Route path="/ventes" element={<Sales />} />
+              <Route path="/locations" element={<Rentals />} />
+              <Route path="/bien/:idOrSlug" element={<PropertyDetail />} />
+              <Route path="/rejoindre-exp" element={<JoinExp />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
+              <Route path="/estimation" element={<Valuation />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/mentions-legales" element={<LegalNotice />} />
+              <Route path="/rgpd" element={<Privacy />} />
+              <Route path="/cookies" element={<Cookies />} />
               <Route path="/login" element={<Login />} />
               <Route 
                 path="/admin" 
