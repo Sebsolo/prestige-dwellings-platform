@@ -1,15 +1,14 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { Session, User } from '@supabase/supabase-js';
-import { supabase } from '@/lib/supabaseClient';
+import { supabase } from '@/integrations/supabase/client';
 
 export type UserRole = 'admin' | 'editor' | 'agent';
 
 export interface UserProfile {
   id: string;
-  email: string;
   role: UserRole;
   full_name?: string;
-  avatar_url?: string;
+  created_at?: string;
 }
 
 interface AuthContextType {

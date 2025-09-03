@@ -30,7 +30,7 @@ const Admin = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
-                  <p><strong>Email:</strong> {profile?.email}</p>
+                  <p><strong>ID:</strong> {profile?.id}</p>
                   <p><strong>Nom:</strong> {profile?.full_name || 'Non défini'}</p>
                   <p><strong>Rôle:</strong> {profile?.role}</p>
                 </div>
