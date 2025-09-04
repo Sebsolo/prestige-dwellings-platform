@@ -20,6 +20,11 @@ import Privacy from "./pages/Privacy";
 import Cookies from "./pages/Cookies";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
+import AdminProperties from "./pages/admin/AdminProperties";
+import AdminBlog from "./pages/admin/AdminBlog";
+import AdminTestimonials from "./pages/admin/AdminTestimonials";
+import AdminLeads from "./pages/admin/AdminLeads";
+import AdminSettings from "./pages/admin/AdminSettings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -51,6 +56,46 @@ const App = () => (
                 element={
                   <RequireRole allowedRoles={['admin', 'editor', 'agent']}>
                     <Admin />
+                  </RequireRole>
+                } 
+              />
+              <Route 
+                path="/admin/properties" 
+                element={
+                  <RequireRole allowedRoles={['admin', 'editor', 'agent']}>
+                    <AdminProperties />
+                  </RequireRole>
+                } 
+              />
+              <Route 
+                path="/admin/blog" 
+                element={
+                  <RequireRole allowedRoles={['admin', 'editor']}>
+                    <AdminBlog />
+                  </RequireRole>
+                } 
+              />
+              <Route 
+                path="/admin/testimonials" 
+                element={
+                  <RequireRole allowedRoles={['admin', 'editor']}>
+                    <AdminTestimonials />
+                  </RequireRole>
+                } 
+              />
+              <Route 
+                path="/admin/leads" 
+                element={
+                  <RequireRole allowedRoles={['admin', 'editor', 'agent']}>
+                    <AdminLeads />
+                  </RequireRole>
+                } 
+              />
+              <Route 
+                path="/admin/settings" 
+                element={
+                  <RequireRole allowedRoles={['admin']}>
+                    <AdminSettings />
                   </RequireRole>
                 } 
               />

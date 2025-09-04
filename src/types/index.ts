@@ -1,5 +1,6 @@
 export interface Property {
   id: string;
+  ref?: string;
   title_fr: string;
   title_en?: string;
   excerpt_fr: string;
