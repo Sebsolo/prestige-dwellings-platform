@@ -9,7 +9,7 @@ const JsonLdOrganization = () => {
     name: 'Sebastien Pons Immobilier',
     description: 'Expert en immobilier de prestige, spécialisé dans la vente et location de propriétés d\'exception.',
     url: siteUrl,
-    logo: `${siteUrl}/logo.png`,
+    logo: `${siteUrl}/lovable-uploads/7d311420-c757-4cc6-b8a1-fda61618d79e.png`,
     image: `${siteUrl}/og-image.jpg`,
     telephone: '+33 1 XX XX XX XX',
     email: 'contact@sebastien-pons-immobilier.fr',
