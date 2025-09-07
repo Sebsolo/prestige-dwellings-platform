@@ -47,16 +47,16 @@ const Footer = () => {
               Services
             </h4>
             <div className="space-y-2">
-              <Link to="/sales" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+              <Link to="/ventes" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
                 Ventes
               </Link>
-              <Link to="/rentals" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+              <Link to="/locations" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
                 Locations
               </Link>
-              <Link to="/valuation" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+              <Link to="/estimation" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
                 Estimations
               </Link>
-              <Link to="/join-exp" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+              <Link to="/rejoindre-exp" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
                 Rejoindre eXp
               </Link>
             </div>
@@ -68,13 +68,13 @@ const Footer = () => {
               Légal
             </h4>
             <div className="space-y-2">
-              <Link to="/legal" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+              <Link to="/mentions-legales" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
                 {t('footer.legalNotice')}
               </Link>
-              <Link to="/privacy" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+              <Link to="/rgpd" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
                 {t('footer.privacy')}
               </Link>
-              <Link to="/terms" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+              <Link to="/cookies" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
                 {t('footer.terms')}
               </Link>
             </div>

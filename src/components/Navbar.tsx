@@ -13,11 +13,11 @@ const Navbar = () => {
 
   const navItems = [
     { href: '/', label: t('nav.home') },
-    { href: '/sales', label: t('nav.sales') },
-    { href: '/rentals', label: t('nav.rentals') },
-    { href: '/join-exp', label: t('nav.joinExp') },
+    { href: '/ventes', label: t('nav.sales') },
+    { href: '/locations', label: t('nav.rentals') },
+    { href: '/rejoindre-exp', label: t('nav.joinExp') },
     { href: '/blog', label: t('nav.blog') },
-    { href: '/valuation', label: t('nav.valuation') },
+    { href: '/estimation', label: t('nav.valuation') },
     { href: '/contact', label: t('nav.contact') },
   ];
 
