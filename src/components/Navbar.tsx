@@ -26,13 +26,13 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border shadow-card">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <Link to="/" className="flex-shrink-0">
             <img 
               src="/lovable-uploads/7d311420-c757-4cc6-b8a1-fda61618d79e.png" 
               alt="Sebastien Pons Immobilier" 
-              className="h-10 w-auto"
+              className="h-12 md:h-16 w-auto"
             />
           </Link>
 
