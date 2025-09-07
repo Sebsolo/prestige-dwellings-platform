@@ -52,12 +52,12 @@ const PropertyFiltersComponent = ({ filters, onFiltersChange, transaction }: Pro
 
           <div>
             <Label htmlFor="type">{t('common.type')}</Label>
-            <Select value={filters.type || ''} onValueChange={(value) => handleFilterChange('type', value)}>
+            <Select value={filters.type || 'all'} onValueChange={(value) => handleFilterChange('type', value === 'all' ? undefined : value)}>
               <SelectTrigger>
                 <SelectValue placeholder="Type de bien" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Tous types</SelectItem>
+                <SelectItem value="all">Tous types</SelectItem>
                 <SelectItem value="apartment">Appartement</SelectItem>
                 <SelectItem value="house">Maison</SelectItem>
                 <SelectItem value="commercial">Commercial</SelectItem>
@@ -101,12 +101,12 @@ const PropertyFiltersComponent = ({ filters, onFiltersChange, transaction }: Pro
 
           <div>
             <Label htmlFor="rooms">{t('common.rooms')}</Label>
-            <Select value={filters.rooms?.toString() || ''} onValueChange={(value) => handleFilterChange('rooms', parseInt(value))}>
+            <Select value={filters.rooms?.toString() || 'all'} onValueChange={(value) => handleFilterChange('rooms', value === 'all' ? undefined : parseInt(value))}>
               <SelectTrigger>
                 <SelectValue placeholder="Pièces" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Toutes</SelectItem>
+                <SelectItem value="all">Toutes</SelectItem>
                 <SelectItem value="1">1 pièce</SelectItem>
                 <SelectItem value="2">2 pièces</SelectItem>
                 <SelectItem value="3">3 pièces</SelectItem>
@@ -118,12 +118,12 @@ const PropertyFiltersComponent = ({ filters, onFiltersChange, transaction }: Pro
 
           <div>
             <Label htmlFor="dpe">DPE</Label>
-            <Select value={filters.dpe || ''} onValueChange={(value) => handleFilterChange('dpe', value)}>
+            <Select value={filters.dpe || 'all'} onValueChange={(value) => handleFilterChange('dpe', value === 'all' ? undefined : value)}>
               <SelectTrigger>
                 <SelectValue placeholder="Classe DPE" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Toutes classes</SelectItem>
+                <SelectItem value="all">Toutes classes</SelectItem>
                 <SelectItem value="A">A</SelectItem>
                 <SelectItem value="B">B</SelectItem>
                 <SelectItem value="C">C</SelectItem>
