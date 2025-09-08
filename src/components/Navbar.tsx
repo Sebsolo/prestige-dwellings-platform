@@ -56,9 +56,16 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Language Switcher & Mobile menu button */}
+          {/* Language Switcher & Login & Mobile menu button */}
           <div className="flex items-center space-x-2">
             <LanguageSwitcher />
+            
+            {/* Login Button */}
+            <Link to="/login">
+              <Button variant="outline" size="sm" className="hidden md:inline-flex">
+                Admin
+              </Button>
+            </Link>
             
             {/* Mobile menu button */}
             <div className="md:hidden">
@@ -98,6 +105,14 @@ const Navbar = () => {
                   {item.label}
                 </Link>
               ))}
+              {/* Mobile Login Button */}
+              <Link
+                to="/login"
+                className="block px-3 py-2 text-base font-medium text-muted-foreground hover:text-primary transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                Admin
+              </Link>
             </div>
           </div>
         )}
