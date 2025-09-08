@@ -1,12 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Mail, Phone, MapPin } from 'lucide-react';
-
 const Footer = () => {
-  const { t } = useTranslation();
-
-  return (
-    <footer className="bg-card border-t border-border">
+  const {
+    t
+  } = useTranslation();
+  return <footer className="bg-card border-t border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
@@ -28,7 +27,7 @@ const Footer = () => {
             <div className="space-y-2">
               <div className="flex items-center text-sm text-muted-foreground">
                 <Phone className="h-4 w-4 mr-2 text-primary" />
-                <span>+33 6 XX XX XX XX</span>
+                <span>+33 6 01 77 10 11</span>
               </div>
               <div className="flex items-center text-sm text-muted-foreground">
                 <Mail className="h-4 w-4 mr-2 text-primary" />
@@ -94,8 +93,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
