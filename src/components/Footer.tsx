@@ -31,11 +31,11 @@ const Footer = () => {
               </div>
               <div className="flex items-center text-sm text-muted-foreground">
                 <Mail className="h-4 w-4 mr-2 text-primary" />
-                <span>contact@sebastienpons-immobilier.fr</span>
+                <span>sebastien@yvelines-immo.fr</span>
               </div>
               <div className="flex items-center text-sm text-muted-foreground">
                 <MapPin className="h-4 w-4 mr-2 text-primary" />
-                <span>France</span>
+                <span>Chavenay, France</span>
               </div>
             </div>
           </div>
