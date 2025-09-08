@@ -86,9 +86,7 @@ const Footer = () => {
               © {new Date().getFullYear()} Sebastien Pons Immobilier. Tous droits réservés.
             </p>
             <div className="mt-4 md:mt-0">
-              <p className="text-xs text-muted-foreground">
-                Carte professionnelle T n° XXX - Préfecture de XXX
-              </p>
+              
             </div>
           </div>
         </div>
