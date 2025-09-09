@@ -82,11 +82,17 @@ const Footer = () => {
 
         <div className="mt-8 pt-8 border-t border-border">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Sebastien Pons Immobilier. Tous droits réservés.
+            <p className="text-sm text-muted-foreground flex items-center">
+              © {new Date().getFullYear()}
+              <img
+                src="/lovable-uploads/7d311420-c757-4cc6-b8a1-fda61618d79e.png"
+                alt="Sebastien Pons Immobilier"
+                className="h-6 w-auto mx-2"
+              />
+              Tous droits réservés.
             </p>
             <div className="mt-4 md:mt-0">
-              
+
             </div>
           </div>
         </div>
