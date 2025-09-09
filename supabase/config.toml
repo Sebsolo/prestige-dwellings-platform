@@ -1,0 +1,18 @@
+project_id = "gxzifrexmsouvfnriyym"
+
+[auth]
+enabled = true
+external_url = ""
+additional_redirect_urls = ["https://gxzifrexmsouvfnriyym.supabase.co"]
+jwt_expiry = 3600
+refresh_token_rotation_enabled = true
+security_update_password_require_reauthentication = true
+security_sessions_timebox_maxbound = 86400
+security_refresh_token_reuse_interval = 10
+
+[local_config]
+# Local config has no effect when running "supabase functions deploy"
+# It is used for local development only
+
+[functions.sendEmail]
+verify_jwt = false
