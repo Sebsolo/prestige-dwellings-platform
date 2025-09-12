@@ -256,6 +256,54 @@ export type Database = {
         }
         Relationships: []
       }
+      site_settings: {
+        Row: {
+          booking_url: string | null
+          created_at: string
+          google_business_url: string | null
+          google_place_id: string | null
+          id: string
+          meta_description: string | null
+          meta_keywords: string | null
+          meta_title: string | null
+          primary_color: string | null
+          secondary_color: string | null
+          site_description: string | null
+          site_name: string | null
+          updated_at: string
+        }
+        Insert: {
+          booking_url?: string | null
+          created_at?: string
+          google_business_url?: string | null
+          google_place_id?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_keywords?: string | null
+          meta_title?: string | null
+          primary_color?: string | null
+          secondary_color?: string | null
+          site_description?: string | null
+          site_name?: string | null
+          updated_at?: string
+        }
+        Update: {
+          booking_url?: string | null
+          created_at?: string
+          google_business_url?: string | null
+          google_place_id?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_keywords?: string | null
+          meta_title?: string | null
+          primary_color?: string | null
+          secondary_color?: string | null
+          site_description?: string | null
+          site_name?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       testimonials: {
         Row: {
           author: string | null
