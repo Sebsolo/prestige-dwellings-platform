@@ -14,7 +14,7 @@ const Footer = () => {
             <img 
               src={logo} 
               alt="Sebastien Pons Immobilier" 
-              className="h-48 md:h-64 w-auto"
+              className="h-32 md:h-44 w-auto"
             />
           </div>
 
