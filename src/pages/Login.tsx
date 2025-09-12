@@ -20,9 +20,10 @@ const Login = () => {
   const location = useLocation();
 
   const from = location.state?.from?.pathname || '/';
+  const cameFrom = location.state?.from?.pathname;
 
-  if (user) {
-    return <Navigate to={from} replace />;
+  if (user && cameFrom && cameFrom !== '/') {
+    return <Navigate to={cameFrom} replace />;
   }
 
   const handleSignIn = async (e: React.FormEvent) => {

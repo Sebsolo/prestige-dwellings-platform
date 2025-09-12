@@ -10,13 +10,13 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="space-y-4">
-            <h3 className="text-lg font-serif font-semibold text-foreground">
-              Sebastien Pons
-              <span className="text-primary ml-1">Immobilier</span>
-            </h3>
-            <p className="text-sm text-muted-foreground">
-              Spécialiste de l'immobilier de prestige depuis plus de 15 ans.
-            </p>
+            <Link to="/" className="inline-block -mt-4 -mb-4 md:-mt-6 md:-mb-6">
+              <img 
+                src="/lovable-uploads/sebastien-pons-immobilier-logo.png" 
+                alt="Sebastien Pons Immobilier" 
+                className="h-26 md:h-26 w-auto"
+              />
+            </Link>
           </div>
 
           {/* Contact Info */}

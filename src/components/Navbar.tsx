@@ -28,9 +28,9 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-36 md:h-44">
           {/* Logo */}
-          <Link to="/" className="flex-shrink-0">
+          <Link to="/" className="flex-shrink-0 mt-2 md:mt-4">
             <img 
-              src="/lovable-uploads/7d311420-c757-4cc6-b8a1-fda61618d79e.png" 
+              src="/lovable-uploads/logo_sebimmo.webp" 
               alt="Sebastien Pons Immobilier" 
               className="h-48 md:h-64 w-auto"
             />
