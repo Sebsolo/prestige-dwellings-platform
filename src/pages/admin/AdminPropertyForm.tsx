@@ -13,7 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Upload, X, Camera } from 'lucide-react';
 
 const propertySchema = z.object({
   transaction: z.enum(['sale', 'rental']),
@@ -42,6 +42,7 @@ const propertySchema = z.object({
   dpe_letter: z.string().optional(),
   ges_letter: z.string().optional(),
   availability_date: z.string().optional(),
+  youtube_url: z.string().optional(),
 });
 
 type PropertyFormData = z.infer<typeof propertySchema>;
@@ -50,6 +51,8 @@ const AdminPropertyForm = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('basic');
+  const [uploadedImages, setUploadedImages] = useState<Array<{ file: File; preview: string; id: string }>>([]);
+  const [isUploading, setIsUploading] = useState(false);
 
   const form = useForm<PropertyFormData>({
     resolver: zodResolver(propertySchema),
@@ -59,6 +62,29 @@ const AdminPropertyForm = () => {
       status: 'draft',
     },
   });
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (!files) return;
+
+    Array.from(files).forEach(file => {
+      if (file.type.startsWith('image/')) {
+        const preview = URL.createObjectURL(file);
+        const id = Math.random().toString(36).substr(2, 9);
+        setUploadedImages(prev => [...prev, { file, preview, id }]);
+      }
+    });
+  };
+
+  const removeImage = (id: string) => {
+    setUploadedImages(prev => {
+      const imageToRemove = prev.find(img => img.id === id);
+      if (imageToRemove) {
+        URL.revokeObjectURL(imageToRemove.preview);
+      }
+      return prev.filter(img => img.id !== id);
+    });
+  };
 
   const onSubmit = async (data: PropertyFormData) => {
     setIsLoading(true);
@@ -93,13 +119,47 @@ const AdminPropertyForm = () => {
         dpe_letter: data.dpe_letter || null,
         ges_letter: data.ges_letter || null,
         availability_date: data.availability_date || null,
+        youtube_url: data.youtube_url || null,
       };
 
-      const { error } = await supabase
+      const { data: property, error } = await supabase
         .from('properties')
-        .insert(propertyData);
+        .insert(propertyData)
+        .select()
+        .single();
 
       if (error) throw error;
+
+      // Upload images if any
+      if (uploadedImages.length > 0) {
+        setIsUploading(true);
+        
+        for (let i = 0; i < uploadedImages.length; i++) {
+          const image = uploadedImages[i];
+          const fileName = `${property.id}/${Date.now()}_${image.file.name}`;
+          
+          // Upload to storage
+          const { error: uploadError } = await supabase.storage
+            .from('property-images')
+            .upload(fileName, image.file);
+
+          if (uploadError) {
+            console.error('Error uploading image:', uploadError);
+            continue;
+          }
+
+          // Save media record
+          await supabase
+            .from('media')
+            .insert({
+              property_id: property.id,
+              path: fileName,
+              sort_order: i,
+            });
+        }
+        
+        setIsUploading(false);
+      }
 
       toast.success('Bien créé avec succès');
       navigate('/admin/properties');
@@ -108,6 +168,7 @@ const AdminPropertyForm = () => {
       toast.error('Erreur lors de la création du bien');
     } finally {
       setIsLoading(false);
+      setIsUploading(false);
     }
   };
 
@@ -129,10 +190,11 @@ const AdminPropertyForm = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-4">
+              <TabsList className="grid w-full grid-cols-5">
                 <TabsTrigger value="basic">Informations de base</TabsTrigger>
                 <TabsTrigger value="details">Détails</TabsTrigger>
                 <TabsTrigger value="location">Localisation</TabsTrigger>
+                <TabsTrigger value="media">Photos & Vidéo</TabsTrigger>
                 <TabsTrigger value="energy">Énergie</TabsTrigger>
               </TabsList>
 
@@ -526,6 +588,88 @@ const AdminPropertyForm = () => {
                 </Card>
               </TabsContent>
 
+              <TabsContent value="media" className="space-y-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Photos et vidéo</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    {/* Photo Upload Section */}
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-2">
+                        <Camera className="h-5 w-5" />
+                        <h3 className="font-medium">Photos du bien</h3>
+                      </div>
+                      
+                      <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center">
+                        <input
+                          type="file"
+                          id="image-upload"
+                          multiple
+                          accept="image/*"
+                          onChange={handleImageUpload}
+                          className="hidden"
+                        />
+                        <label
+                          htmlFor="image-upload"
+                          className="cursor-pointer flex flex-col items-center gap-2"
+                        >
+                          <Upload className="h-8 w-8 text-muted-foreground" />
+                          <span className="text-sm text-muted-foreground">
+                            Cliquez pour ajouter des photos ou glissez-déposez
+                          </span>
+                          <span className="text-xs text-muted-foreground">
+                            Formats acceptés: JPG, PNG, WebP
+                          </span>
+                        </label>
+                      </div>
+
+                      {uploadedImages.length > 0 && (
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                          {uploadedImages.map((image) => (
+                            <div key={image.id} className="relative group">
+                              <img
+                                src={image.preview}
+                                alt="Preview"
+                                className="w-full h-32 object-cover rounded-lg border"
+                              />
+                              <button
+                                type="button"
+                                onClick={() => removeImage(image.id)}
+                                className="absolute top-2 right-2 bg-destructive text-destructive-foreground rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                              >
+                                <X className="h-4 w-4" />
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* YouTube Video Section */}
+                    <div className="space-y-4">
+                      <h3 className="font-medium">Vidéo YouTube (optionnel)</h3>
+                      <FormField
+                        control={form.control}
+                        name="youtube_url"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>URL de la vidéo YouTube</FormLabel>
+                            <FormControl>
+                              <Input 
+                                placeholder="https://www.youtube.com/watch?v=..." 
+                                {...field} 
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
               <TabsContent value="energy" className="space-y-4">
                 <Card>
                   <CardHeader>
@@ -600,8 +744,8 @@ const AdminPropertyForm = () => {
               >
                 Annuler
               </Button>
-              <Button type="submit" disabled={isLoading}>
-                {isLoading ? 'Création...' : 'Créer le bien'}
+              <Button type="submit" disabled={isLoading || isUploading}>
+                {isLoading ? 'Création...' : isUploading ? 'Upload des photos...' : 'Créer le bien'}
               </Button>
             </div>
           </form>

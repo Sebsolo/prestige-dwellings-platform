@@ -182,6 +182,7 @@ export type Database = {
           transaction: string
           type: string
           updated_at: string | null
+          youtube_url: string | null
         }
         Insert: {
           address?: string | null
@@ -216,6 +217,7 @@ export type Database = {
           transaction: string
           type: string
           updated_at?: string | null
+          youtube_url?: string | null
         }
         Update: {
           address?: string | null
@@ -250,6 +252,7 @@ export type Database = {
           transaction?: string
           type?: string
           updated_at?: string | null
+          youtube_url?: string | null
         }
         Relationships: []
       }
