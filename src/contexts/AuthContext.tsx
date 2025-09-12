@@ -45,13 +45,18 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const fetchProfile = async (userId: string) => {
     try {
+      console.log('Fetching profile for user:', userId);
       const { data, error } = await (supabase as any)
         .from('profiles')
         .select('*')
         .eq('id', userId)
         .single();
 
-      if (error) throw error;
+      if (error) {
+        console.error('Profile fetch error:', error);
+        throw error;
+      }
+      console.log('Profile data:', data);
       setProfile(data);
     } catch (error) {
       console.error('Error fetching profile:', error);

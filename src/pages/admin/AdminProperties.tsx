@@ -159,7 +159,7 @@ const AdminProperties = () => {
                           </div>
                           <div>
                             <span className="font-medium">Réf:</span>
-                            <p>{property.ref || property.id.slice(0, 8)}</p>
+                            <p>{property.ref || String(property.id).slice(0, 8)}</p>
                           </div>
                           <div>
                             <span className="font-medium">Images:</span>
