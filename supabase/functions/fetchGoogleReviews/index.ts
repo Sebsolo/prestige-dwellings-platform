@@ -70,8 +70,8 @@ serve(async (req) => {
       )
     }
 
-    // Construct Google Places API URL
-    const apiUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=name,rating,reviews&key=${googleApiKey}`
+    // Construct Google Places API URL with French language parameter
+    const apiUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=name,rating,reviews&language=fr&key=${googleApiKey}`
     
     const response = await fetch(apiUrl)
     const data = await response.json()
