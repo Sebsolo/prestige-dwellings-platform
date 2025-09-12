@@ -5,6 +5,7 @@ import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import LanguageSwitcher from './LanguageSwitcher';
 import { cn } from '@/lib/utils';
+import logo from '@/assets/logo.svg';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,9 +31,9 @@ const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="flex-shrink-0">
             <img 
-              src="/lovable-uploads/7d311420-c757-4cc6-b8a1-fda61618d79e.png" 
+              src={logo} 
               alt="Sebastien Pons Immobilier" 
-              className="h-48 md:h-64 w-auto"
+              className="h-48 md:h-64 w-auto mt-5"
             />
           </Link>
 
