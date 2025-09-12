@@ -25,8 +25,10 @@ const AdminProperties = () => {
   const loadProperties = async () => {
     try {
       setLoading(true);
+      // Admin should see all properties regardless of status
       const data = await propertiesApi.list({ 
-        transaction: activeTab as 'sale' | 'rental' 
+        transaction: activeTab as 'sale' | 'rental',
+        status: 'all' // Show all properties for admin
       });
       setProperties(data);
     } catch (error) {

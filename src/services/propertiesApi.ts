@@ -23,8 +23,15 @@ export const propertiesApi = {
       .select(`
         *,
         media (*)
-      `)
-      .eq('status', 'available');
+      `);
+
+    // Apply status filter based on context
+    if (filters.status && filters.status !== 'all') {
+      query = query.eq('status', filters.status);
+    } else if (filters.status !== 'all' && filters.transaction) {
+      // For public listings, only show published properties
+      query = query.in('status', ['published', 'under_offer']);
+    }
 
     if (filters.transaction) {
       query = query.eq('transaction', filters.transaction);
