@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Save, Upload } from 'lucide-react';
 import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
 
 const AdminSettings = () => {
   const [settings, setSettings] = useState({
@@ -23,11 +24,60 @@ const AdminSettings = () => {
     googleBusinessUrl: 'https://share.google/LOxi7WwOzlRaYUVJj'
   });
 
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const { data } = await supabase
+          .from('site_settings')
+          .select('*')
+          .single();
+        
+        if (data) {
+          setSettings({
+            siteName: data.site_name || 'Sebastien Pons Immobilier',
+            siteDescription: data.site_description || 'Agence immobilière spécialisée en France et International',
+            logo: '',
+            primaryColor: data.primary_color || '#007bff',
+            secondaryColor: data.secondary_color || '#6c757d',
+            metaTitle: data.meta_title || 'Sebastien Pons Immobilier - France & International',
+            metaDescription: data.meta_description || 'Découvrez notre sélection de biens immobiliers en France et à l\'international avec Sebastien Pons Immobilier.',
+            metaKeywords: data.meta_keywords || 'immobilier, vente, location, france, international, sebastien pons',
+            booking_url: data.booking_url || '',
+            googlePlaceId: data.google_place_id || '',
+            googleBusinessUrl: data.google_business_url || 'https://share.google/LOxi7WwOzlRaYUVJj'
+          });
+        }
+      } catch (error) {
+        console.log('Settings not yet configured');
+      }
+    };
+
+    fetchSettings();
+  }, []);
+
   const handleSave = async () => {
     try {
-      // TODO: Save settings to API
+      const { error } = await supabase
+        .from('site_settings')
+        .upsert({
+          site_name: settings.siteName,
+          site_description: settings.siteDescription,
+          primary_color: settings.primaryColor,
+          secondary_color: settings.secondaryColor,
+          meta_title: settings.metaTitle,
+          meta_description: settings.metaDescription,
+          meta_keywords: settings.metaKeywords,
+          booking_url: settings.booking_url,
+          google_place_id: settings.googlePlaceId,
+          google_business_url: settings.googleBusinessUrl,
+          updated_at: new Date().toISOString()
+        });
+
+      if (error) throw error;
+      
       toast.success('Paramètres sauvegardés avec succès');
     } catch (error) {
+      console.error('Error saving settings:', error);
       toast.error('Erreur lors de la sauvegarde');
     }
   };
