@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import Layout from '@/components/Layout';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
+import GoogleReviews from '@/components/GoogleReviews';
 
 const Home = () => {
   const { t } = useTranslation();
@@ -80,31 +81,19 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* Google Reviews */}
       <section className="py-20 bg-muted/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-4">
-              {t('home.testimonials_title')}
+              Ils nous font confiance
             </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Découvrez les avis de nos clients sur Google Business
+            </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-background rounded-lg p-6 shadow-card">
-                <div className="flex mb-4">
-                  {[1,2,3,4,5].map(star => (
-                    <span key={star} className="text-yellow-400">★</span>
-                  ))}
-                </div>
-                <p className="text-muted-foreground mb-4">
-                  "Service exceptionnel et accompagnement personnalisé. 
-                  Sebastien a su nous trouver la propriété de nos rêves."
-                </p>
-                <div className="font-semibold">Client satisfait #{i}</div>
-              </div>
-            ))}
-          </div>
+          <GoogleReviews maxReviews={6} />
         </div>
       </section>
 
