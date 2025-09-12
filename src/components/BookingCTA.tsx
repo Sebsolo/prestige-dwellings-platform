@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 
 interface BookingCTAProps {
   label: string;
@@ -12,10 +13,28 @@ const BookingCTA = ({ label, variant = 'default', size = 'default', className }:
   const [bookingUrl, setBookingUrl] = useState('#');
 
   useEffect(() => {
-    // In a real implementation, this would fetch from admin settings
-    // For now, we'll use a fallback
-    const savedBookingUrl = localStorage.getItem('booking_url') || '#';
-    setBookingUrl(savedBookingUrl);
+    const fetchBookingUrl = async () => {
+      try {
+        const { data: settings } = await supabase
+          .from('site_settings')
+          .select('booking_url')
+          .single();
+        
+        if (settings?.booking_url) {
+          setBookingUrl(settings.booking_url);
+        } else {
+          // Fallback to localStorage if database is not configured
+          const savedBookingUrl = localStorage.getItem('booking_url') || '#';
+          setBookingUrl(savedBookingUrl);
+        }
+      } catch (error) {
+        console.log('Settings not yet configured, using localStorage fallback');
+        const savedBookingUrl = localStorage.getItem('booking_url') || '#';
+        setBookingUrl(savedBookingUrl);
+      }
+    };
+
+    fetchBookingUrl();
   }, []);
 
   const handleClick = () => {

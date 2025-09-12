@@ -89,37 +89,50 @@ const GoogleReviews = ({ placeId, maxReviews = 6, className = "" }: GoogleReview
       try {
         setLoading(true);
         
-        // Get settings from database first
-        const { data: settings } = await supabase
-          .from('site_settings')
-          .select('*')
-          .single();
+        // Try to get settings from localStorage first (fallback)
+        const fallbackBusinessUrl = 'https://share.google/LOxi7WwOzlRaYUVJj';
+        setGoogleBusinessUrl(fallbackBusinessUrl);
         
-        const settingsPlaceId = settings?.google_place_id || placeId;
-        const businessUrl = settings?.google_business_url || 'https://share.google/LOxi7WwOzlRaYUVJj';
-        setGoogleBusinessUrl(businessUrl);
-        
-        if (!settingsPlaceId) {
-          // Use mock data if no Place ID configured
+        // Try to get settings from database
+        try {
+          const { data: settings } = await supabase
+            .from('site_settings')
+            .select('*')
+            .single();
+          
+          if (settings?.google_business_url) {
+            setGoogleBusinessUrl(settings.google_business_url);
+          }
+          
+          const settingsPlaceId = settings?.google_place_id || placeId;
+          
+          if (!settingsPlaceId) {
+            // Use mock data if no Place ID configured
+            setReviews(mockReviews.slice(0, maxReviews));
+            setError(null);
+            return;
+          }
+
+          // Call Supabase edge function to fetch Google reviews
+          const { data, error: functionError } = await supabase.functions.invoke('fetchGoogleReviews', {
+            body: { placeId: settingsPlaceId }
+          });
+
+          if (functionError) {
+            console.error('Error calling fetchGoogleReviews function:', functionError);
+            setReviews(mockReviews.slice(0, maxReviews));
+            setError(null);
+            return;
+          }
+
+          setReviews(data.reviews.slice(0, maxReviews));
+          setError(null);
+        } catch (dbError) {
+          console.log('Database not yet configured, using mock data:', dbError);
           setReviews(mockReviews.slice(0, maxReviews));
           setError(null);
-          return;
         }
-
-        // Call Supabase edge function to fetch Google reviews
-        const { data, error: functionError } = await supabase.functions.invoke('fetchGoogleReviews', {
-          body: { placeId: settingsPlaceId }
-        });
-
-        if (functionError) {
-          console.error('Error calling fetchGoogleReviews function:', functionError);
-          setReviews(mockReviews.slice(0, maxReviews));
-          setError(null);
-          return;
-        }
-
-        setReviews(data.reviews.slice(0, maxReviews));
-        setError(null);
+        
       } catch (err) {
         console.error('Error fetching reviews:', err);
         setError('Erreur lors du chargement des avis');
