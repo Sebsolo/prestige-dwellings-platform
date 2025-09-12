@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Mail, Phone, MapPin } from 'lucide-react';
+import logo from '@/assets/logo.svg';
 const Footer = () => {
   const {
     t
@@ -10,13 +11,11 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="space-y-4">
-            <h3 className="text-lg font-serif font-semibold text-foreground">
-              Sebastien Pons
-              <span className="text-primary ml-1">Immobilier</span>
-            </h3>
-            <p className="text-sm text-muted-foreground">
-              Spécialiste de l'immobilier de prestige depuis plus de 15 ans.
-            </p>
+            <img 
+              src={logo} 
+              alt="Sebastien Pons Immobilier" 
+              className="h-16 w-auto"
+            />
           </div>
 
           {/* Contact Info */}
