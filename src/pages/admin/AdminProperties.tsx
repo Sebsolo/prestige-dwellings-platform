@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { propertiesApi } from '@/services/propertiesApi';
 import { PropertyWithMedia } from '@/types/index';
@@ -11,6 +12,7 @@ import { Plus, Edit, Trash2, Eye } from 'lucide-react';
 import { toast } from 'sonner';
 
 const AdminProperties = () => {
+  const navigate = useNavigate();
   const { profile } = useAuth();
   const [properties, setProperties] = useState<PropertyWithMedia[]>([]);
   const [loading, setLoading] = useState(true);
@@ -74,7 +76,7 @@ const AdminProperties = () => {
       <div className="space-y-6">
         <div className="flex justify-between items-center">
           <h2 className="text-2xl font-bold text-foreground">Biens Immobiliers</h2>
-          <Button>
+          <Button onClick={() => navigate('/admin/properties/new')}>
             <Plus className="h-4 w-4 mr-2" />
             Nouveau Bien
           </Button>

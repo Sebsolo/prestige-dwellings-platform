@@ -21,7 +21,9 @@ import Cookies from "./pages/Cookies";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import AdminProperties from "./pages/admin/AdminProperties";
+import AdminPropertyForm from "./pages/admin/AdminPropertyForm";
 import AdminBlog from "./pages/admin/AdminBlog";
+import AdminBlogForm from "./pages/admin/AdminBlogForm";
 import AdminTestimonials from "./pages/admin/AdminTestimonials";
 import AdminLeads from "./pages/admin/AdminLeads";
 import AdminSettings from "./pages/admin/AdminSettings";
@@ -68,10 +70,26 @@ const App = () => (
                 } 
               />
               <Route 
+                path="/admin/properties/new" 
+                element={
+                  <RequireRole allowedRoles={['admin', 'editor', 'agent']}>
+                    <AdminPropertyForm />
+                  </RequireRole>
+                } 
+              />
+              <Route 
                 path="/admin/blog" 
                 element={
                   <RequireRole allowedRoles={['admin', 'editor']}>
                     <AdminBlog />
+                  </RequireRole>
+                } 
+              />
+              <Route 
+                path="/admin/blog/new" 
+                element={
+                  <RequireRole allowedRoles={['admin', 'editor']}>
+                    <AdminBlogForm />
                   </RequireRole>
                 } 
               />

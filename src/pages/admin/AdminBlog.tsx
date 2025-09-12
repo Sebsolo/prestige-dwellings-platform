@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,6 +8,7 @@ import { Plus, Edit, Trash2, Eye } from 'lucide-react';
 import { Post } from '@/types/index';
 
 const AdminBlog = () => {
+  const navigate = useNavigate();
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -28,7 +30,7 @@ const AdminBlog = () => {
       <div className="space-y-6">
         <div className="flex justify-between items-center">
           <h2 className="text-2xl font-bold text-foreground">Articles de Blog</h2>
-          <Button>
+          <Button onClick={() => navigate('/admin/blog/new')}>
             <Plus className="h-4 w-4 mr-2" />
             Nouvel Article
           </Button>
