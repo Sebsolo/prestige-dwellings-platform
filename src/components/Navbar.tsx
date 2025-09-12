@@ -30,7 +30,7 @@ const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="flex-shrink-0 mt-2 md:mt-4">
             <img 
-              src="/lovable-uploads/logo_sebimmo.webp" 
+              src="/lovable-uploads/Black and Gold Elegant Interior Design Logo (1).svg" 
               alt="Sebastien Pons Immobilier" 
               className="h-48 md:h-64 w-auto"
             />

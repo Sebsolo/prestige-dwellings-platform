@@ -12,9 +12,9 @@ const Footer = () => {
           <div className="space-y-4">
             <Link to="/" className="inline-block -mt-4 -mb-4 md:-mt-6 md:-mb-6">
               <img 
-                src="/lovable-uploads/sebastien-pons-immobilier-logo.png" 
+                src="/lovable-uploads/Black and Gold Elegant Interior Design Logo (1).svg" 
                 alt="Sebastien Pons Immobilier" 
-                className="h-26 md:h-26 w-auto"
+                className="h-48 md:h-64 w-auto"
               />
             </Link>
           </div>
