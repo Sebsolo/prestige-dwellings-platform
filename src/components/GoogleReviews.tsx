@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 import { Star, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -22,6 +23,7 @@ interface GoogleReviewsProps {
 const GoogleReviews = ({ placeId, maxReviews = 6, className = "" }: GoogleReviewsProps) => {
   const [reviews, setReviews] = useState<GoogleReview[]>([]);
   const [loading, setLoading] = useState(true);
+  const [googleBusinessUrl, setGoogleBusinessUrl] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
 
   // Mock reviews data for demonstration (replace with actual Google Places API call)
@@ -83,16 +85,43 @@ const GoogleReviews = ({ placeId, maxReviews = 6, className = "" }: GoogleReview
   ];
 
   useEffect(() => {
-    // Simulate API call
     const fetchReviews = async () => {
       try {
         setLoading(true);
-        // In a real implementation, you would call Google Places API here
-        // For now, we'll use mock data
-        await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate loading
-        setReviews(mockReviews.slice(0, maxReviews));
+        
+        // Get settings from database first
+        const { data: settings } = await supabase
+          .from('site_settings')
+          .select('*')
+          .single();
+        
+        const settingsPlaceId = settings?.google_place_id || placeId;
+        const businessUrl = settings?.google_business_url || 'https://share.google/LOxi7WwOzlRaYUVJj';
+        setGoogleBusinessUrl(businessUrl);
+        
+        if (!settingsPlaceId) {
+          // Use mock data if no Place ID configured
+          setReviews(mockReviews.slice(0, maxReviews));
+          setError(null);
+          return;
+        }
+
+        // Call Supabase edge function to fetch Google reviews
+        const { data, error: functionError } = await supabase.functions.invoke('fetchGoogleReviews', {
+          body: { placeId: settingsPlaceId }
+        });
+
+        if (functionError) {
+          console.error('Error calling fetchGoogleReviews function:', functionError);
+          setReviews(mockReviews.slice(0, maxReviews));
+          setError(null);
+          return;
+        }
+
+        setReviews(data.reviews.slice(0, maxReviews));
         setError(null);
       } catch (err) {
+        console.error('Error fetching reviews:', err);
         setError('Erreur lors du chargement des avis');
         setReviews(mockReviews.slice(0, maxReviews)); // Fallback to mock data
       } finally {
@@ -190,7 +219,7 @@ const GoogleReviews = ({ placeId, maxReviews = 6, className = "" }: GoogleReview
         <Button 
           variant="outline" 
           className="group"
-          onClick={() => window.open('https://www.google.com/search?q=Sebastien+Pons+avis', '_blank')}
+          onClick={() => window.open(googleBusinessUrl || 'https://share.google/LOxi7WwOzlRaYUVJj', '_blank')}
         >
           Voir tous les avis Google
           <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />

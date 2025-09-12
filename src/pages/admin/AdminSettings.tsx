@@ -17,7 +17,10 @@ const AdminSettings = () => {
     secondaryColor: '#6c757d',
     metaTitle: 'Sebastien Pons Immobilier - France & International',
     metaDescription: 'Découvrez notre sélection de biens immobiliers en France et à l\'international avec Sebastien Pons Immobilier.',
-    metaKeywords: 'immobilier, vente, location, france, international, sebastien pons'
+    metaKeywords: 'immobilier, vente, location, france, international, sebastien pons',
+    booking_url: '',
+    googlePlaceId: '',
+    googleBusinessUrl: 'https://share.google/LOxi7WwOzlRaYUVJj'
   });
 
   const handleSave = async () => {
@@ -177,6 +180,53 @@ const AdminSettings = () => {
                   onChange={(e) => setSettings({...settings, metaKeywords: e.target.value})}
                   placeholder="mot-clé1, mot-clé2, mot-clé3"
                 />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Intégrations</CardTitle>
+              <CardDescription>
+                Configuration des services externes
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="booking_url">URL de Réservation</Label>
+                <Input
+                  id="booking_url"
+                  value={settings.booking_url}
+                  onChange={(e) => setSettings({...settings, booking_url: e.target.value})}
+                  placeholder="https://calendly.com/sebastien-pons"
+                />
+                <p className="text-sm text-muted-foreground">
+                  URL utilisée par tous les boutons de prise de rendez-vous
+                </p>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="googlePlaceId">Google Place ID</Label>
+                <Input
+                  id="googlePlaceId"
+                  value={settings.googlePlaceId}
+                  onChange={(e) => setSettings({...settings, googlePlaceId: e.target.value})}
+                  placeholder="ChIJxxxxxxxxxxxxxxx"
+                />
+                <p className="text-sm text-muted-foreground">
+                  ID de votre fiche Google Business pour récupérer les avis automatiquement
+                </p>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="googleBusinessUrl">URL Google Business</Label>
+                <Input
+                  id="googleBusinessUrl"
+                  value={settings.googleBusinessUrl}
+                  onChange={(e) => setSettings({...settings, googleBusinessUrl: e.target.value})}
+                  placeholder="https://share.google/..."
+                />
+                <p className="text-sm text-muted-foreground">
+                  Lien vers votre page Google Business
+                </p>
               </div>
             </CardContent>
           </Card>
