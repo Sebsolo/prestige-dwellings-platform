@@ -3,10 +3,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/hooks/use-toast';
 import { createClient } from '@supabase/supabase-js';
 import { cn } from '@/lib/utils';
 import { z } from 'zod';
+import { Link } from 'react-router-dom';
 
 // Create Supabase client directly to avoid type issues
 const supabase = createClient(
@@ -30,6 +32,7 @@ const formSchema = z.object({
   email: z.string().email('Adresse email invalide'),
   phone: z.string().optional(),
   message: z.string().min(10, 'Le message doit contenir au moins 10 caractères'),
+  privacyAccepted: z.boolean().refine(val => val === true, 'Vous devez accepter la politique de confidentialité'),
   honeypot: z.string().max(0, 'Spam détecté'), // Hidden field, should remain empty
 });
 
@@ -49,6 +52,7 @@ const SmartForm = ({
     email: '',
     phone: '',
     message: '',
+    privacyAccepted: false,
     honeypot: ''
   });
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
@@ -207,6 +211,7 @@ const SmartForm = ({
         email: '',
         phone: '',
         message: '',
+        privacyAccepted: false,
         honeypot: ''
       });
 
@@ -224,7 +229,7 @@ const SmartForm = ({
     }
   };
 
-  const handleInputChange = (field: keyof FormData, value: string) => {
+  const handleInputChange = (field: keyof FormData, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     // Clear error when user starts typing
     if (errors[field]) {
@@ -339,9 +344,34 @@ const SmartForm = ({
           )}
         </div>
 
+        <div className="space-y-2">
+          <div className="flex items-start space-x-3">
+            <Checkbox 
+              id="privacy-policy" 
+              checked={formData.privacyAccepted}
+              onCheckedChange={(checked) => handleInputChange('privacyAccepted', checked as boolean)}
+              disabled={isLoading}
+              className="mt-1" 
+            />
+            <Label htmlFor="privacy-policy" className="text-sm text-muted-foreground leading-relaxed">
+              J'ai lu et j'accepte la{' '}
+              <Link 
+                to="/mentions-legales" 
+                className="text-primary hover:underline"
+              >
+                politique de confidentialité
+              </Link>
+              {' '}de ce site *
+            </Label>
+          </div>
+          {errors.privacyAccepted && (
+            <p className="text-sm text-destructive">{errors.privacyAccepted}</p>
+          )}
+        </div>
+
         <Button
           type="submit"
-          disabled={isLoading || isRateLimited}
+          disabled={isLoading || isRateLimited || !formData.privacyAccepted}
           className="w-full"
         >
           {isLoading ? 'Envoi en cours...' : 'Envoyer le message'}

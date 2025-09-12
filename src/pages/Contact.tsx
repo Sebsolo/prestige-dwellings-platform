@@ -1,9 +1,6 @@
 import Layout from '@/components/Layout';
 import SmartForm from '@/components/SmartForm';
 import { Phone, Mail, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Label } from '@/components/ui/label';
-import { Link } from 'react-router-dom';
 
 const Contact = () => {
   return (
@@ -94,27 +91,13 @@ const Contact = () => {
               
               <SmartForm 
                 source="contact-page"
-                title="Nouveau message depuis la page contact"
-                description="Un visiteur a envoyé un message depuis la page de contact"
+                title="Envoyez-moi un message"
+                description="Remplissez le formulaire ci-dessous et je vous répondrai rapidement."
                 className="space-y-6"
                 onSuccess={() => {
                   // Form success is handled by SmartForm internally
                 }}
               />
-              
-              <div className="mt-6 flex items-start space-x-3">
-                <Checkbox id="privacy-policy" className="mt-1" />
-                <Label htmlFor="privacy-policy" className="text-sm text-muted-foreground leading-relaxed">
-                  J'ai lu et j'accepte la{' '}
-                  <Link 
-                    to="/mentions-legales" 
-                    className="text-primary hover:underline"
-                  >
-                    politique de confidentialité
-                  </Link>
-                  {' '}de ce site
-                </Label>
-              </div>
             </div>
           </div>
         </div>
