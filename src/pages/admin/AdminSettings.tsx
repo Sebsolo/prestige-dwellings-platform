@@ -11,6 +11,7 @@ import { supabase } from '@/integrations/supabase/client';
 
 const AdminSettings = () => {
   const [settings, setSettings] = useState({
+    id: null as string | null,
     siteName: 'Sebastien Pons Immobilier',
     siteDescription: 'Agence immobilière spécialisée en France et International',
     logo: '',
@@ -34,6 +35,7 @@ const AdminSettings = () => {
         
         if (data) {
           setSettings({
+            id: data.id,
             siteName: data.site_name || 'Sebastien Pons Immobilier',
             siteDescription: data.site_description || 'Agence immobilière spécialisée en France et International',
             logo: '',
@@ -57,21 +59,43 @@ const AdminSettings = () => {
 
   const handleSave = async () => {
     try {
-      const { error } = await supabase
-        .from('site_settings')
-        .upsert({
-          site_name: settings.siteName,
-          site_description: settings.siteDescription,
-          primary_color: settings.primaryColor,
-          secondary_color: settings.secondaryColor,
-          meta_title: settings.metaTitle,
-          meta_description: settings.metaDescription,
-          meta_keywords: settings.metaKeywords,
-          booking_url: settings.booking_url,
-          google_place_id: settings.googlePlaceId,
-          google_business_url: settings.googleBusinessUrl,
-          updated_at: new Date().toISOString()
-        });
+      const settingsData = {
+        site_name: settings.siteName,
+        site_description: settings.siteDescription,
+        primary_color: settings.primaryColor,
+        secondary_color: settings.secondaryColor,
+        meta_title: settings.metaTitle,
+        meta_description: settings.metaDescription,
+        meta_keywords: settings.metaKeywords,
+        booking_url: settings.booking_url,
+        google_place_id: settings.googlePlaceId,
+        google_business_url: settings.googleBusinessUrl,
+        updated_at: new Date().toISOString()
+      };
+
+      let error;
+      
+      if (settings.id) {
+        // Update existing record
+        const result = await supabase
+          .from('site_settings')
+          .update(settingsData)
+          .eq('id', settings.id);
+        error = result.error;
+      } else {
+        // Insert new record
+        const result = await supabase
+          .from('site_settings')
+          .insert(settingsData)
+          .select()
+          .single();
+        error = result.error;
+        
+        if (!error && result.data) {
+          // Update local state with the new ID
+          setSettings(prev => ({ ...prev, id: result.data.id }));
+        }
+      }
 
       if (error) throw error;
       
