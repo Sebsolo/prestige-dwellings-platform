@@ -24,6 +24,7 @@ import AdminProperties from "./pages/admin/AdminProperties";
 import AdminPropertyForm from "./pages/admin/AdminPropertyForm";
 import AdminBlog from "./pages/admin/AdminBlog";
 import AdminBlogForm from "./pages/admin/AdminBlogForm";
+import AdminBlogEdit from "./pages/admin/AdminBlogEdit";
 import AdminTestimonials from "./pages/admin/AdminTestimonials";
 import AdminLeads from "./pages/admin/AdminLeads";
 import AdminSettings from "./pages/admin/AdminSettings";
@@ -90,6 +91,14 @@ const App = () => (
                 element={
                   <RequireRole allowedRoles={['admin', 'editor']}>
                     <AdminBlogForm />
+                  </RequireRole>
+                } 
+              />
+              <Route 
+                path="/admin/blog/edit/:id" 
+                element={
+                  <RequireRole allowedRoles={['admin', 'editor']}>
+                    <AdminBlogEdit />
                   </RequireRole>
                 } 
               />
