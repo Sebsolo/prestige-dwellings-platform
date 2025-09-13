@@ -72,9 +72,9 @@ const Footer = () => {
               <Link to="/rgpd" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
                 {t('footer.privacy')}
               </Link>
-              <Link to="/cookies" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+              <a href="https://www.expfrance.fr/fr/mentions-legales/honoraires" target="_blank" rel="noopener noreferrer" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
                 {t('footer.terms')}
-              </Link>
+              </a>
             </div>
           </div>
         </div>

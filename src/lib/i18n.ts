@@ -75,7 +75,7 @@ const resources = {
         legalNotice: 'Mentions légales',
         privacy: 'RGPD',
         cookies: 'Cookies',
-        terms: 'Conditions d\'utilisation'
+        terms: 'Honoraires'
       }
     }
   },
@@ -152,7 +152,7 @@ const resources = {
         legalNotice: 'Legal Notice',
         privacy: 'GDPR',
         cookies: 'Cookies',
-        terms: 'Terms of Use'
+        terms: 'Fees'
       }
     }
   }
