@@ -6,16 +6,52 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Plus, Edit, Trash2, Eye } from 'lucide-react';
 import { Post } from '@/types/index';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 const AdminBlog = () => {
   const navigate = useNavigate();
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const fetchPosts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('posts')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setPosts(data || []);
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+      toast.error('Erreur lors du chargement des articles');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    // TODO: Load posts from API
-    setLoading(false);
+    fetchPosts();
   }, []);
+
+  const handleDelete = async (id: number) => {
+    if (!confirm('Êtes-vous sûr de vouloir supprimer cet article ?')) return;
+
+    try {
+      const { error } = await supabase
+        .from('posts')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+      toast.success('Article supprimé avec succès');
+      fetchPosts();
+    } catch (error) {
+      console.error('Error deleting post:', error);
+      toast.error('Erreur lors de la suppression');
+    }
+  };
 
   const getStatusBadge = (status: string) => {
     return (
@@ -66,13 +102,25 @@ const AdminBlog = () => {
                       <div className="flex items-center gap-2">
                         {getStatusBadge(post.status)}
                         <div className="flex gap-1">
-                          <Button size="sm" variant="outline">
+                          <Button 
+                            size="sm" 
+                            variant="outline"
+                            onClick={() => window.open(`/blog/${post.slug}`, '_blank')}
+                          >
                             <Eye className="h-4 w-4" />
                           </Button>
-                          <Button size="sm" variant="outline">
+                          <Button 
+                            size="sm" 
+                            variant="outline"
+                            onClick={() => navigate(`/admin/blog/edit/${post.id}`)}
+                          >
                             <Edit className="h-4 w-4" />
                           </Button>
-                          <Button size="sm" variant="outline">
+                          <Button 
+                            size="sm" 
+                            variant="outline"
+                            onClick={() => handleDelete(post.id)}
+                          >
                             <Trash2 className="h-4 w-4" />
                           </Button>
                         </div>
