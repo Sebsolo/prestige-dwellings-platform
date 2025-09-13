@@ -17,147 +17,244 @@ const Privacy = () => {
         </h1>
 
         <div className="space-y-8">
-          <Card>
-            <CardHeader>
-              <CardTitle>Responsable du traitement</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p>
-                Sebastien Pons Immobilier, en qualité de responsable du traitement, 
-                s'engage à protéger vos données personnelles conformément au Règlement 
-                Général sur la Protection des Données (RGPD).
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Données collectées</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p><strong>Données d'identification :</strong></p>
-              <ul className="list-disc list-inside ml-4 space-y-1">
-                <li>Nom et prénom</li>
-                <li>Adresse email</li>
-                <li>Numéro de téléphone</li>
-                <li>Adresse postale</li>
-              </ul>
+          <div className="bg-muted/50 p-6 rounded-lg">
+            <p className="font-semibold mb-2">Version du 13/09/2025</p>
+            <p className="mb-4">
+              La présente politique décrit comment <strong>Sébastien Pons Immobilier — Sébastien Pons (EI)</strong>, 
+              <strong>RSAC Versailles n° 912 212 073</strong>, collecte et traite vos données personnelles dans le cadre du site <strong>yvelines-immo.fr</strong>.
+            </p>
+            
+            <div className="space-y-2">
+              <p><strong>Éditeur / Responsable de traitement</strong></p>
+              <p>Sébastien Pons Immobilier — Sébastien Pons (EI)</p>
+              <p>8 rue des Amandiers, 78450 Chavenay — France</p>
+              <p>Tél. : 06 01 77 10 11 — Email : <a href="mailto:sebastien@yvelines-immo.fr" className="text-primary hover:underline"><strong>sebastien@yvelines-immo.fr</strong></a></p>
               
-              <p><strong>Données de navigation :</strong></p>
-              <ul className="list-disc list-inside ml-4 space-y-1">
-                <li>Adresse IP</li>
-                <li>Données de connexion</li>
-                <li>Informations sur le navigateur</li>
-              </ul>
-            </CardContent>
-          </Card>
+              <p className="mt-4">
+                Les activités de transaction sont réalisées sous le couvert de la carte professionnelle "Transaction sur immeubles et fonds de commerce" 
+                <strong>CPI 3402 2020 000 045 086</strong>, détenue par <strong>eXp Global France SAS</strong>, 266 place Ernest Granier, 34000 Montpellier (absence de garantie financière).
+              </p>
+              
+              <p><strong>Hébergeur :</strong> o2switch, Chemin des Pardiaux, 63000 Clermont-Ferrand, France.</p>
+            </div>
+          </div>
 
           <Card>
             <CardHeader>
-              <CardTitle>Finalités du traitement</CardTitle>
+              <CardTitle>1) Données que nous collectons</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p>Vos données personnelles sont traitées pour les finalités suivantes :</p>
-              <ul className="list-disc list-inside ml-4 space-y-1">
-                <li>Réponse à vos demandes de contact</li>
-                <li>Estimation de votre bien immobilier</li>
-                <li>Gestion de votre candidature (recrutement)</li>
-                <li>Envoi de notre newsletter (avec votre consentement)</li>
-                <li>Amélioration de nos services</li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Base légale</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p>Le traitement de vos données repose sur :</p>
-              <ul className="list-disc list-inside ml-4 space-y-1">
-                <li><strong>Intérêt légitime :</strong> pour la prospection commerciale</li>
-                <li><strong>Consentement :</strong> pour l'envoi de newsletters</li>
-                <li><strong>Exécution contractuelle :</strong> pour la réalisation de prestations</li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Durée de conservation</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p>Vos données sont conservées pendant :</p>
-              <ul className="list-disc list-inside ml-4 space-y-1">
-                <li><strong>Prospects :</strong> 3 ans à compter du dernier contact</li>
-                <li><strong>Clients :</strong> 5 ans après la fin de la relation commerciale</li>
-                <li><strong>Candidatures :</strong> 2 ans à compter de la candidature</li>
-                <li><strong>Newsletter :</strong> jusqu'à votre désinscription</li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Vos droits</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p>Conformément au RGPD, vous disposez des droits suivants :</p>
-              <ul className="list-disc list-inside ml-4 space-y-1">
-                <li><strong>Droit d'accès :</strong> connaître les données vous concernant</li>
-                <li><strong>Droit de rectification :</strong> corriger vos données</li>
-                <li><strong>Droit à l'effacement :</strong> supprimer vos données</li>
-                <li><strong>Droit à la limitation :</strong> limiter le traitement</li>
-                <li><strong>Droit à la portabilité :</strong> récupérer vos données</li>
-                <li><strong>Droit d'opposition :</strong> vous opposer au traitement</li>
+              <ul className="list-disc list-inside space-y-2">
+                <li><strong>Formulaires de contact / estimation / prise de RDV / acheteur :</strong> identité (nom, prénom), coordonnées (email, téléphone), contenu du message, critères de recherche, adresse du bien, budget, etc.</li>
+                <li><strong>Espace "Rejoindre eXp" (recrutement de mandataires) :</strong> identité, coordonnées, éléments de parcours/expérience transmis.</li>
+                <li><strong>Gestion de dossiers clients (vendeurs, acquéreurs, locataires) :</strong> informations nécessaires à l'étude, à la commercialisation et au suivi de la transaction (ex. : adresse du bien, pièces justificatives transmises).</li>
+                <li><strong>Journal technique :</strong> données de navigation et de sécurité (horodatage, adresse IP, user-agent) à des fins de sécurité/maintenance.</li>
+                <li><strong>Cookies & mesure d'audience :</strong> selon votre choix dans le bandeau cookies (voir Politique Cookies).</li>
               </ul>
               
               <p className="mt-4">
-                Pour exercer ces droits, contactez-nous à : 
-                <a href="mailto:contact@sebastienpons-immobilier.fr" className="text-primary hover:underline ml-1">
-                  contact@sebastienpons-immobilier.fr
-                </a>
+                Nous ne collectons <strong>pas</strong> de catégories particulières de données (dites "sensibles") via le site.
               </p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader>
-              <CardTitle>Sécurité des données</CardTitle>
+              <CardTitle>2) Finalités et bases légales</CardTitle>
             </CardHeader>
             <CardContent>
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse border border-border">
+                  <thead>
+                    <tr className="bg-muted/50">
+                      <th className="border border-border p-3 text-left">Finalité</th>
+                      <th className="border border-border p-3 text-left">Exemples</th>
+                      <th className="border border-border p-3 text-left">Base légale</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="border border-border p-3">Réponse aux demandes (contact, estimation, recherche)</td>
+                      <td className="border border-border p-3">Prise de RDV, envoi d'informations sur un bien</td>
+                      <td className="border border-border p-3"><strong>Mesures précontractuelles</strong> ou <strong>intérêt légitime</strong> à répondre</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-border p-3">Exécution et suivi des mandats / transactions</td>
+                      <td className="border border-border p-3">Diffusion d'annonce, visites, négociation, signatures</td>
+                      <td className="border border-border p-3"><strong>Exécution d'un contrat</strong></td>
+                    </tr>
+                    <tr>
+                      <td className="border border-border p-3">Prospection et actualités</td>
+                      <td className="border border-border p-3">Envoi ponctuel d'informations utiles sur l'activité/bien</td>
+                      <td className="border border-border p-3"><strong>Consentement</strong> (email/SMS) ; retrait possible à tout moment</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-border p-3">Recrutement de mandataires ("Rejoindre eXp")</td>
+                      <td className="border border-border p-3">Étude de candidatures et prises de contact</td>
+                      <td className="border border-border p-3"><strong>Intérêt légitime</strong></td>
+                    </tr>
+                    <tr>
+                      <td className="border border-border p-3">Sécurité du site, prévention de la fraude</td>
+                      <td className="border border-border p-3">Logs techniques, prévention d'abus</td>
+                      <td className="border border-border p-3"><strong>Intérêt légitime</strong></td>
+                    </tr>
+                    <tr>
+                      <td className="border border-border p-3">Obligations légales et comptables</td>
+                      <td className="border border-border p-3">Facturation, prescriptions légales, LCB-FT le cas échéant</td>
+                      <td className="border border-border p-3"><strong>Obligation légale</strong></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>3) Destinataires et sous-traitants</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <p><strong>Interne :</strong> l'éditeur du site (Sébastien Pons) et, le cas échéant, ses partenaires intervenant dans le cadre d'un mandat.</p>
+              </div>
+              
+              <div>
+                <p><strong>Sous-traitants techniques :</strong></p>
+                <ul className="list-disc list-inside ml-4 mt-2 space-y-1">
+                  <li><strong>Hébergeur :</strong> o2switch (hébergement et sécurité).</li>
+                  <li>Outils de messagerie / prise de RDV / formulaires et, si activé, <strong>mesure d'audience</strong> (uniquement après consentement).</li>
+                </ul>
+              </div>
+              
+              <div>
+                <p><strong>Partenaires transaction :</strong> dans le cadre d'un mandat, informations strictement nécessaires (photographes, diagnostiqueurs, notaires, etc.).</p>
+              </div>
+              
+              <div>
+                <p><strong>Autorités :</strong> administrations et autorités légalement habilitées.</p>
+              </div>
+              
               <p>
-                Nous mettons en œuvre toutes les mesures techniques et organisationnelles 
-                appropriées pour protéger vos données personnelles contre la destruction, 
-                la perte, l'altération, la divulgation ou l'accès non autorisé.
+                Aucun transfert hors UE n'est effectué <strong>sauf</strong> si un outil choisi par vos soins héberge des données hors UE ; dans ce cas, nous privilégions des prestataires offrant des garanties appropriées (clauses contractuelles types, hébergement UE, etc.).
               </p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader>
-              <CardTitle>Réclamation</CardTitle>
+              <CardTitle>4) Durées de conservation</CardTitle>
             </CardHeader>
             <CardContent>
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse border border-border">
+                  <thead>
+                    <tr className="bg-muted/50">
+                      <th className="border border-border p-3 text-left">Catégorie</th>
+                      <th className="border border-border p-3 text-left">Durée</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="border border-border p-3"><strong>Prospects / demandes de contact</strong></td>
+                      <td className="border border-border p-3">3 ans après le dernier contact entrant de votre part</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-border p-3"><strong>Dossiers clients et pièces contractuelles</strong></td>
+                      <td className="border border-border p-3">Durée du mandat et de la transaction, puis durée légale de prescription (en principe 5 ans) ; pièces comptables : 10 ans</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-border p-3"><strong>Candidatures "Rejoindre eXp"</strong></td>
+                      <td className="border border-border p-3">2 ans après le dernier contact si non retenu(e)</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-border p-3"><strong>Logs techniques</strong></td>
+                      <td className="border border-border p-3">Jusqu'à 12 mois à des fins de sécurité</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-border p-3"><strong>Cookies</strong></td>
+                      <td className="border border-border p-3">Selon type et consentement (voir Politique Cookies)</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>5) Vos droits</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
               <p>
-                Si vous considérez que le traitement de vos données personnelles constitue 
-                une violation du RGPD, vous avez le droit d'introduire une réclamation 
-                auprès de la CNIL (Commission Nationale de l'Informatique et des Libertés).
+                Vous disposez des droits <strong>d'accès</strong>, <strong>rectification</strong>, <strong>effacement</strong>, <strong>limitation</strong>, <strong>opposition</strong>, <strong>portabilité</strong>, et du droit de <strong>retirer votre consentement</strong> à tout moment (pour la prospection notamment).
+              </p>
+              <p>
+                Pour exercer vos droits : <a href="mailto:sebastien@yvelines-immo.fr" className="text-primary hover:underline"><strong>sebastien@yvelines-immo.fr</strong></a> ou courrier postal à l'adresse figurant ci-dessus, en joignant un justificatif d'identité si nécessaire.
+              </p>
+              <p>
+                Vous pouvez également introduire une réclamation auprès de la <strong>CNIL</strong> (cnil.fr).
+              </p>
+              <p className="italic">
+                Délégué à la protection des données (DPO) : non désigné, au regard de l'activité exercée.
               </p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader>
-              <CardTitle>Mise à jour</CardTitle>
+              <CardTitle>6) Prospection et démarchage téléphonique</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <ul className="list-disc list-inside space-y-2">
+                <li><strong>Emails/SMS :</strong> uniquement avec votre <strong>consentement</strong> préalable (ou clients pour des services analogues). Vous pouvez vous désinscrire à tout moment.</li>
+                <li><strong>Téléphone :</strong> opposition possible via la liste <strong>BLOCTEL</strong> (bloctel.gouv.fr).</li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>7) Sécurité</CardTitle>
             </CardHeader>
             <CardContent>
               <p>
-                Cette politique de confidentialité peut être mise à jour. 
-                La date de dernière modification est indiquée en bas de cette page.
+                Nous mettons en œuvre des mesures techniques et organisationnelles adaptées (hébergement sécurisé, mises à jour, gestion des accès, sauvegardes raisonnables). Aucun système n'étant infaillible, nous vous invitons à limiter les informations transmises aux seules données strictement nécessaires.
               </p>
-              <p className="mt-4 text-sm text-muted-foreground">
-                Dernière mise à jour : Janvier 2024
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>8) Cookies</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p>
+                Le site utilise des cookies techniques nécessaires au fonctionnement et, <strong>avec votre consentement</strong>, des cookies de mesure d'audience et/ou de services tiers.
+              </p>
+              <p className="mt-2">
+                → Voir la <strong>[Politique Cookies]</strong> (bandeau de consentement, finalités détaillées, durées et partenaires).
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>9) Mineurs</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p>
+                Le site ne s'adresse pas intentionnellement aux mineurs. Si des données de mineur nous étaient transmises, le représentant légal peut demander leur suppression via <a href="mailto:sebastien@yvelines-immo.fr" className="text-primary hover:underline"><strong>sebastien@yvelines-immo.fr</strong></a>.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>10) Évolution de la politique</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p>
+                Nous pouvons modifier la présente politique pour refléter des évolutions légales ou techniques. La version applicable est celle publiée sur cette page à la date de votre visite.
               </p>
             </CardContent>
           </Card>
