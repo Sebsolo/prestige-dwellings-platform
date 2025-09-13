@@ -106,11 +106,14 @@ const AdminBlogEdit = () => {
     setIsLoading(true);
     try {
       const updateData = {
-        ...data,
-        excerpt_fr: data.excerpt_fr || generateExcerpt(data.content_fr),
-        excerpt_en: data.excerpt_en || (data.content_en ? generateExcerpt(data.content_en) : null),
+        title_fr: data.title_fr,
+        title_en: data.title_en || null,
+        content_fr: data.content_fr,
+        content_en: data.content_en || null,
+        slug: data.slug,
+        status: data.status,
+        cover_path: data.cover_path || null,
         published_at: data.status === 'published' ? new Date().toISOString() : null,
-        updated_at: new Date().toISOString(),
       };
 
       const { error } = await supabase
