@@ -11,6 +11,7 @@ import { PropertyWithMedia } from '@/types/index';
 import { supabase } from '@/integrations/supabase/client';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
+import SinglePropertyMap from '@/components/SinglePropertyMap';
 
 const PropertyDetail = () => {
   const { idOrSlug } = useParams();
@@ -224,16 +225,20 @@ const PropertyDetail = () => {
             </Card>
 
             {/* Map */}
-            <Card>
-              <CardHeader>
-                <CardTitle>{t('property.location')}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="h-64 bg-muted rounded-lg flex items-center justify-center">
-                  <span className="text-muted-foreground">Carte à intégrer</span>
-                </div>
-              </CardContent>
-            </Card>
+            {(property.address || property.city) && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>{t('property.location')}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <SinglePropertyMap 
+                    address={property.address || ''}
+                    city={property.city}
+                    title={property.title_fr || property.title_en}
+                  />
+                </CardContent>
+              </Card>
+            )}
           </div>
 
           {/* Sidebar */}
