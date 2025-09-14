@@ -235,6 +235,8 @@ const PropertyDetail = () => {
                     address={property.address || ''}
                     city={property.city}
                     title={property.title_fr || property.title_en}
+                    lat={property.lat}
+                    lng={property.lng}
                   />
                 </CardContent>
               </Card>

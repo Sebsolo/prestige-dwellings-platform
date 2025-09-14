@@ -12,9 +12,11 @@ L.Icon.Default.mergeOptions({
 });
 
 interface SinglePropertyMapProps {
-  address: string;
+  address?: string;
   city?: string;
   title?: string;
+  lat?: number;
+  lng?: number;
 }
 
 const MapUpdater = ({ position }: { position: [number, number] | null }) => {
@@ -29,47 +31,57 @@ const MapUpdater = ({ position }: { position: [number, number] | null }) => {
   return null;
 };
 
-const SinglePropertyMap = ({ address, city, title }: SinglePropertyMapProps) => {
+const SinglePropertyMap = ({ address, city, title, lat, lng }: SinglePropertyMapProps) => {
   const [position, setPosition] = useState<[number, number] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const geocodeAddress = async () => {
+    const initializeMap = async () => {
       try {
         setLoading(true);
-        const fullAddress = city ? `${address}, ${city}` : address;
         
-        // Using Nominatim for free geocoding
-        const response = await fetch(
-          `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(fullAddress)}&limit=1`
-        );
-        
-        if (!response.ok) {
-          throw new Error('Geocoding failed');
+        // If we have stored coordinates, use them directly
+        if (lat && lng) {
+          setPosition([lat, lng]);
+          setLoading(false);
+          return;
         }
         
-        const data = await response.json();
-        
-        if (data && data.length > 0) {
-          const lat = parseFloat(data[0].lat);
-          const lon = parseFloat(data[0].lon);
-          setPosition([lat, lon]);
+        // Otherwise, geocode the address
+        if (address) {
+          const fullAddress = city ? `${address}, ${city}` : address;
+          
+          const response = await fetch(
+            `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(fullAddress)}&limit=1`
+          );
+          
+          if (!response.ok) {
+            throw new Error('Geocoding failed');
+          }
+          
+          const data = await response.json();
+          
+          if (data && data.length > 0) {
+            const geocodedLat = parseFloat(data[0].lat);
+            const geocodedLng = parseFloat(data[0].lon);
+            setPosition([geocodedLat, geocodedLng]);
+          } else {
+            setError('Adresse non trouvée');
+          }
         } else {
-          setError('Adresse non trouvée');
+          setError('Aucune adresse ou coordonnées disponibles');
         }
       } catch (err) {
-        console.error('Geocoding error:', err);
+        console.error('Map initialization error:', err);
         setError('Erreur lors de la géolocalisation');
       } finally {
         setLoading(false);
       }
     };
 
-    if (address) {
-      geocodeAddress();
-    }
-  }, [address, city]);
+    initializeMap();
+  }, [address, city, lat, lng]);
 
   if (loading) {
     return (
