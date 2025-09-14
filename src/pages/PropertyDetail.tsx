@@ -28,12 +28,15 @@ const PropertyDetail = () => {
   };
 
   useEffect(() => {
+    console.log('PropertyDetail mounted, idOrSlug:', idOrSlug);
     const fetchProperty = async () => {
       if (!idOrSlug) return;
       
       try {
+        console.log('Fetching property with ID:', idOrSlug);
         setLoading(true);
         const propertyData = await propertiesApi.getById(idOrSlug);
+        console.log('Property data received:', propertyData);
         setProperty(propertyData);
 
         // Get signed URLs for images
@@ -50,6 +53,7 @@ const PropertyDetail = () => {
         }
       } catch (error) {
         console.error('Error fetching property:', error);
+        console.log('Error details:', error);
       } finally {
         setLoading(false);
       }
@@ -59,6 +63,7 @@ const PropertyDetail = () => {
   }, [idOrSlug]);
 
   if (loading) {
+    console.log('PropertyDetail loading state');
     return (
       <Layout title="Chargement...">
         <div className="flex justify-center items-center min-h-screen">
@@ -69,6 +74,7 @@ const PropertyDetail = () => {
   }
 
   if (!property) {
+    console.log('PropertyDetail no property found');
     return (
       <Layout title="Bien non trouvé">
         <div className="flex justify-center items-center min-h-screen">
@@ -81,6 +87,7 @@ const PropertyDetail = () => {
     );
   }
 
+  console.log('PropertyDetail rendering with property:', property);
   return (
     <Layout 
       title={property.title_fr || property.title_en || 'Bien immobilier'}
