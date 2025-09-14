@@ -29,7 +29,7 @@ export interface Property {
   terrace?: boolean;
   elevator?: boolean;
   furnished?: boolean;
-  status: 'available' | 'under_offer' | 'sold' | 'rented';
+  status: 'draft' | 'published' | 'under_offer' | 'sold' | 'rented';
   featured: boolean;
   created_by: string;
   created_at: string;

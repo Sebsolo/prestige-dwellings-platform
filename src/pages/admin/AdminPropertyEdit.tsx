@@ -19,7 +19,7 @@ import { propertiesApi } from '@/services/propertiesApi';
 const propertySchema = z.object({
   transaction: z.enum(['sale', 'rental']),
   type: z.enum(['apartment', 'house', 'commercial', 'land', 'other']),
-  status: z.enum(['available', 'under_offer', 'sold', 'rented']),
+  status: z.enum(['draft', 'published', 'under_offer', 'sold', 'rented']),
   ref: z.string().optional(),
   title_fr: z.string().min(1, 'Le titre français est requis'),
   title_en: z.string().optional(),
@@ -56,7 +56,7 @@ const AdminPropertyEdit = () => {
     defaultValues: {
       transaction: 'sale',
       type: 'apartment',
-      status: 'available',
+      status: 'draft',
     },
   });
 
@@ -81,7 +81,7 @@ const AdminPropertyEdit = () => {
       form.reset({
         transaction: property.transaction,
         type: property.type,
-        status: property.status,
+        status: property.status || 'draft',
         ref: property.ref || '',
         title_fr: property.title_fr || '',
         title_en: property.title_en || '',
@@ -271,6 +271,47 @@ const AdminPropertyEdit = () => {
                     <CardTitle>Informations générales</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <FormField
+                        control={form.control}
+                        name="status"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Statut</FormLabel>
+                            <Select onValueChange={field.onChange} value={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Statut" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="draft">Brouillon</SelectItem>
+                                <SelectItem value="published">Publié</SelectItem>
+                                <SelectItem value="under_offer">Sous offre</SelectItem>
+                                <SelectItem value="sold">Vendu</SelectItem>
+                                <SelectItem value="rented">Loué</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="ref"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Référence (optionnel)</FormLabel>
+                            <FormControl>
+                              <Input placeholder="REF-2024-001" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <FormField
                         control={form.control}
@@ -319,44 +360,8 @@ const AdminPropertyEdit = () => {
                         )}
                       />
 
-                      <FormField
-                        control={form.control}
-                        name="status"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Statut</FormLabel>
-                            <Select onValueChange={field.onChange} value={field.value}>
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Statut" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                <SelectItem value="available">Disponible</SelectItem>
-                                <SelectItem value="under_offer">Sous offre</SelectItem>
-                                <SelectItem value="sold">Vendu</SelectItem>
-                                <SelectItem value="rented">Loué</SelectItem>
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
                     </div>
 
-                    <FormField
-                      control={form.control}
-                      name="ref"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Référence (optionnel)</FormLabel>
-                          <FormControl>
-                            <Input placeholder="REF-2024-001" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
 
                     <div className="space-y-4">
                       <FormField
