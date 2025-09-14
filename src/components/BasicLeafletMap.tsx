@@ -30,7 +30,7 @@ const BasicLeafletMap = ({
   address,
   city,
   zoom = 14,
-  radiusMeters = 200,
+  radiusMeters = 500,
   className,
 }: BasicLeafletMapProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
