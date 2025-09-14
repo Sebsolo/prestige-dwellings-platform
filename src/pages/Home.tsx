@@ -5,11 +5,15 @@ import Layout from '@/components/Layout';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Calendar, User } from 'lucide-react';
 import GoogleReviews from '@/components/GoogleReviews';
+import PropertyCard from '@/components/PropertyCard';
+import { propertiesApi } from '@/services/propertiesApi';
+import { PropertyWithMedia } from '@/types/index';
 import { supabase } from '@/integrations/supabase/client';
 
 const Home = () => {
   const { t } = useTranslation();
   const [recentPosts, setRecentPosts] = useState<any[]>([]);
+  const [featuredProperties, setFeaturedProperties] = useState<PropertyWithMedia[]>([]);
 
   useEffect(() => {
     const fetchRecentPosts = async () => {
@@ -28,7 +32,21 @@ const Home = () => {
       }
     };
 
+    const fetchFeaturedProperties = async () => {
+      try {
+        const properties = await propertiesApi.list({ 
+          featured: true, 
+          status: 'published' 
+        });
+        // Limit to 3 featured properties
+        setFeaturedProperties(properties.slice(0, 3));
+      } catch (error) {
+        console.error('Error fetching featured properties:', error);
+      }
+    };
+
     fetchRecentPosts();
+    fetchFeaturedProperties();
   }, []);
 
   return (
@@ -72,19 +90,25 @@ const Home = () => {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="bg-card rounded-lg shadow-card overflow-hidden group hover:shadow-lg transition-shadow">
-                <div className="h-64 bg-muted overflow-hidden">
-                  <div className="w-full h-full bg-gradient-to-br from-muted to-muted-foreground/20 group-hover:scale-105 transition-transform"></div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">Villa de prestige #{i}</h3>
-                  <p className="text-muted-foreground mb-4">Une propriété d'exception avec vue mer</p>
-                  <p className="text-2xl font-bold text-primary">€ {(2500000 + i * 100000).toLocaleString()}</p>
-                </div>
+          <div className={`grid gap-8 ${
+            featuredProperties.length === 1 
+              ? 'grid-cols-1 max-w-md mx-auto' 
+              : featuredProperties.length === 2 
+              ? 'grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto' 
+              : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+          }`}>
+            {featuredProperties.length > 0 ? (
+              featuredProperties.map((property) => (
+                <PropertyCard key={property.id} property={property} />
+              ))
+            ) : (
+              // Fallback content when no featured properties
+              <div className="col-span-full text-center py-12">
+                <p className="text-muted-foreground text-lg">
+                  Aucun bien vedette disponible pour le moment
+                </p>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </section>

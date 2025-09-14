@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Edit, Trash2, Eye } from 'lucide-react';
+import { Plus, Edit, Trash2, Eye, Star } from 'lucide-react';
 import { toast } from 'sonner';
 
 const AdminProperties = () => {
@@ -60,6 +60,17 @@ const AdminProperties = () => {
   const canDelete = (property: PropertyWithMedia) => {
     if (profile?.role === 'admin') return true;
     return false;
+  };
+
+  const toggleFeatured = async (property: PropertyWithMedia) => {
+    try {
+      await propertiesApi.update(property.id, { featured: !property.featured });
+      toast.success(property.featured ? 'Bien retiré des vedettes' : 'Bien ajouté aux vedettes');
+      loadProperties();
+    } catch (error) {
+      console.error('Error toggling featured:', error);
+      toast.error('Erreur lors de la mise à jour');
+    }
   };
 
   const getStatusBadge = (status: string) => {
@@ -121,6 +132,14 @@ const AdminProperties = () => {
                           <div className="flex items-center gap-2">
                             {getStatusBadge(property.status)}
                             <div className="flex gap-1">
+                              <Button 
+                                size="sm" 
+                                variant={property.featured ? "default" : "outline"}
+                                onClick={() => toggleFeatured(property)}
+                                title={property.featured ? "Retirer des vedettes" : "Ajouter aux vedettes"}
+                              >
+                                <Star className={`h-4 w-4 ${property.featured ? 'fill-current' : ''}`} />
+                              </Button>
                               <Button size="sm" variant="outline">
                                 <Eye className="h-4 w-4" />
                               </Button>

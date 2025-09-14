@@ -6,11 +6,12 @@ import { z } from 'zod';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Switch } from '@/components/ui/switch';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { ArrowLeft, Upload, X, Camera } from 'lucide-react';
@@ -43,6 +44,7 @@ const propertySchema = z.object({
   ges_letter: z.string().optional(),
   availability_date: z.string().optional(),
   youtube_url: z.string().optional(),
+  featured: z.boolean().default(false),
 });
 
 type PropertyFormData = z.infer<typeof propertySchema>;
@@ -322,6 +324,29 @@ const AdminPropertyForm = () => {
                         )}
                       />
                     </div>
+
+                    <FormField
+                      control={form.control}
+                      name="featured"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                          <div className="space-y-0.5">
+                            <FormLabel className="text-base">
+                              Bien vedette
+                            </FormLabel>
+                            <FormDescription>
+                              Afficher ce bien dans la section "Biens Vedettes" de la page d'accueil
+                            </FormDescription>
+                          </div>
+                          <FormControl>
+                            <Switch
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
 
                     <FormField
                       control={form.control}
