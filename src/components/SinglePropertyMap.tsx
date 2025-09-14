@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -35,6 +35,18 @@ const SinglePropertyMap = ({ address, city, title, lat, lng }: SinglePropertyMap
   const [position, setPosition] = useState<[number, number] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [primaryHsl, setPrimaryHsl] = useState<string>('220 90% 50%');
+
+  useEffect(() => {
+    // Safely read CSS variable for primary color (HSL values like: 222 47% 11%)
+    try {
+      const root = document.documentElement;
+      const val = getComputedStyle(root).getPropertyValue('--primary').trim();
+      if (val) setPrimaryHsl(val);
+    } catch (e) {
+      // ignore
+    }
+  }, []);
 
   useEffect(() => {
     const initializeMap = async () => {
@@ -117,8 +129,8 @@ const SinglePropertyMap = ({ address, city, title, lat, lng }: SinglePropertyMap
           center={position}
           radius={30}
           pathOptions={{
-            color: 'hsl(var(--primary))',
-            fillColor: 'hsl(var(--primary))',
+            color: `hsl(${primaryHsl})`,
+            fillColor: `hsl(${primaryHsl})`,
             fillOpacity: 0.2,
             weight: 2
           }}

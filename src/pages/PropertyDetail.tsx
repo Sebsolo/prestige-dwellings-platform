@@ -12,6 +12,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import SinglePropertyMap from '@/components/SinglePropertyMap';
+import ErrorBoundary from '@/components/ErrorBoundary';
 
 const PropertyDetail = () => {
   const { idOrSlug } = useParams();
@@ -98,34 +99,40 @@ const PropertyDetail = () => {
         {/* Image Gallery */}
         <div className="mb-8">
           {imageUrls.length > 0 ? (
-            <Carousel className="w-full">
-              <CarouselContent>
-                {imageUrls.map((url, index) => (
-                  <CarouselItem key={index}>
-                    <div className="relative aspect-video bg-muted rounded-lg overflow-hidden group cursor-pointer">
-                      <img 
-                        src={url} 
-                        alt={`Image ${index + 1}`}
-                        className="w-full h-full object-cover"
-                        onClick={() => setFullscreenImage(url)}
-                      />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
-                        <Button 
-                          variant="secondary" 
-                          size="sm"
+            <ErrorBoundary fallback={
+              <div className="aspect-video bg-muted rounded-lg mb-4 flex items-center justify-center">
+                <span className="text-muted-foreground">Galerie indisponible</span>
+              </div>
+            }>
+              <Carousel className="w-full">
+                <CarouselContent>
+                  {imageUrls.map((url, index) => (
+                    <CarouselItem key={index}>
+                      <div className="relative aspect-video bg-muted rounded-lg overflow-hidden group cursor-pointer">
+                        <img 
+                          src={url} 
+                          alt={`Image ${index + 1}`}
+                          className="w-full h-full object-cover"
                           onClick={() => setFullscreenImage(url)}
-                        >
-                          <Maximize2 className="h-4 w-4 mr-2" />
-                          Agrandir
-                        </Button>
+                        />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                          <Button 
+                            variant="secondary" 
+                            size="sm"
+                            onClick={() => setFullscreenImage(url)}
+                          >
+                            <Maximize2 className="h-4 w-4 mr-2" />
+                            Agrandir
+                          </Button>
+                        </div>
                       </div>
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="left-4" />
-              <CarouselNext className="right-4" />
-            </Carousel>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="left-4" />
+                <CarouselNext className="right-4" />
+              </Carousel>
+            </ErrorBoundary>
           ) : (
             <div className="aspect-video bg-muted rounded-lg mb-4 flex items-center justify-center">
               <span className="text-muted-foreground">Aucune image disponible</span>
@@ -238,13 +245,19 @@ const PropertyDetail = () => {
                   <CardTitle>{t('property.location')}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <SinglePropertyMap 
-                    address={property.address || ''}
-                    city={property.city}
-                    title={property.title_fr || property.title_en}
-                    lat={property.lat}
-                    lng={property.lng}
-                  />
+                  <ErrorBoundary fallback={
+                    <div className="h-64 bg-muted rounded-lg flex items-center justify-center">
+                      <span className="text-muted-foreground">Carte indisponible</span>
+                    </div>
+                  }>
+                    <SinglePropertyMap 
+                      address={property.address || ''}
+                      city={property.city}
+                      title={property.title_fr || property.title_en}
+                      lat={property.lat}
+                      lng={property.lng}
+                    />
+                  </ErrorBoundary>
                 </CardContent>
               </Card>
             )}
