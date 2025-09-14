@@ -5,14 +5,12 @@ import Layout from '@/components/Layout';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { MapPin, Ruler, BedDouble, Car, Calendar, Loader, X, Maximize2 } from 'lucide-react';
+import { MapPin, Ruler, BedDouble, Calendar, Loader, X, Maximize2 } from 'lucide-react';
 import { propertiesApi } from '@/services/propertiesApi';
 import { PropertyWithMedia } from '@/types/index';
 import { supabase } from '@/integrations/supabase/client';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import SinglePropertyMap from '@/components/SinglePropertyMap';
-import ErrorBoundary from '@/components/ErrorBoundary';
 
 const PropertyDetail = () => {
   const { idOrSlug } = useParams();
@@ -99,40 +97,34 @@ const PropertyDetail = () => {
         {/* Image Gallery */}
         <div className="mb-8">
           {imageUrls.length > 0 ? (
-            <ErrorBoundary fallback={
-              <div className="aspect-video bg-muted rounded-lg mb-4 flex items-center justify-center">
-                <span className="text-muted-foreground">Galerie indisponible</span>
-              </div>
-            }>
-              <Carousel className="w-full">
-                <CarouselContent>
-                  {imageUrls.map((url, index) => (
-                    <CarouselItem key={index}>
-                      <div className="relative aspect-video bg-muted rounded-lg overflow-hidden group cursor-pointer">
-                        <img 
-                          src={url} 
-                          alt={`Image ${index + 1}`}
-                          className="w-full h-full object-cover"
+            <Carousel className="w-full">
+              <CarouselContent>
+                {imageUrls.map((url, index) => (
+                  <CarouselItem key={index}>
+                    <div className="relative aspect-video bg-muted rounded-lg overflow-hidden group cursor-pointer">
+                      <img 
+                        src={url} 
+                        alt={`Image ${index + 1}`}
+                        className="w-full h-full object-cover"
+                        onClick={() => setFullscreenImage(url)}
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                        <Button 
+                          variant="secondary" 
+                          size="sm"
                           onClick={() => setFullscreenImage(url)}
-                        />
-                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
-                          <Button 
-                            variant="secondary" 
-                            size="sm"
-                            onClick={() => setFullscreenImage(url)}
-                          >
-                            <Maximize2 className="h-4 w-4 mr-2" />
-                            Agrandir
-                          </Button>
-                        </div>
+                        >
+                          <Maximize2 className="h-4 w-4 mr-2" />
+                          Agrandir
+                        </Button>
                       </div>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <CarouselPrevious className="left-4" />
-                <CarouselNext className="right-4" />
-              </Carousel>
-            </ErrorBoundary>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="left-4" />
+              <CarouselNext className="right-4" />
+            </Carousel>
           ) : (
             <div className="aspect-video bg-muted rounded-lg mb-4 flex items-center justify-center">
               <span className="text-muted-foreground">Aucune image disponible</span>
@@ -193,7 +185,7 @@ const PropertyDetail = () => {
             {/* Key Info */}
             <Card className="mb-6">
               <CardHeader>
-                <CardTitle>{t('property.key_info')}</CardTitle>
+                <CardTitle>Informations clés</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -238,26 +230,26 @@ const PropertyDetail = () => {
               </CardContent>
             </Card>
 
-            {/* Map */}
+            {/* Map Placeholder */}
             {(property.address || property.city) && (
               <Card>
                 <CardHeader>
-                  <CardTitle>{t('property.location')}</CardTitle>
+                  <CardTitle>Localisation</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <ErrorBoundary fallback={
-                    <div className="h-64 bg-muted rounded-lg flex items-center justify-center">
-                      <span className="text-muted-foreground">Carte indisponible</span>
+                  <div className="h-64 bg-muted rounded-lg flex items-center justify-center">
+                    <div className="text-center">
+                      <MapPin className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
+                      <p className="text-muted-foreground">
+                        {property.address && property.city ? `${property.address}, ${property.city}` : property.city}
+                      </p>
+                      {property.lat && property.lng && (
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Coordonnées: {property.lat.toFixed(6)}, {property.lng.toFixed(6)}
+                        </p>
+                      )}
                     </div>
-                  }>
-                    <SinglePropertyMap 
-                      address={property.address || ''}
-                      city={property.city}
-                      title={property.title_fr || property.title_en}
-                      lat={property.lat}
-                      lng={property.lng}
-                    />
-                  </ErrorBoundary>
+                  </div>
                 </CardContent>
               </Card>
             )}
@@ -268,31 +260,31 @@ const PropertyDetail = () => {
             {/* Contact Form */}
             <Card className="mb-6">
               <CardHeader>
-                <CardTitle>{t('property.visit_request')}</CardTitle>
+                <CardTitle>Demande de visite</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <input 
                   type="text" 
-                  placeholder={t('common.name')}
+                  placeholder="Nom"
                   className="w-full p-3 border rounded-lg"
                 />
                 <input 
                   type="email" 
-                  placeholder={t('common.email')}
+                  placeholder="Email"
                   className="w-full p-3 border rounded-lg"
                 />
                 <input 
                   type="tel" 
-                  placeholder={t('common.phone')}
+                  placeholder="Téléphone"
                   className="w-full p-3 border rounded-lg"
                 />
                 <textarea 
-                  placeholder={t('common.message')}
+                  placeholder="Message"
                   rows={4}
                   className="w-full p-3 border rounded-lg"
                 />
                 <Button className="w-full">
-                  {t('common.submit')}
+                  Envoyer la demande
                 </Button>
               </CardContent>
             </Card>
@@ -300,7 +292,7 @@ const PropertyDetail = () => {
             {/* Similar Properties */}
             <Card>
               <CardHeader>
-                <CardTitle>{t('property.similar_properties')}</CardTitle>
+                <CardTitle>Biens similaires</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
