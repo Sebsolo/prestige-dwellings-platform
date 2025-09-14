@@ -44,17 +44,20 @@ const SinglePropertyMap = ({ address, city, title, lat, lng }: SinglePropertyMap
       const val = getComputedStyle(root).getPropertyValue('--primary').trim();
       if (val) setPrimaryHsl(val);
     } catch (e) {
-      // ignore
+      console.error('Error reading CSS variable:', e);
     }
   }, []);
 
   useEffect(() => {
+    console.log('SinglePropertyMap props:', { address, city, title, lat, lng });
     const initializeMap = async () => {
       try {
+        console.log('Map initialization started');
         setLoading(true);
         
         // If we have stored coordinates, use them directly
         if (lat && lng) {
+          console.log('Using stored coordinates:', lat, lng);
           setPosition([lat, lng]);
           setLoading(false);
           return;
@@ -92,10 +95,12 @@ const SinglePropertyMap = ({ address, city, title, lat, lng }: SinglePropertyMap
       }
     };
 
+    console.log('Map useEffect triggered with:', { address, city, lat, lng });
     initializeMap();
   }, [address, city, lat, lng]);
 
   if (loading) {
+    console.log('Map is loading');
     return (
       <div className="h-64 bg-muted rounded-lg flex items-center justify-center">
         <span className="text-muted-foreground">Chargement de la carte...</span>
@@ -104,6 +109,7 @@ const SinglePropertyMap = ({ address, city, title, lat, lng }: SinglePropertyMap
   }
 
   if (error || !position) {
+    console.log('Map error or no position:', { error, position });
     return (
       <div className="h-64 bg-muted rounded-lg flex items-center justify-center">
         <span className="text-muted-foreground">{error || 'Impossible de localiser l\'adresse'}</span>
@@ -111,6 +117,7 @@ const SinglePropertyMap = ({ address, city, title, lat, lng }: SinglePropertyMap
     );
   }
 
+  console.log('Rendering map with position:', position);
   return (
     <div className="h-64 rounded-lg overflow-hidden border">
       <MapContainer
