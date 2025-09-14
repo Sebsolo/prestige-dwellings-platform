@@ -261,11 +261,14 @@ export type Database = {
       }
       site_settings: {
         Row: {
+          appointment_url: string | null
           booking_url: string | null
+          canva_share_url: string | null
           created_at: string
           google_business_url: string | null
           google_place_id: string | null
           id: string
+          legal_footer: string | null
           meta_description: string | null
           meta_keywords: string | null
           meta_title: string | null
@@ -276,11 +279,14 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          appointment_url?: string | null
           booking_url?: string | null
+          canva_share_url?: string | null
           created_at?: string
           google_business_url?: string | null
           google_place_id?: string | null
           id?: string
+          legal_footer?: string | null
           meta_description?: string | null
           meta_keywords?: string | null
           meta_title?: string | null
@@ -291,11 +297,14 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          appointment_url?: string | null
           booking_url?: string | null
+          canva_share_url?: string | null
           created_at?: string
           google_business_url?: string | null
           google_place_id?: string | null
           id?: string
+          legal_footer?: string | null
           meta_description?: string | null
           meta_keywords?: string | null
           meta_title?: string | null
