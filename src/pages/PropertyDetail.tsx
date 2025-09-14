@@ -11,6 +11,7 @@ import { PropertyWithMedia } from '@/types/index';
 import { supabase } from '@/integrations/supabase/client';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
+import BasicLeafletMap from '@/components/BasicLeafletMap';
 
 const PropertyDetail = () => {
   const { idOrSlug } = useParams();
@@ -230,26 +231,23 @@ const PropertyDetail = () => {
               </CardContent>
             </Card>
 
-            {/* Map Placeholder */}
-            {(property.address || property.city) && (
+            {/* Map */}
+            {(property.lat && property.lng) && (
               <Card>
                 <CardHeader>
                   <CardTitle>Localisation</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="h-64 bg-muted rounded-lg flex items-center justify-center">
-                    <div className="text-center">
-                      <MapPin className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
-                      <p className="text-muted-foreground">
-                        {property.address && property.city ? `${property.address}, ${property.city}` : property.city}
-                      </p>
-                      {property.lat && property.lng && (
-                        <p className="text-sm text-muted-foreground mt-1">
-                          Coordonnées: {property.lat.toFixed(6)}, {property.lng.toFixed(6)}
-                        </p>
-                      )}
-                    </div>
-                  </div>
+                  <BasicLeafletMap 
+                    lat={Number(property.lat)}
+                    lng={Number(property.lng)}
+                    title={property.title_fr || property.title_en || undefined}
+                    address={property.address || undefined}
+                    city={property.city || undefined}
+                    zoom={14}
+                    radiusMeters={200}
+                    className="rounded-lg overflow-hidden border"
+                  />
                 </CardContent>
               </Card>
             )}
