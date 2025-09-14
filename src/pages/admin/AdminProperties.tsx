@@ -125,7 +125,11 @@ const AdminProperties = () => {
                                 <Eye className="h-4 w-4" />
                               </Button>
                               {canEdit(property) && (
-                                <Button size="sm" variant="outline">
+                                <Button 
+                                  size="sm" 
+                                  variant="outline"
+                                  onClick={() => navigate(`/admin/properties/edit/${property.id}`)}
+                                >
                                   <Edit className="h-4 w-4" />
                                 </Button>
                               )}

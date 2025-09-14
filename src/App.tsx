@@ -22,6 +22,7 @@ import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import AdminProperties from "./pages/admin/AdminProperties";
 import AdminPropertyForm from "./pages/admin/AdminPropertyForm";
+import AdminPropertyEdit from "./pages/admin/AdminPropertyEdit";
 import AdminBlog from "./pages/admin/AdminBlog";
 import AdminBlogForm from "./pages/admin/AdminBlogForm";
 import AdminBlogEdit from "./pages/admin/AdminBlogEdit";
@@ -79,7 +80,15 @@ const App = () => (
                 } 
               />
               <Route 
-                path="/admin/blog" 
+                path="/admin/properties/edit/:id" 
+                element={
+                  <RequireRole allowedRoles={['admin', 'editor', 'agent']}>
+                    <AdminPropertyEdit />
+                  </RequireRole>
+                } 
+              />
+              <Route 
+                path="/admin/blog"
                 element={
                   <RequireRole allowedRoles={['admin', 'editor']}>
                     <AdminBlog />
