@@ -21,6 +21,7 @@ export interface Property {
   lng?: number;
   dpe_letter?: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G';
   dpe_value?: number;
+  youtube_url?: string;
   year_built?: number;
   floor?: number;
   total_floors?: number;

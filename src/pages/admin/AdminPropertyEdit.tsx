@@ -37,6 +37,7 @@ const propertySchema = z.object({
   lat: z.coerce.number().optional(),
   lng: z.coerce.number().optional(),
   dpe_letter: z.enum(['A', 'B', 'C', 'D', 'E', 'F', 'G']).optional(),
+  youtube_url: z.string().url().optional().or(z.literal('')),
 });
 
 type PropertyFormData = z.infer<typeof propertySchema>;
@@ -99,6 +100,7 @@ const AdminPropertyEdit = () => {
         lat: property.lat ? Number(property.lat) : undefined,
         lng: property.lng ? Number(property.lng) : undefined,
         dpe_letter: property.dpe_letter || undefined,
+        youtube_url: property.youtube_url || '',
       });
 
       // Load existing images
@@ -184,6 +186,7 @@ const AdminPropertyEdit = () => {
         lat: data.lat || null,
         lng: data.lng || null,
         dpe_letter: data.dpe_letter || null,
+        youtube_url: data.youtube_url || null,
       };
 
       await propertiesApi.update(id!, propertyData);
@@ -650,6 +653,30 @@ const AdminPropertyEdit = () => {
               </TabsContent>
 
               <TabsContent value="media" className="space-y-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Vidéo YouTube</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <FormField
+                      control={form.control}
+                      name="youtube_url"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>URL YouTube (optionnel)</FormLabel>
+                          <FormControl>
+                            <Input 
+                              placeholder="https://www.youtube.com/watch?v=..." 
+                              {...field} 
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </CardContent>
+                </Card>
+
                 <Card>
                   <CardHeader>
                     <CardTitle>Photos</CardTitle>

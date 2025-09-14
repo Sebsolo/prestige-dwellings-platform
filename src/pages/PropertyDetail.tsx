@@ -5,10 +5,12 @@ import Layout from '@/components/Layout';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { MapPin, Ruler, BedDouble, Car, Calendar, Loader } from 'lucide-react';
+import { MapPin, Ruler, BedDouble, Car, Calendar, Loader, X, Maximize2 } from 'lucide-react';
 import { propertiesApi } from '@/services/propertiesApi';
 import { PropertyWithMedia } from '@/types/index';
 import { supabase } from '@/integrations/supabase/client';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 const PropertyDetail = () => {
   const { idOrSlug } = useParams();
@@ -16,6 +18,13 @@ const PropertyDetail = () => {
   const [property, setProperty] = useState<PropertyWithMedia | null>(null);
   const [loading, setLoading] = useState(true);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
+
+  const getYouTubeEmbedUrl = (url: string) => {
+    const regex = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/;
+    const match = url.match(regex);
+    return match ? `https://www.youtube.com/embed/${match[1]}` : null;
+  };
 
   useEffect(() => {
     const fetchProperty = async () => {
@@ -81,34 +90,62 @@ const PropertyDetail = () => {
         {/* Image Gallery */}
         <div className="mb-8">
           {imageUrls.length > 0 ? (
-            <>
-              <div className="aspect-video bg-muted rounded-lg mb-4">
-                <img 
-                  src={imageUrls[0]} 
-                  alt={property.title_fr || property.title_en || 'Bien immobilier'}
-                  className="w-full h-full object-cover rounded-lg"
-                />
-              </div>
-              {imageUrls.length > 1 && (
-                <div className="grid grid-cols-4 gap-2">
-                  {imageUrls.slice(1, 5).map((url, i) => (
-                    <div key={i} className="aspect-square bg-muted rounded-lg overflow-hidden">
+            <Carousel className="w-full">
+              <CarouselContent>
+                {imageUrls.map((url, index) => (
+                  <CarouselItem key={index}>
+                    <div className="relative aspect-video bg-muted rounded-lg overflow-hidden group cursor-pointer">
                       <img 
                         src={url} 
-                        alt={`Image ${i + 2}`}
+                        alt={`Image ${index + 1}`}
                         className="w-full h-full object-cover"
+                        onClick={() => setFullscreenImage(url)}
                       />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                        <Button 
+                          variant="secondary" 
+                          size="sm"
+                          onClick={() => setFullscreenImage(url)}
+                        >
+                          <Maximize2 className="h-4 w-4 mr-2" />
+                          Agrandir
+                        </Button>
+                      </div>
                     </div>
-                  ))}
-                </div>
-              )}
-            </>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="left-4" />
+              <CarouselNext className="right-4" />
+            </Carousel>
           ) : (
             <div className="aspect-video bg-muted rounded-lg mb-4 flex items-center justify-center">
               <span className="text-muted-foreground">Aucune image disponible</span>
             </div>
           )}
         </div>
+
+        {/* YouTube Video */}
+        {property.youtube_url && (
+          <div className="mb-8">
+            <Card>
+              <CardHeader>
+                <CardTitle>Visite virtuelle</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="aspect-video">
+                  <iframe
+                    src={getYouTubeEmbedUrl(property.youtube_url) || ''}
+                    title="Visite virtuelle"
+                    className="w-full h-full rounded-lg"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
@@ -255,6 +292,29 @@ const PropertyDetail = () => {
             </Card>
           </div>
         </div>
+
+        {/* Fullscreen Image Dialog */}
+        <Dialog open={!!fullscreenImage} onOpenChange={() => setFullscreenImage(null)}>
+          <DialogContent className="max-w-7xl w-full h-full p-0 bg-black/95">
+            <div className="relative w-full h-full flex items-center justify-center">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute top-4 right-4 z-50 text-white hover:bg-white/20"
+                onClick={() => setFullscreenImage(null)}
+              >
+                <X className="h-6 w-6" />
+              </Button>
+              {fullscreenImage && (
+                <img
+                  src={fullscreenImage}
+                  alt="Vue agrandie"
+                  className="max-w-full max-h-full object-contain"
+                />
+              )}
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </Layout>
   );
