@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -50,6 +50,7 @@ type PropertyFormData = z.infer<typeof propertySchema>;
 const AdminPropertyForm = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [geocoding, setGeocoding] = useState(false);
   const [activeTab, setActiveTab] = useState('basic');
   const [uploadedImages, setUploadedImages] = useState<Array<{ file: File; preview: string; id: string }>>([]);
   const [isUploading, setIsUploading] = useState(false);
@@ -85,6 +86,50 @@ const AdminPropertyForm = () => {
       return prev.filter(img => img.id !== id);
     });
   };
+
+  const geocodeAddress = useCallback(async () => {
+    const address = form.getValues('address');
+    const city = form.getValues('city');
+    const postalCode = form.getValues('postal_code');
+    
+    if (!address || !city) {
+      toast.error('Veuillez renseigner l\'adresse et la ville');
+      return;
+    }
+    
+    try {
+      setGeocoding(true);
+      const addressParts = [address, postalCode, city].filter(Boolean);
+      const fullAddress = addressParts.join(', ');
+      
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(fullAddress)}&limit=1`
+      );
+      
+      if (!response.ok) {
+        throw new Error('Geocoding failed');
+      }
+      
+      const data = await response.json();
+      
+      if (data && data.length > 0) {
+        const lat = parseFloat(data[0].lat);
+        const lng = parseFloat(data[0].lon);
+        
+        form.setValue('lat', lat);
+        form.setValue('lng', lng);
+        
+        toast.success(`Coordonnées mises à jour: ${lat.toFixed(6)}, ${lng.toFixed(6)}`);
+      } else {
+        toast.error('Adresse non trouvée');
+      }
+    } catch (error) {
+      console.error('Geocoding error:', error);
+      toast.error('Erreur lors du géocodage');
+    } finally {
+      setGeocoding(false);
+    }
+  }, [form]);
 
   const onSubmit = async (data: PropertyFormData) => {
     setIsLoading(true);
@@ -553,6 +598,24 @@ const AdminPropertyForm = () => {
                           </FormItem>
                         )}
                       />
+                    </div>
+
+                    <div className="pt-4">
+                      <Button 
+                        type="button" 
+                        variant="outline" 
+                        onClick={geocodeAddress}
+                        disabled={geocoding}
+                      >
+                        {geocoding ? (
+                          <>
+                            <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-transparent border-l-current"></div>
+                            Géocodage...
+                          </>
+                        ) : (
+                          'Géocoder l\'adresse'
+                        )}
+                      </Button>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

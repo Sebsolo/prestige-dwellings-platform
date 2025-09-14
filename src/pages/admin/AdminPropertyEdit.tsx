@@ -34,6 +34,7 @@ const propertySchema = z.object({
   area_m2: z.coerce.number().optional(),
   address: z.string().optional(),
   city: z.string().optional(),
+  postal_code: z.string().optional(),
   lat: z.coerce.number().optional(),
   lng: z.coerce.number().optional(),
   dpe_letter: z.enum(['A', 'B', 'C', 'D', 'E', 'F', 'G']).optional(),
@@ -98,6 +99,7 @@ const AdminPropertyEdit = () => {
         area_m2: property.area_m2 ? Number(property.area_m2) : undefined,
         address: property.address || '',
         city: property.city || '',
+        postal_code: property.postal_code || '',
         lat: property.lat ? Number(property.lat) : undefined,
         lng: property.lng ? Number(property.lng) : undefined,
         dpe_letter: property.dpe_letter || undefined,
@@ -166,6 +168,7 @@ const AdminPropertyEdit = () => {
   const geocodeAddress = useCallback(async () => {
     const address = form.getValues('address');
     const city = form.getValues('city');
+    const postalCode = form.getValues('postal_code');
     
     if (!address || !city) {
       toast.error('Veuillez renseigner l\'adresse et la ville');
@@ -174,7 +177,8 @@ const AdminPropertyEdit = () => {
     
     try {
       setGeocoding(true);
-      const fullAddress = `${address}, ${city}`;
+      const addressParts = [address, postalCode, city].filter(Boolean);
+      const fullAddress = addressParts.join(', ');
       
       const response = await fetch(
         `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(fullAddress)}&limit=1`
@@ -226,6 +230,7 @@ const AdminPropertyEdit = () => {
         area_m2: data.area_m2 || null,
         address: data.address || null,
         city: data.city || null,
+        postal_code: data.postal_code || null,
         lat: data.lat || null,
         lng: data.lng || null,
         dpe_letter: data.dpe_letter || null,
@@ -648,19 +653,35 @@ const AdminPropertyEdit = () => {
                       )}
                     />
 
-                    <FormField
-                      control={form.control}
-                      name="city"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Ville</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Paris" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <FormField
+                        control={form.control}
+                        name="city"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Ville</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Paris" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="postal_code"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Code postal</FormLabel>
+                            <FormControl>
+                              <Input placeholder="75001" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <FormField

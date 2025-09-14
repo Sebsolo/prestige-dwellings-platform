@@ -17,6 +17,7 @@ export interface Property {
   transaction: 'sale' | 'rental';
   city: string;
   address?: string;
+  postal_code?: string;
   lat?: number;
   lng?: number;
   dpe_letter?: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G';
