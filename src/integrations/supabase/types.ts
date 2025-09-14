@@ -164,6 +164,7 @@ export type Database = {
           dpe_value: number | null
           excerpt_en: string | null
           excerpt_fr: string | null
+          featured: boolean
           features: Json | null
           ges_letter: string | null
           id: number
@@ -199,6 +200,7 @@ export type Database = {
           dpe_value?: number | null
           excerpt_en?: string | null
           excerpt_fr?: string | null
+          featured?: boolean
           features?: Json | null
           ges_letter?: string | null
           id?: never
@@ -234,6 +236,7 @@ export type Database = {
           dpe_value?: number | null
           excerpt_en?: string | null
           excerpt_fr?: string | null
+          featured?: boolean
           features?: Json | null
           ges_letter?: string | null
           id?: never
