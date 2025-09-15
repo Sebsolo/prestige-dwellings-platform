@@ -201,9 +201,7 @@ const RevShareCalculator = ({
                     Bonus RevShare (%)
                   </Label>
                   <Input id="bonus" type="number" value={bonus} onChange={e => setBonus(Math.min(100, Number(e.target.value) || 0))} className="mt-2 text-lg" min={0} max={100} step={1} />
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Bonus supplémentaire appliqué au total (0-100%)
-                  </p>
+                  <p className="text-sm text-muted-foreground mt-1">Bonus supplémentaire conditionnel appliqué au total (0-100%). En moyenne de 40 %</p>
                 </div>}
 
               <div className="p-4 bg-primary/5 rounded-xl">
