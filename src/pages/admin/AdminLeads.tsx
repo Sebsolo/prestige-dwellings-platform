@@ -7,18 +7,65 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Download, Filter, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Lead } from '@/types/index';
+import { supabase } from '@/integrations/supabase/client';
+
+interface Lead {
+  id: number;
+  firstname: string;
+  lastname: string;
+  email: string;
+  phone?: string;
+  message?: string;
+  source: string;
+  meta?: any;
+  created_at: string;
+}
+
+interface Property {
+  id: number;
+  title_fr: string;
+  ref?: string;
+}
 
 const AdminLeads = () => {
   const [leads, setLeads] = useState<Lead[]>([]);
+  const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [sourceFilter, setSourceFilter] = useState('all');
 
   useEffect(() => {
-    // TODO: Load leads from API
-    setLoading(false);
+    const loadData = async () => {
+      try {
+        setLoading(true);
+        
+        // Load leads
+        const { data: leadsData, error: leadsError } = await supabase
+          .from('leads')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (leadsError) throw leadsError;
+
+        // Load properties for reference
+        const { data: propertiesData, error: propertiesError } = await supabase
+          .from('properties')
+          .select('id, title_fr, ref')
+          .eq('status', 'published');
+
+        if (propertiesError) throw propertiesError;
+
+        setLeads(leadsData || []);
+        setProperties(propertiesData || []);
+      } catch (error) {
+        console.error('Error loading leads:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
   }, []);
 
   const getStatusBadge = (status: string) => {
@@ -41,6 +88,23 @@ const AdminLeads = () => {
     };
     return labels[source] || source;
   };
+
+  const getPropertyTitle = (propertyId?: string) => {
+    if (!propertyId) return '-';
+    const property = properties.find(p => p.id.toString() === propertyId);
+    return property ? `${property.ref ? `${property.ref} - ` : ''}${property.title_fr}` : `Bien ${propertyId}`;
+  };
+
+  const filteredLeads = leads.filter(lead => {
+    const matchesSearch = !searchTerm || 
+      lead.firstname?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      lead.lastname?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      lead.email?.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesSource = sourceFilter === 'all' || lead.source === sourceFilter;
+    
+    return matchesSearch && matchesSource;
+  });
 
   const exportToCsv = () => {
     // TODO: Implement CSV export
@@ -116,24 +180,24 @@ const AdminLeads = () => {
                     <TableHead>Email</TableHead>
                     <TableHead>Téléphone</TableHead>
                     <TableHead>Source</TableHead>
-                    <TableHead>Statut</TableHead>
+                    <TableHead>Bien</TableHead>
                     <TableHead>Date</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {leads.length === 0 ? (
+                  {filteredLeads.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan={6} className="text-center py-8">
                         <p className="text-muted-foreground">
-                          Aucun lead trouvé
+                          {loading ? 'Chargement...' : 'Aucun lead trouvé'}
                         </p>
                       </TableCell>
                     </TableRow>
                   ) : (
-                    leads.map((lead) => (
+                    filteredLeads.map((lead) => (
                       <TableRow key={lead.id}>
                         <TableCell className="font-medium">
-                          {lead.first_name} {lead.last_name}
+                          {lead.firstname} {lead.lastname}
                         </TableCell>
                         <TableCell>{lead.email}</TableCell>
                         <TableCell>{lead.phone || '-'}</TableCell>
@@ -142,9 +206,13 @@ const AdminLeads = () => {
                             {getSourceLabel(lead.source)}
                           </Badge>
                         </TableCell>
-                        <TableCell>{getStatusBadge(lead.status)}</TableCell>
                         <TableCell>
-                          {new Date(lead.created_at).toLocaleDateString()}
+                          <span className="text-sm text-muted-foreground">
+                            {getPropertyTitle(lead.meta?.property_id)}
+                          </span>
+                        </TableCell>
+                        <TableCell>
+                          {new Date(lead.created_at).toLocaleDateString('fr-FR')}
                         </TableCell>
                       </TableRow>
                     ))

@@ -12,6 +12,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import BasicLeafletMap from '@/components/BasicLeafletMap';
+import SmartForm from '@/components/SmartForm';
 
 const PropertyDetail = () => {
   const { idOrSlug } = useParams();
@@ -256,36 +257,13 @@ const PropertyDetail = () => {
           {/* Sidebar */}
           <div className="lg:col-span-1">
             {/* Contact Form */}
-            <Card className="mb-6">
-              <CardHeader>
-                <CardTitle>Demande de visite</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <input 
-                  type="text" 
-                  placeholder="Nom"
-                  className="w-full p-3 border rounded-lg"
-                />
-                <input 
-                  type="email" 
-                  placeholder="Email"
-                  className="w-full p-3 border rounded-lg"
-                />
-                <input 
-                  type="tel" 
-                  placeholder="Téléphone"
-                  className="w-full p-3 border rounded-lg"
-                />
-                <textarea 
-                  placeholder="Message"
-                  rows={4}
-                  className="w-full p-3 border rounded-lg"
-                />
-                <Button className="w-full">
-                  Envoyer la demande
-                </Button>
-              </CardContent>
-            </Card>
+            <SmartForm
+              source="visit_request"
+              propertyId={property.id?.toString()}
+              title="Demande de visite"
+              description="Remplissez le formulaire pour demander une visite de ce bien."
+              className="mb-6"
+            />
 
             {/* Similar Properties */}
             <Card>
