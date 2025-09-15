@@ -11,7 +11,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
-          <div className="space-y-4 -my-4">
+          <div className="space-y-4 -my-4 md:col-span-2">
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <img 
                 src={logo} 
@@ -27,7 +27,7 @@ const Footer = () => {
           </div>
 
           {/* Contact Info */}
-          <div className="space-y-4">
+          <div className="space-y-4 md:order-4">
             <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider">
               Contact
             </h4>
@@ -48,7 +48,7 @@ const Footer = () => {
           </div>
 
           {/* Services */}
-          <div className="space-y-4">
+          <div className="space-y-4 md:order-3">
             <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider">
               Services
             </h4>
@@ -69,7 +69,7 @@ const Footer = () => {
           </div>
 
           {/* Legal */}
-          <div className="space-y-4">
+          <div className="space-y-4 md:order-2">
             <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider">
               Légal
             </h4>
