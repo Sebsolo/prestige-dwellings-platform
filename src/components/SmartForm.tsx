@@ -30,7 +30,7 @@ const formSchema = z.object({
   firstname: z.string().min(2, 'Le prénom doit contenir au moins 2 caractères'),
   lastname: z.string().min(2, 'Le nom doit contenir au moins 2 caractères'),
   email: z.string().email('Adresse email invalide'),
-  phone: z.string().optional().refine(val => !val || /^(?:\+33|0)[1-9](?:[0-9]{8})$/.test(val.replace(/\s/g, '')), 'Format de téléphone invalide (ex: 01 23 45 67 89)'),
+  phone: z.string().min(1, 'Le téléphone est obligatoire').refine(val => /^(?:\+33|0)[1-9](?:[0-9]{8})$/.test(val.replace(/\s/g, '')), 'Format de téléphone invalide (ex: 01 23 45 67 89)'),
   message: z.string().min(10, 'Le message doit contenir au moins 10 caractères'),
   privacyAccepted: z.boolean().refine(val => val === true, 'Vous devez accepter la politique de confidentialité'),
   honeypot: z.string().max(0, 'Spam détecté'), // Hidden field, should remain empty
@@ -109,7 +109,7 @@ const SmartForm = ({
       firstname: formData.firstname,
       lastname: formData.lastname,
       email: formData.email,
-      phone: formData.phone || null,
+      phone: formData.phone,
       message: formData.message,
       source,
       meta: {
@@ -314,7 +314,7 @@ const SmartForm = ({
         </div>
 
         <div>
-          <Label htmlFor="phone">Téléphone</Label>
+          <Label htmlFor="phone">Téléphone *</Label>
           <Input
             id="phone"
             type="tel"
@@ -322,6 +322,7 @@ const SmartForm = ({
             onChange={(e) => handleInputChange('phone', e.target.value)}
             className={errors.phone ? 'border-destructive' : ''}
             disabled={isLoading}
+            required
           />
           {errors.phone && (
             <p className="text-sm text-destructive mt-1">{errors.phone}</p>
