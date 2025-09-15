@@ -1,8 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import Layout from '@/components/Layout';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle, Home, Calculator, FileText } from 'lucide-react';
+import SmartForm from '@/components/SmartForm';
 
 const Valuation = () => {
   const { t } = useTranslation();
@@ -15,13 +14,13 @@ const Valuation = () => {
     },
     {
       icon: <Calculator className="h-6 w-6" />,
-      title: 'Estimation automatique',
-      description: 'Notre algorithme calcule une première estimation'
+      title: 'Analyse personnalisée',
+      description: 'Notre agent analyse votre bien en détail'
     },
     {
       icon: <FileText className="h-6 w-6" />,
-      title: 'Rapport détaillé',
-      description: 'Recevez votre estimation personnalisée'
+      title: 'Rapport d\'estimation',
+      description: 'Recevez votre estimation par notre expert'
     }
   ];
 
@@ -46,7 +45,7 @@ const Valuation = () => {
             <CheckCircle className="h-4 w-4 text-green-600" />
             <span>Sans engagement</span>
             <CheckCircle className="h-4 w-4 text-green-600" />
-            <span>Résultat immédiat</span>
+            <span>Expertise personnalisée</span>
           </div>
         </div>
       </section>
@@ -71,119 +70,12 @@ const Valuation = () => {
       {/* Form Section */}
       <section className="py-20">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-center">Estimer mon bien</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {/* Property Type */}
-              <div>
-                <label className="block text-sm font-medium mb-2">
-                  {t('valuation.property_type')}
-                </label>
-                <div className="grid grid-cols-2 gap-2">
-                  {['Maison', 'Appartement', 'Villa', 'Terrain'].map((type) => (
-                    <button
-                      key={type}
-                      className="p-3 border rounded-lg text-left hover:border-primary hover:bg-primary/5 transition-colors"
-                    >
-                      {type}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Address */}
-              <div>
-                <label className="block text-sm font-medium mb-2">
-                  {t('valuation.property_address')}
-                </label>
-                <input 
-                  type="text" 
-                  placeholder="Saisissez l'adresse complète"
-                  className="w-full p-3 border rounded-lg"
-                />
-              </div>
-
-              {/* Property Details */}
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2">Surface (m²)</label>
-                  <input 
-                    type="number" 
-                    placeholder="120"
-                    className="w-full p-3 border rounded-lg"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Nombre de pièces</label>
-                  <select className="w-full p-3 border rounded-lg">
-                    <option>Sélectionner</option>
-                    <option>1 pièce</option>
-                    <option>2 pièces</option>
-                    <option>3 pièces</option>
-                    <option>4 pièces</option>
-                    <option>5+ pièces</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2">Chambres</label>
-                  <select className="w-full p-3 border rounded-lg">
-                    <option>Sélectionner</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5+</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">État du bien</label>
-                  <select className="w-full p-3 border rounded-lg">
-                    <option>Sélectionner</option>
-                    <option>Neuf</option>
-                    <option>Excellent</option>
-                    <option>Bon</option>
-                    <option>À rénover</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Contact Info */}
-              <div className="border-t pt-6">
-                <h4 className="font-medium mb-4">Vos coordonnées</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input 
-                    type="text" 
-                    placeholder={t('common.name')}
-                    className="w-full p-3 border rounded-lg"
-                  />
-                  <input 
-                    type="email" 
-                    placeholder={t('common.email')}
-                    className="w-full p-3 border rounded-lg"
-                  />
-                </div>
-                <input 
-                  type="tel" 
-                  placeholder={t('common.phone')}
-                  className="w-full p-3 border rounded-lg mt-4"
-                />
-              </div>
-
-              <Button className="w-full bg-gradient-primary shadow-luxury">
-                Obtenir mon estimation gratuite
-              </Button>
-
-              <p className="text-xs text-muted-foreground text-center">
-                En soumettant ce formulaire, vous acceptez d'être contacté par notre équipe 
-                concernant votre projet d'estimation.
-              </p>
-            </CardContent>
-          </Card>
+          <SmartForm
+            source="estimation"
+            title="Demande d'estimation"
+            description="Remplissez ce formulaire pour recevoir une estimation personnalisée de votre bien par notre expert."
+            className="bg-card shadow-lg rounded-2xl"
+          />
         </div>
       </section>
     </Layout>
