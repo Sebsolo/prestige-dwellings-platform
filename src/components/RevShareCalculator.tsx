@@ -248,19 +248,19 @@ const RevShareCalculator = ({
                         {!isActive && requiredApql > 0 && (
                           <Lock className="h-4 w-4 text-muted-foreground" />
                         )}
-                         <div>
-                           <div className={`font-medium ${isActive ? '' : 'text-muted-foreground'}`}>
-                             {level.label}
-                           </div>
-                           <div className="text-xs text-muted-foreground">
-                             {agentCounts[level.key]} agents × {avgRevenues[level.key].toLocaleString('fr-FR')}€ × {percents[level.key]}%
-                             {requiredApql > 0 && (
-                               <div className={`${isActive ? 'text-green-600 dark:text-green-400' : 'text-red-500 dark:text-red-400'}`}>
-                                 • {requiredApql} APQL requis
-                               </div>
-                             )}
-                           </div>
-                         </div>
+                        <div>
+                          <div className={`font-medium ${isActive ? '' : 'text-muted-foreground'}`}>
+                            {level.label}
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            {agentCounts[level.key]} agents × {avgRevenues[level.key].toLocaleString('fr-FR')}€ × {percents[level.key]}%
+                            {requiredApql > 0 && (
+                              <div className={`${isActive ? 'text-green-600 dark:text-green-400' : 'text-red-500 dark:text-red-400'}`}>
+                                • {requiredApql} APQL requis
+                              </div>
+                            )}
+                          </div>
+                        </div>
                       </div>
                       <Badge 
                         variant={isActive ? "secondary" : "outline"} 
