@@ -162,7 +162,7 @@ const RevShareCalculator = ({
                           </div>
                           
                           <div className="flex gap-3">
-                            <div className="w-24">
+                            <div className="w-28">
                               <Label htmlFor={`agents-${level.key}`} className="text-xs font-medium block mb-1">
                                 Nombre d'agents
                               </Label>
