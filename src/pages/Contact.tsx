@@ -90,7 +90,7 @@ const Contact = () => {
               </h2>
               
               <SmartForm 
-                source="contact-page"
+                source="contact"
                 title="Envoyez-moi un message"
                 description="Remplissez le formulaire ci-dessous et je vous répondrai rapidement."
                 className="space-y-6"
