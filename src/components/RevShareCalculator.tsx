@@ -115,13 +115,13 @@ const RevShareCalculator = ({
                     return (
                       <div 
                         key={level.key} 
-                        className={`p-4 rounded-xl border transition-all ${
+                        className={`p-3 rounded-xl border transition-all ${
                           isActive ? 'border-primary/20 bg-primary/5' : 'border-muted bg-muted/30 opacity-60'
                         }`}
                       >
-                        <div className="flex items-center justify-between mb-3">
-                          <div>
-                            <div className={`font-medium ${isActive ? '' : 'text-muted-foreground'}`}>
+                        <div className="flex items-center justify-between gap-3">
+                          <div className="min-w-0 flex-shrink-0">
+                            <div className={`font-medium text-sm ${isActive ? '' : 'text-muted-foreground'}`}>
                               {level.label} ({percents[level.key]}%)
                             </div>
                             {requiredApql > 0 && (
@@ -130,44 +130,42 @@ const RevShareCalculator = ({
                               </div>
                             )}
                           </div>
-                        </div>
-                        
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                          <div>
-                            <Label htmlFor={`agents-${level.key}`} className="text-xs font-medium">
-                              Nombre d'agents
-                            </Label>
-                            <Input
-                              id={`agents-${level.key}`}
-                              type="number"
-                              value={agentCounts[level.key]}
-                              onChange={(e) => setAgentCounts(prev => ({
-                                ...prev,
-                                [level.key]: Math.max(0, Number(e.target.value) || 0)
-                              }))}
-                              className="mt-1"
-                              min={0}
-                              disabled={!isActive}
-                            />
-                          </div>
                           
-                          <div>
-                            <Label htmlFor={`revenue-${level.key}`} className="text-xs font-medium">
-                              CA moyen/agent (€)
-                            </Label>
-                            <Input
-                              id={`revenue-${level.key}`}
-                              type="number"
-                              value={avgRevenues[level.key]}
-                              onChange={(e) => setAvgRevenues(prev => ({
-                                ...prev,
-                                [level.key]: Math.max(0, Number(e.target.value) || 0)
-                              }))}
-                              className="mt-1"
-                              min={0}
-                              step={500}
-                              disabled={!isActive}
-                            />
+                          <div className="flex gap-2 flex-1">
+                            <div className="flex-1">
+                              <Label htmlFor={`agents-${level.key}`} className="text-xs font-medium block mb-1">
+                                Nombre d'agents
+                              </Label>
+                              <Input
+                                id={`agents-${level.key}`}
+                                type="number"
+                                value={agentCounts[level.key]}
+                                onChange={(e) => setAgentCounts(prev => ({
+                                  ...prev,
+                                  [level.key]: Math.max(0, Number(e.target.value) || 0)
+                                }))}
+                                className="h-8 text-sm"
+                                min={0}
+                              />
+                            </div>
+                            
+                            <div className="flex-1">
+                              <Label htmlFor={`revenue-${level.key}`} className="text-xs font-medium block mb-1">
+                                CA moyen/agent (€)
+                              </Label>
+                              <Input
+                                id={`revenue-${level.key}`}
+                                type="number"
+                                value={avgRevenues[level.key]}
+                                onChange={(e) => setAvgRevenues(prev => ({
+                                  ...prev,
+                                  [level.key]: Math.max(0, Number(e.target.value) || 0)
+                                }))}
+                                className="h-8 text-sm"
+                                min={0}
+                                step={500}
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
