@@ -1,101 +1,38 @@
-import { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Calculator, Save, RefreshCw } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import AdminLayout from '@/components/admin/AdminLayout';
-
-interface RevSharePercents {
-  l1y1: number;
-  l1y2: number;
-  l2: number;
-  l3: number;
-  l4: number;
-  l5: number;
-  l6: number;
-  l7: number;
-}
+import { useRevShareSettings, LevelPercents } from '@/contexts/RevShareSettingsContext';
 
 const AdminRevShare = () => {
-  const [percents, setPercents] = useState<RevSharePercents>({
-    l1y1: 5.0,
-    l1y2: 3.5,
-    l2: 4.0,
-    l3: 2.5,
-    l4: 1.5,
-    l5: 1.0,
-    l6: 2.5,
-    l7: 5.0
-  });
-  const [loading, setLoading] = useState(true);
+  const { percents: contextPercents, loading, savePercents } = useRevShareSettings();
+  const [percents, setPercents] = useState<LevelPercents>(contextPercents);
   const [saving, setSaving] = useState(false);
-  const [settingsId, setSettingsId] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchRevShareSettings();
-  }, []);
-
-  const fetchRevShareSettings = async () => {
-    try {
-      setLoading(true);
-      const { data, error } = await supabase
-        .from('revshare_settings')
-        .select('id, percents')
-        .single();
-
-      if (error) {
-        console.error('Error fetching revshare settings:', error);
-        toast.error('Erreur lors du chargement des paramètres');
-        return;
-      }
-
-      if (data) {
-        setSettingsId(data.id);
-        if (data.percents) {
-          setPercents(data.percents as unknown as RevSharePercents);
-        }
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      toast.error('Erreur lors du chargement des paramètres');
-    } finally {
-      setLoading(false);
-    }
-  };
+  // Update local state when context percents change
+  React.useEffect(() => {
+    setPercents(contextPercents);
+  }, [contextPercents]);
 
   const saveSettings = async () => {
-    if (!settingsId) {
-      toast.error('ID des paramètres non trouvé');
-      return;
-    }
-
     try {
       setSaving(true);
-      const { error } = await supabase
-        .from('revshare_settings')
-        .update({ percents: percents as any })
-        .eq('id', settingsId);
-
-      if (error) {
-        console.error('Error saving revshare settings:', error);
-        toast.error('Erreur lors de la sauvegarde');
-        return;
-      }
-
+      await savePercents(percents);
       toast.success('Paramètres sauvegardés avec succès');
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error saving revshare settings:', error);
       toast.error('Erreur lors de la sauvegarde');
     } finally {
       setSaving(false);
     }
   };
 
-  const updatePercent = (key: keyof RevSharePercents, value: string) => {
+  const updatePercent = (key: keyof LevelPercents, value: string) => {
     const numValue = parseFloat(value) || 0;
     setPercents(prev => ({
       ...prev,
@@ -137,14 +74,6 @@ const AdminRevShare = () => {
             </p>
           </div>
           <div className="flex gap-2">
-            <Button 
-              variant="outline" 
-              onClick={fetchRevShareSettings}
-              disabled={loading}
-            >
-              <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
-              Actualiser
-            </Button>
             <Button 
               onClick={saveSettings}
               disabled={saving}

@@ -8,9 +8,11 @@ import BookingCTA from '@/components/BookingCTA';
 import JsonLdFAQ from '@/components/JsonLdFAQ';
 import StickyFooterCTA from '@/components/StickyFooterCTA';
 import RevShareCalculator from '@/components/RevShareCalculator';
+import { useRevShareSettings } from '@/contexts/RevShareSettingsContext';
 
 const JoinExp = () => {
   const { t } = useTranslation();
+  const { percents } = useRevShareSettings();
 
   const keyConditions = [
     {
@@ -242,7 +244,17 @@ const JoinExp = () => {
       </section>
 
       {/* RevShare Calculator Section */}
-      <RevShareCalculator />
+      <section id="revshare-calculator" className="mt-16 border-t border-muted pt-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-8">
+          <h2 className="text-2xl font-bold tracking-tight mb-2">
+            Calculez votre potentiel de revenus eXp
+          </h2>
+          <p className="text-muted-foreground mb-6">
+            Ajustez les hypothèses et visualisez un ordre de grandeur (à titre indicatif).
+          </p>
+        </div>
+        <RevShareCalculator initialPercents={percents} />
+      </section>
 
       {/* FAQ Section */}
       <section className="py-20 bg-muted/30">

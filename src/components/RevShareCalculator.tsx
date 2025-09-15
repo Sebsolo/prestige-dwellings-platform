@@ -1,65 +1,31 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Calculator, TrendingUp } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
-import { toast } from 'sonner';
+import { LevelPercents } from '@/contexts/RevShareSettingsContext';
 
-interface RevSharePercents {
-  l1y1: number;
-  l1y2: number;
-  l2: number;
-  l3: number;
-  l4: number;
-  l5: number;
-  l6: number;
-  l7: number;
+const DEFAULT_PERCENTS: LevelPercents = {
+  l1y1: 5.0,
+  l1y2: 3.5,
+  l2: 4.0,
+  l3: 2.5,
+  l4: 1.5,
+  l5: 1.0,
+  l6: 2.5,
+  l7: 5.0
+};
+
+interface RevShareCalculatorProps {
+  initialPercents?: LevelPercents;
 }
 
-const RevShareCalculator = () => {
+const RevShareCalculator = ({ initialPercents }: RevShareCalculatorProps) => {
   const [monthlyRevenue, setMonthlyRevenue] = useState<number>(10000);
-  const [percents, setPercents] = useState<RevSharePercents>({
-    l1y1: 5.0,
-    l1y2: 3.5,
-    l2: 4.0,
-    l3: 2.5,
-    l4: 1.5,
-    l5: 1.0,
-    l6: 2.5,
-    l7: 5.0
-  });
-  const [loading, setLoading] = useState(true);
+  const [percents] = useState<LevelPercents>(initialPercents ?? DEFAULT_PERCENTS);
 
-  useEffect(() => {
-    fetchRevShareSettings();
-  }, []);
-
-  const fetchRevShareSettings = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('revshare_settings')
-        .select('percents')
-        .single();
-
-      if (error) {
-        console.error('Error fetching revshare settings:', error);
-        toast.error('Erreur lors du chargement des paramètres');
-        return;
-      }
-
-      if (data?.percents) {
-        setPercents(data.percents as unknown as RevSharePercents);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const calculateRevShare = (level: keyof RevSharePercents): number => {
+  const calculateRevShare = (level: keyof LevelPercents): number => {
     return (monthlyRevenue * percents[level]) / 100;
   };
 
@@ -78,13 +44,6 @@ const RevShareCalculator = () => {
     return total + calculateRevShare(level.key);
   }, 0);
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center p-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-      </div>
-    );
-  }
 
   return (
     <section id="revshare-calculator" className="py-20 bg-muted/30">
