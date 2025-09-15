@@ -5,7 +5,7 @@ import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import LanguageSwitcher from './LanguageSwitcher';
 import { cn } from '@/lib/utils';
-import logo from '@/assets/logo.svg';
+import logo from '@/assets/logo-new.png';
 import expLogo from '@/assets/exp-logo.webp';
 
 const Navbar = () => {

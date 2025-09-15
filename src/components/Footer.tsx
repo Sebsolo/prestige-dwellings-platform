@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Mail, Phone, MapPin } from 'lucide-react';
-import logo from '@/assets/logo.svg';
+import logo from '@/assets/logo-new.png';
 import expLogo from '@/assets/exp-logo.webp';
 const Footer = () => {
   const {
