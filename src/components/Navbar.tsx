@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import LanguageSwitcher from './LanguageSwitcher';
 import { cn } from '@/lib/utils';
 import logo from '@/assets/logo.svg';
+import expLogo from '@/assets/exp-logo.webp';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,12 +29,17 @@ const Navbar = () => {
     <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border shadow-card">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-36 md:h-44">
-          {/* Logo */}
-          <Link to="/" className="flex-shrink-0">
+          {/* Logos */}
+          <Link to="/" className="flex-shrink-0 flex items-center gap-4">
             <img 
               src={logo} 
               alt="Sebastien Pons Immobilier" 
-              className="h-48 md:h-64 w-auto mt-5"
+              className="h-48 md:h-64 w-auto"
+            />
+            <img 
+              src={expLogo} 
+              alt="eXp Realty" 
+              className="h-16 md:h-20 w-auto"
             />
           </Link>
 
