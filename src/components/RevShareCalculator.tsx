@@ -162,24 +162,24 @@ const RevShareCalculator = ({
                           </div>
                           
                           <div className="flex gap-2 flex-1">
-                            <div className="w-24">
+                            <div className="flex-1">
                               <Label htmlFor={`agents-${level.key}`} className="text-xs font-medium block mb-1">
                                 Nombre d'agents
                               </Label>
                               <Input id={`agents-${level.key}`} type="number" value={agentCounts[level.key]} onChange={e => setAgentCounts(prev => ({
                             ...prev,
                             [level.key]: Math.max(0, Number(e.target.value) || 0)
-                          }))} className="h-8 text-sm w-full" min={0} />
+                          }))} className="h-8 text-sm" min={0} />
                             </div>
                             
-                            <div className="w-32">
+                            <div className="flex-1">
                               <Label htmlFor={`revenue-${level.key}`} className="text-xs font-medium block mb-1">
                                 CA moyen/agent (€)
                               </Label>
                               <Input id={`revenue-${level.key}`} type="number" value={avgRevenues[level.key]} onChange={e => setAvgRevenues(prev => ({
                             ...prev,
                             [level.key]: Math.max(0, Number(e.target.value) || 0)
-                          }))} className="h-8 text-sm w-full" min={0} step={500} />
+                          }))} className="h-8 text-sm" min={0} step={500} />
                             </div>
                           </div>
                         </div>
