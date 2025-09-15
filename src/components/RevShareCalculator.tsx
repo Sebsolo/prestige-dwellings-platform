@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -16,7 +16,14 @@ const RevShareCalculator = ({
   bonusSettings
 }: RevShareCalculatorProps) => {
   const [apql, setApql] = useState<number>(0);
-  const [bonus, setBonus] = useState<number>(bonusSettings?.defaultValue || 0);
+  const [bonus, setBonus] = useState<number>(0);
+
+  // Update bonus when bonusSettings changes
+  useEffect(() => {
+    if (bonusSettings?.defaultValue !== undefined) {
+      setBonus(bonusSettings.defaultValue);
+    }
+  }, [bonusSettings?.defaultValue]);
 
   // Number of agents per level
   const [agentCounts, setAgentCounts] = useState<Record<keyof LevelPercents, number>>({
