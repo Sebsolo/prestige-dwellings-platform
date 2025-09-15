@@ -17,14 +17,14 @@ const Footer = () => {
                 <img 
                   src={logo} 
                   alt="Sebastien Pons Immobilier" 
-                  className="h-48 md:h-64 w-auto"
+                  className="h-36 md:h-52 w-auto"
                 />
               </Link>
               <a href="https://www.expfrance.fr" target="_blank" rel="noopener noreferrer">
                 <img 
                   src={expLogo} 
                   alt="eXp Realty" 
-                  className="h-16 md:h-20 w-auto"
+                  className="h-12 md:h-16 w-auto"
                 />
               </a>
             </div>
@@ -97,14 +97,14 @@ const Footer = () => {
                 <img 
                   src={logo} 
                   alt="Sebastien Pons Immobilier" 
-                  className="h-48 w-auto"
+                  className="h-36 w-auto"
                 />
               </Link>
               <a href="https://www.expfrance.fr" target="_blank" rel="noopener noreferrer">
                 <img 
                   src={expLogo} 
                   alt="eXp Realty" 
-                  className="h-16 w-auto"
+                  className="h-12 w-auto"
                 />
               </a>
             </div>
