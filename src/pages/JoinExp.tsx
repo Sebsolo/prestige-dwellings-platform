@@ -7,6 +7,7 @@ import { TrendingUp, Users, Award, Star, Globe, Zap, BookOpen, Building, Target,
 import BookingCTA from '@/components/BookingCTA';
 import JsonLdFAQ from '@/components/JsonLdFAQ';
 import StickyFooterCTA from '@/components/StickyFooterCTA';
+import RevShareCalculator from '@/components/RevShareCalculator';
 
 const JoinExp = () => {
   const { t } = useTranslation();
@@ -239,6 +240,9 @@ const JoinExp = () => {
           </div>
         </div>
       </section>
+
+      {/* RevShare Calculator Section */}
+      <RevShareCalculator />
 
       {/* FAQ Section */}
       <section className="py-20 bg-muted/30">

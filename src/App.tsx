@@ -29,6 +29,7 @@ import AdminBlogEdit from "./pages/admin/AdminBlogEdit";
 import AdminTestimonials from "./pages/admin/AdminTestimonials";
 import AdminLeads from "./pages/admin/AdminLeads";
 import AdminSettings from "./pages/admin/AdminSettings";
+import AdminRevShare from "./pages/admin/AdminRevShare";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -132,6 +133,14 @@ const App = () => (
                 element={
                   <RequireRole allowedRoles={['admin']}>
                     <AdminSettings />
+                  </RequireRole>
+                } 
+              />
+              <Route 
+                path="/admin/revshare" 
+                element={
+                  <RequireRole allowedRoles={['admin']}>
+                    <AdminRevShare />
                   </RequireRole>
                 } 
               />
