@@ -151,7 +151,7 @@ const RevShareCalculator = ({
                   const isActive = isLevelActive(level.key);
                   const requiredApql = getRequiredApql(level.key);
                   return <div key={level.key} className="p-3 rounded-xl border border-primary/20 bg-primary/5 transition-all">
-                        <div className="flex items-center justify-between gap-3">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <div className="min-w-0 flex-shrink-0">
                             <div className="font-medium text-sm">
                               {level.label} ({percents[level.key]}%)
@@ -161,8 +161,8 @@ const RevShareCalculator = ({
                               </div>}
                           </div>
                           
-                          <div className="flex gap-3">
-                            <div className="w-28">
+                          <div className="flex gap-2 sm:gap-3">
+                            <div className="w-24 sm:w-28">
                               <Label htmlFor={`agents-${level.key}`} className="text-xs font-medium block mb-1">
                                 Nombre d'agents
                               </Label>
@@ -172,7 +172,7 @@ const RevShareCalculator = ({
                           }))} className="h-8 text-sm" min={0} />
                             </div>
                             
-                            <div className="w-32">
+                            <div className="w-28 sm:w-32">
                               <Label htmlFor={`revenue-${level.key}`} className="text-xs font-medium block mb-1">
                                 CA moyen/agent (€)
                               </Label>
