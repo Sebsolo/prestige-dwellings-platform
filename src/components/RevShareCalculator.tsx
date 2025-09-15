@@ -47,9 +47,13 @@ const RevShareCalculator = ({
   };
 
   const calculateRevShare = (level: keyof LevelPercents): number => {
-    if (!isLevelActive(level)) return 0;
     const totalLevelRevenue = agentCounts[level] * avgRevenues[level];
     return (totalLevelRevenue * percents[level]) / 100;
+  };
+
+  const calculateActiveRevShare = (level: keyof LevelPercents): number => {
+    if (!isLevelActive(level)) return 0;
+    return calculateRevShare(level);
   };
 
   const levels = [
@@ -64,7 +68,7 @@ const RevShareCalculator = ({
   ] as const;
 
   const baseRevShare = levels.reduce((total, level) => {
-    return total + calculateRevShare(level.key);
+    return total + calculateActiveRevShare(level.key);
   }, 0);
   
   const bonusAmount = bonusSettings?.enabled ? (baseRevShare * bonus) / 100 : 0;
@@ -115,17 +119,15 @@ const RevShareCalculator = ({
                     return (
                       <div 
                         key={level.key} 
-                        className={`p-3 rounded-xl border transition-all ${
-                          isActive ? 'border-primary/20 bg-primary/5' : 'border-muted bg-muted/30 opacity-60'
-                        }`}
+                        className="p-3 rounded-xl border border-primary/20 bg-primary/5 transition-all"
                       >
                         <div className="flex items-center justify-between gap-3">
                           <div className="min-w-0 flex-shrink-0">
-                            <div className={`font-medium text-sm ${isActive ? '' : 'text-muted-foreground'}`}>
+                            <div className="font-medium text-sm">
                               {level.label} ({percents[level.key]}%)
                             </div>
                             {requiredApql > 0 && (
-                              <div className={`text-xs ${isActive ? 'text-green-600 dark:text-green-400' : 'text-red-500 dark:text-red-400'}`}>
+                              <div className={`text-xs ${isActive ? 'text-green-600 dark:text-green-400' : 'text-amber-600 dark:text-amber-400'}`}>
                                 {requiredApql} APQL requis
                               </div>
                             )}
@@ -230,10 +232,11 @@ const RevShareCalculator = ({
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {levels.map((level) => {
-                  const isActive = isLevelActive(level.key);
-                  const requiredApql = getRequiredApql(level.key);
-                  const revenue = calculateRevShare(level.key);
+                 {levels.map((level) => {
+                   const isActive = isLevelActive(level.key);
+                   const requiredApql = getRequiredApql(level.key);
+                   const revenue = calculateRevShare(level.key);
+                   const activeRevenue = calculateActiveRevShare(level.key);
                   
                   return (
                     <div 
@@ -260,17 +263,20 @@ const RevShareCalculator = ({
                           </div>
                         </div>
                       </div>
-                      <Badge 
-                        variant={isActive ? "secondary" : "outline"} 
-                        className={`text-sm font-semibold ${!isActive ? 'opacity-50' : ''}`}
-                      >
-                        {revenue.toLocaleString('fr-FR', {
-                          style: 'currency',
-                          currency: 'EUR',
-                          minimumFractionDigits: 0,
-                          maximumFractionDigits: 0
-                        })}
-                      </Badge>
+                       <Badge 
+                         variant={isActive ? "secondary" : "outline"} 
+                         className={`text-sm font-semibold ${!isActive ? 'opacity-50' : ''}`}
+                       >
+                         {revenue.toLocaleString('fr-FR', {
+                           style: 'currency',
+                           currency: 'EUR',
+                           minimumFractionDigits: 0,
+                           maximumFractionDigits: 0
+                         })}
+                         {!isActive && revenue > 0 && (
+                           <span className="text-xs ml-1">(non compté)</span>
+                         )}
+                       </Badge>
                     </div>
                   );
                 })}
