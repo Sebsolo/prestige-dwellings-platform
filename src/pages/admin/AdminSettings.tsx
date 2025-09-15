@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Save, Upload, Target } from 'lucide-react';
+import { Save, Upload } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -22,10 +22,7 @@ const AdminSettings = () => {
     metaKeywords: 'immobilier, vente, location, france, international, sebastien pons',
     booking_url: '',
     googlePlaceId: '',
-    googleBusinessUrl: 'https://share.google/LOxi7WwOzlRaYUVJj',
-    appointment_url: '/rendez-vous',
-    canva_share_url: 'https://www.canva.com/design/DAGeyLDzKMU/ejBonHFtrwLk9wCZA3ThTA/view?utm_content=DAGeyLDzKMU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h91a9dd08af',
-    legal_footer: 'EI eu RSAC 912212073 Versailles — Ne pas jeter sur la voie publique'
+    googleBusinessUrl: 'https://share.google/LOxi7WwOzlRaYUVJj'
   });
 
   useEffect(() => {
@@ -49,10 +46,7 @@ const AdminSettings = () => {
             metaKeywords: data.meta_keywords || 'immobilier, vente, location, france, international, sebastien pons',
             booking_url: data.booking_url || '',
             googlePlaceId: data.google_place_id || '',
-            googleBusinessUrl: data.google_business_url || 'https://share.google/LOxi7WwOzlRaYUVJj',
-            appointment_url: data.appointment_url || '/rendez-vous',
-            canva_share_url: data.canva_share_url || 'https://www.canva.com/design/DAGeyLDzKMU/ejBonHFtrwLk9wCZA3ThTA/view?utm_content=DAGeyLDzKMU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h91a9dd08af',
-            legal_footer: data.legal_footer || 'EI eu RSAC 912212073 Versailles — Ne pas jeter sur la voie publique'
+            googleBusinessUrl: data.google_business_url || 'https://share.google/LOxi7WwOzlRaYUVJj'
           });
         }
       } catch (error) {
@@ -76,9 +70,6 @@ const AdminSettings = () => {
         booking_url: settings.booking_url,
         google_place_id: settings.googlePlaceId,
         google_business_url: settings.googleBusinessUrl,
-        appointment_url: settings.appointment_url,
-        canva_share_url: settings.canva_share_url,
-        legal_footer: settings.legal_footer,
         updated_at: new Date().toISOString()
       };
 
@@ -293,8 +284,11 @@ const AdminSettings = () => {
                   id="googlePlaceId"
                   value={settings.googlePlaceId}
                   onChange={(e) => setSettings({...settings, googlePlaceId: e.target.value})}
-                  placeholder="ChIJd8BlQ2BZwokRSFP..."
+                  placeholder="ChIJxxxxxxxxxxxxxxx"
                 />
+                <p className="text-sm text-muted-foreground">
+                  ID de votre fiche Google Business pour récupérer les avis automatiquement
+                </p>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="googleBusinessUrl">URL Google Business</Label>
@@ -302,60 +296,10 @@ const AdminSettings = () => {
                   id="googleBusinessUrl"
                   value={settings.googleBusinessUrl}
                   onChange={(e) => setSettings({...settings, googleBusinessUrl: e.target.value})}
-                  placeholder="https://share.google/LOxi7WwOzlRaYUVJj"
-                />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Target className="h-5 w-5" />
-                Page eXp
-              </CardTitle>
-              <CardDescription>
-                Configuration spécifique pour la page de recrutement eXp
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="appointment_url">URL de rendez-vous eXp</Label>
-                <Input
-                  id="appointment_url"
-                  value={settings.appointment_url}
-                  onChange={(e) => setSettings({...settings, appointment_url: e.target.value})}
-                  placeholder="/rendez-vous"
+                  placeholder="https://share.google/..."
                 />
                 <p className="text-sm text-muted-foreground">
-                  URL spécifique pour les rendez-vous depuis la page eXp
-                </p>
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="canva_share_url">URL de partage Canva</Label>
-                <Textarea
-                  id="canva_share_url"
-                  value={settings.canva_share_url}
-                  onChange={(e) => setSettings({...settings, canva_share_url: e.target.value})}
-                  placeholder="https://www.canva.com/design/..."
-                  rows={3}
-                />
-                <p className="text-sm text-muted-foreground">
-                  Lien de partage de votre présentation Canva
-                </p>
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="legal_footer">Mention légale (footer)</Label>
-                <Input
-                  id="legal_footer"
-                  value={settings.legal_footer}
-                  onChange={(e) => setSettings({...settings, legal_footer: e.target.value})}
-                  placeholder="EI eu RSAC 912212073 Versailles"
-                />
-                <p className="text-sm text-muted-foreground">
-                  Mention légale affichée en bas de la page eXp
+                  Lien vers votre page Google Business
                 </p>
               </div>
             </CardContent>
