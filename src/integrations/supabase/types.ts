@@ -261,16 +261,22 @@ export type Database = {
       }
       revshare_settings: {
         Row: {
+          apql_thresholds: Json
+          bonus_settings: Json
           id: string
           percents: Json
           updated_at: string
         }
         Insert: {
+          apql_thresholds?: Json
+          bonus_settings?: Json
           id?: string
           percents?: Json
           updated_at?: string
         }
         Update: {
+          apql_thresholds?: Json
+          bonus_settings?: Json
           id?: string
           percents?: Json
           updated_at?: string

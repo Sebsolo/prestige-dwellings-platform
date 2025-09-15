@@ -3,29 +3,42 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { Calculator, TrendingUp } from 'lucide-react';
-import { LevelPercents } from '@/contexts/RevShareSettingsContext';
-
-const DEFAULT_PERCENTS: LevelPercents = {
-  l1y1: 5.0,
-  l1y2: 3.5,
-  l2: 4.0,
-  l3: 2.5,
-  l4: 1.5,
-  l5: 1.0,
-  l6: 2.5,
-  l7: 5.0
-};
+import { Calculator, TrendingUp, Lock } from 'lucide-react';
+import { LevelPercents, APQLThresholds, BonusSettings } from '@/contexts/RevShareSettingsContext';
 
 interface RevShareCalculatorProps {
   initialPercents?: LevelPercents;
+  apqlThresholds?: APQLThresholds;
+  bonusSettings?: BonusSettings;
 }
 
-const RevShareCalculator = ({ initialPercents }: RevShareCalculatorProps) => {
+const RevShareCalculator = ({ 
+  initialPercents, 
+  apqlThresholds,
+  bonusSettings 
+}: RevShareCalculatorProps) => {
   const [monthlyRevenue, setMonthlyRevenue] = useState<number>(10000);
-  const [percents] = useState<LevelPercents>(initialPercents ?? DEFAULT_PERCENTS);
+  const [apql, setApql] = useState<number>(0);
+  const [bonus, setBonus] = useState<number>(bonusSettings?.defaultValue || 0);
+  
+  const percents = initialPercents || {
+    l1y1: 5.0, l1y2: 3.5, l2: 4.0, l3: 2.5,
+    l4: 1.5, l5: 1.0, l6: 2.5, l7: 5.0
+  };
+  
+  const thresholds = apqlThresholds || { l4: 5, l5: 10, l6: 15, l7: 30 };
+
+  const isLevelActive = (level: keyof LevelPercents): boolean => {
+    if (level === 'l1y1' || level === 'l1y2' || level === 'l2' || level === 'l3') return true;
+    if (level === 'l4') return apql >= thresholds.l4;
+    if (level === 'l5') return apql >= thresholds.l5;
+    if (level === 'l6') return apql >= thresholds.l6;
+    if (level === 'l7') return apql >= thresholds.l7;
+    return false;
+  };
 
   const calculateRevShare = (level: keyof LevelPercents): number => {
+    if (!isLevelActive(level)) return 0;
     return (monthlyRevenue * percents[level]) / 100;
   };
 
@@ -40,10 +53,20 @@ const RevShareCalculator = ({ initialPercents }: RevShareCalculatorProps) => {
     { key: 'l7', label: 'L7', description: 'Septième ligne' }
   ] as const;
 
-  const totalRevShare = levels.reduce((total, level) => {
+  const baseRevShare = levels.reduce((total, level) => {
     return total + calculateRevShare(level.key);
   }, 0);
+  
+  const bonusAmount = bonusSettings?.enabled ? (baseRevShare * bonus) / 100 : 0;
+  const totalRevShare = baseRevShare + bonusAmount;
 
+  const getRequiredApql = (level: keyof LevelPercents): number => {
+    if (level === 'l4') return thresholds.l4;
+    if (level === 'l5') return thresholds.l5;
+    if (level === 'l6') return thresholds.l6;
+    if (level === 'l7') return thresholds.l7;
+    return 0;
+  };
 
   return (
     <section id="revshare-calculator" className="py-20 bg-muted/30">
@@ -88,11 +111,50 @@ const RevShareCalculator = ({ initialPercents }: RevShareCalculatorProps) => {
                 </p>
               </div>
 
+              <div>
+                <Label htmlFor="apql" className="text-sm font-medium">
+                  APQL (Agents Partenaires Qualifiés Licenciés)
+                </Label>
+                <Input
+                  id="apql"
+                  type="number"
+                  value={apql}
+                  onChange={(e) => setApql(Number(e.target.value) || 0)}
+                  className="mt-2 text-lg"
+                  min={0}
+                  step={1}
+                />
+                <p className="text-sm text-muted-foreground mt-1">
+                  Nombre d'agents qualifiés dans votre organisation (débloque les niveaux)
+                </p>
+              </div>
+
+              {bonusSettings?.enabled && (
+                <div>
+                  <Label htmlFor="bonus" className="text-sm font-medium">
+                    Bonus RevShare (%)
+                  </Label>
+                  <Input
+                    id="bonus"
+                    type="number"
+                    value={bonus}
+                    onChange={(e) => setBonus(Math.min(100, Number(e.target.value) || 0))}
+                    className="mt-2 text-lg"
+                    min={0}
+                    max={100}
+                    step={1}
+                  />
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Bonus supplémentaire appliqué au total (0-100%)
+                  </p>
+                </div>
+              )}
+
               <div className="p-4 bg-primary/5 rounded-xl">
                 <h4 className="font-semibold text-primary mb-2">💡 Comment ça marche ?</h4>
                 <p className="text-sm text-muted-foreground">
                   Le RevShare eXp vous permet de percevoir un pourcentage sur les commissions 
-                  générées par votre organisation sur 7 niveaux de profondeur.
+                  générées par votre organisation. Les niveaux 4-7 nécessitent un certain nombre d'APQL.
                 </p>
               </div>
             </CardContent>
@@ -105,23 +167,74 @@ const RevShareCalculator = ({ initialPercents }: RevShareCalculatorProps) => {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {levels.map((level) => (
-                  <div key={level.key} className="flex items-center justify-between p-3 bg-muted/30 rounded-xl">
-                    <div>
-                      <div className="font-medium">{level.label}</div>
-                      <div className="text-xs text-muted-foreground">{percents[level.key]}%</div>
+                {levels.map((level) => {
+                  const isActive = isLevelActive(level.key);
+                  const requiredApql = getRequiredApql(level.key);
+                  const revenue = calculateRevShare(level.key);
+                  
+                  return (
+                    <div 
+                      key={level.key} 
+                      className={`flex items-center justify-between p-3 rounded-xl transition-all ${
+                        isActive ? 'bg-muted/30' : 'bg-muted/10 opacity-60'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2">
+                        {!isActive && requiredApql > 0 && (
+                          <Lock className="h-4 w-4 text-muted-foreground" />
+                        )}
+                        <div>
+                          <div className={`font-medium ${isActive ? '' : 'text-muted-foreground'}`}>
+                            {level.label}
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            {percents[level.key]}%
+                            {requiredApql > 0 && (
+                              <span className={`ml-2 ${isActive ? 'text-green-600 dark:text-green-400' : 'text-red-500 dark:text-red-400'}`}>
+                                • {requiredApql} APQL requis
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      <Badge 
+                        variant={isActive ? "secondary" : "outline"} 
+                        className={`text-sm font-semibold ${!isActive ? 'opacity-50' : ''}`}
+                      >
+                        {revenue.toLocaleString('fr-FR', {
+                          style: 'currency',
+                          currency: 'EUR',
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0
+                        })}
+                      </Badge>
                     </div>
-                    <Badge variant="secondary" className="text-sm font-semibold">
-                      {calculateRevShare(level.key).toLocaleString('fr-FR', {
+                  );
+                })}
+              </div>
+
+              {bonusSettings?.enabled && bonusAmount > 0 && (
+                <div className="mt-4 p-3 bg-green-50 dark:bg-green-950/20 rounded-xl border border-green-200 dark:border-green-800">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="font-medium text-green-800 dark:text-green-200">
+                        Bonus RevShare ({bonus}%)
+                      </div>
+                      <div className="text-xs text-green-600 dark:text-green-400">
+                        Appliqué sur le total de base
+                      </div>
+                    </div>
+                    <div className="text-sm font-semibold text-green-800 dark:text-green-200">
+                      +{bonusAmount.toLocaleString('fr-FR', {
                         style: 'currency',
                         currency: 'EUR',
                         minimumFractionDigits: 0,
                         maximumFractionDigits: 0
                       })}
-                    </Badge>
+                    </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              )}
 
               <div className="mt-6 p-4 bg-gradient-primary rounded-xl text-white">
                 <div className="flex items-center justify-between">
@@ -143,8 +256,8 @@ const RevShareCalculator = ({ initialPercents }: RevShareCalculatorProps) => {
               <div className="mt-4 p-3 bg-amber-50 dark:bg-amber-950/20 rounded-xl border border-amber-200 dark:border-amber-800">
                 <p className="text-xs text-amber-800 dark:text-amber-200">
                   <strong>Disclaimer :</strong> Ces calculs sont indicatifs et basés sur les pourcentages 
-                  actuels. Les revenus réels dépendent de l'activité de votre organisation et des 
-                  conditions eXp en vigueur.
+                  actuels. Les revenus réels dépendent de l'activité de votre organisation, du nombre d'APQL 
+                  et des conditions eXp en vigueur.
                 </p>
               </div>
             </CardContent>

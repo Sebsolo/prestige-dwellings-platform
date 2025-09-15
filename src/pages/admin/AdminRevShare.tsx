@@ -4,25 +4,30 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Calculator, Save, RefreshCw } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
+import { Calculator, Save, Settings, Users, Gift } from 'lucide-react';
 import { toast } from 'sonner';
 import AdminLayout from '@/components/admin/AdminLayout';
-import { useRevShareSettings, LevelPercents } from '@/contexts/RevShareSettingsContext';
+import { useRevShareSettings, LevelPercents, APQLThresholds, BonusSettings } from '@/contexts/RevShareSettingsContext';
 
 const AdminRevShare = () => {
-  const { percents: contextPercents, loading, savePercents } = useRevShareSettings();
+  const { percents: contextPercents, apqlThresholds: contextThresholds, bonusSettings: contextBonus, loading, saveSettings } = useRevShareSettings();
   const [percents, setPercents] = useState<LevelPercents>(contextPercents);
+  const [apqlThresholds, setApqlThresholds] = useState<APQLThresholds>(contextThresholds);
+  const [bonusSettings, setBonusSettings] = useState<BonusSettings>(contextBonus);
   const [saving, setSaving] = useState(false);
 
-  // Update local state when context percents change
+  // Update local state when context changes
   React.useEffect(() => {
     setPercents(contextPercents);
-  }, [contextPercents]);
+    setApqlThresholds(contextThresholds);
+    setBonusSettings(contextBonus);
+  }, [contextPercents, contextThresholds, contextBonus]);
 
-  const saveSettings = async () => {
+  const handleSave = async () => {
     try {
       setSaving(true);
-      await savePercents(percents);
+      await saveSettings({ percents, apqlThresholds, bonusSettings });
       toast.success('Paramètres sauvegardés avec succès');
     } catch (error) {
       console.error('Error saving revshare settings:', error);
@@ -35,6 +40,14 @@ const AdminRevShare = () => {
   const updatePercent = (key: keyof LevelPercents, value: string) => {
     const numValue = parseFloat(value) || 0;
     setPercents(prev => ({
+      ...prev,
+      [key]: numValue
+    }));
+  };
+
+  const updateThreshold = (key: keyof APQLThresholds, value: string) => {
+    const numValue = parseInt(value) || 0;
+    setApqlThresholds(prev => ({
       ...prev,
       [key]: numValue
     }));
@@ -70,22 +83,20 @@ const AdminRevShare = () => {
           <div>
             <h1 className="text-2xl font-bold">Configuration RevShare</h1>
             <p className="text-muted-foreground">
-              Gérez les pourcentages de partage des revenus pour chaque niveau
+              Gérez les pourcentages, seuils APQL et bonus du système de partage des revenus
             </p>
           </div>
-          <div className="flex gap-2">
-            <Button 
-              onClick={saveSettings}
-              disabled={saving}
-            >
-              <Save className={`h-4 w-4 mr-2 ${saving ? 'animate-spin' : ''}`} />
-              Sauvegarder
-            </Button>
-          </div>
+          <Button 
+            onClick={handleSave}
+            disabled={saving}
+          >
+            <Save className={`h-4 w-4 mr-2 ${saving ? 'animate-spin' : ''}`} />
+            Sauvegarder
+          </Button>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Configuration Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Pourcentages Section */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -96,11 +107,8 @@ const AdminRevShare = () => {
             <CardContent className="space-y-4">
               {levels.map((level) => (
                 <div key={level.key} className="space-y-2">
-                  <Label htmlFor={level.key}>
+                  <Label htmlFor={level.key} className="text-sm">
                     {level.label}
-                    <span className="text-sm text-muted-foreground ml-2">
-                      {level.description}
-                    </span>
                   </Label>
                   <div className="flex items-center gap-2">
                     <Input
@@ -110,50 +118,170 @@ const AdminRevShare = () => {
                       onChange={(e) => updatePercent(level.key, e.target.value)}
                       step="0.1"
                       min="0"
-                      max="100"
+                      max="10"
                       className="flex-1"
                     />
-                    <span className="text-sm text-muted-foreground">%</span>
+                    <span className="text-sm text-muted-foreground w-6">%</span>
                   </div>
                 </div>
               ))}
               
               <div className="pt-4 border-t">
                 <div className="flex items-center justify-between">
-                  <span className="font-medium">Total des pourcentages :</span>
-                  <Badge variant={totalPercent > 50 ? "destructive" : "secondary"}>
+                  <span className="font-medium">Total :</span>
+                  <Badge variant={totalPercent > 30 ? "destructive" : "secondary"}>
                     {totalPercent.toFixed(1)}%
                   </Badge>
                 </div>
-                {totalPercent > 50 && (
-                  <p className="text-sm text-destructive mt-1">
-                    ⚠️ Le total dépasse 50%, cela peut être élevé
-                  </p>
-                )}
               </div>
             </CardContent>
           </Card>
 
-          {/* Preview Section */}
+          {/* APQL Thresholds Section */}
           <Card>
             <CardHeader>
-              <CardTitle>Aperçu du calculateur</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <Users className="h-5 w-5" />
+                Seuils APQL
+              </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                <div className="text-sm text-muted-foreground mb-4">
-                  Exemple avec 10 000€ de CA mensuel :
+            <CardContent className="space-y-4">
+              <p className="text-sm text-muted-foreground mb-4">
+                Nombre d'agents requis pour débloquer chaque niveau
+              </p>
+              
+              {(['l4', 'l5', 'l6', 'l7'] as const).map((level) => (
+                <div key={level} className="space-y-2">
+                  <Label htmlFor={`threshold-${level}`} className="text-sm">
+                    Niveau {level.slice(1)} 
+                    <span className="text-muted-foreground ml-1">
+                      (actuellement {apqlThresholds[level]})
+                    </span>
+                  </Label>
+                  <div className="flex items-center gap-2">
+                    <Input
+                      id={`threshold-${level}`}
+                      type="number"
+                      value={apqlThresholds[level]}
+                      onChange={(e) => updateThreshold(level, e.target.value)}
+                      min="0"
+                      max="100"
+                      className="flex-1"
+                    />
+                    <span className="text-sm text-muted-foreground w-12">APQL</span>
+                  </div>
                 </div>
-                
+              ))}
+
+              <div className="pt-4 border-t">
+                <div className="text-sm text-muted-foreground space-y-1">
+                  <p>• Niveaux 1-3 : Toujours actifs</p>
+                  <p>• Niveaux 4-7 : Selon seuils APQL</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Bonus Settings Section */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Gift className="h-5 w-5" />
+                Configuration Bonus
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label className="text-sm font-medium">Activer le bonus</Label>
+                  <p className="text-xs text-muted-foreground">
+                    Permet aux utilisateurs d'ajouter un bonus
+                  </p>
+                </div>
+                <Switch
+                  checked={bonusSettings.enabled}
+                  onCheckedChange={(checked) => 
+                    setBonusSettings(prev => ({ ...prev, enabled: checked }))
+                  }
+                />
+              </div>
+
+              {bonusSettings.enabled && (
+                <div className="space-y-2">
+                  <Label htmlFor="bonus-default" className="text-sm">
+                    Valeur par défaut (%)
+                  </Label>
+                  <div className="flex items-center gap-2">
+                    <Input
+                      id="bonus-default"
+                      type="number"
+                      value={bonusSettings.defaultValue}
+                      onChange={(e) => 
+                        setBonusSettings(prev => ({ 
+                          ...prev, 
+                          defaultValue: Math.min(100, Number(e.target.value) || 0) 
+                        }))
+                      }
+                      min="0"
+                      max="100"
+                      className="flex-1"
+                    />
+                    <span className="text-sm text-muted-foreground w-6">%</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Bonus appliqué sur le total de base (0-100%)
+                  </p>
+                </div>
+              )}
+
+              <div className="pt-4 border-t">
+                <div className="text-sm text-muted-foreground space-y-1">
+                  <p>• Le bonus s'applique au total RevShare</p>
+                  <p>• Peut être désactivé pour simplifier</p>
+                  <p>• Valeur modifiable par l'utilisateur</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Preview Section */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Aperçu du calculateur</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-sm text-muted-foreground mb-4">
+              Exemple avec 10 000€ de CA mensuel et 10 APQL :
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
                 {levels.map((level) => {
-                  const amount = (10000 * percents[level.key]) / 100;
+                  const isActive = level.key === 'l1y1' || level.key === 'l1y2' || level.key === 'l2' || level.key === 'l3' ||
+                                   (level.key === 'l4' && 10 >= apqlThresholds.l4) ||
+                                   (level.key === 'l5' && 10 >= apqlThresholds.l5) ||
+                                   (level.key === 'l6' && 10 >= apqlThresholds.l6) ||
+                                   (level.key === 'l7' && 10 >= apqlThresholds.l7);
+                  
+                  const amount = isActive ? (10000 * percents[level.key]) / 100 : 0;
+                  
                   return (
-                    <div key={level.key} className="flex items-center justify-between p-2 bg-muted/30 rounded">
+                    <div 
+                      key={level.key} 
+                      className={`flex items-center justify-between p-2 rounded ${
+                        isActive ? 'bg-muted/30' : 'bg-muted/10 opacity-50'
+                      }`}
+                    >
                       <div>
-                        <div className="text-sm font-medium">{level.label}</div>
-                        <div className="text-xs text-muted-foreground">{percents[level.key]}%</div>
+                        <div className={`text-sm font-medium ${isActive ? '' : 'text-muted-foreground'}`}>
+                          {level.label}
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          {percents[level.key]}% {!isActive && '(verrouillé)'}
+                        </div>
                       </div>
-                      <div className="text-sm font-semibold">
+                      <div className={`text-sm font-semibold ${isActive ? '' : 'text-muted-foreground'}`}>
                         {amount.toLocaleString('fr-FR', {
                           style: 'currency',
                           currency: 'EUR',
@@ -163,37 +291,66 @@ const AdminRevShare = () => {
                     </div>
                   );
                 })}
+              </div>
 
-                <div className="pt-3 border-t">
-                  <div className="flex items-center justify-between font-semibold">
-                    <span>Total mensuel :</span>
-                    <span className="text-primary">
-                      {((10000 * totalPercent) / 100).toLocaleString('fr-FR', {
-                        style: 'currency',
-                        currency: 'EUR',
-                        minimumFractionDigits: 0
-                      })}
+              <div className="space-y-3">
+                <div className="p-3 bg-muted/30 rounded">
+                  <div className="flex justify-between">
+                    <span className="text-sm">Total de base :</span>
+                    <span className="font-semibold">
+                      {levels.reduce((total, level) => {
+                        const isActive = level.key === 'l1y1' || level.key === 'l1y2' || level.key === 'l2' || level.key === 'l3' ||
+                                         (level.key === 'l4' && 10 >= apqlThresholds.l4) ||
+                                         (level.key === 'l5' && 10 >= apqlThresholds.l5) ||
+                                         (level.key === 'l6' && 10 >= apqlThresholds.l6) ||
+                                         (level.key === 'l7' && 10 >= apqlThresholds.l7);
+                        return total + (isActive ? (10000 * percents[level.key]) / 100 : 0);
+                      }, 0).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 })}
+                    </span>
+                  </div>
+                </div>
+
+                {bonusSettings.enabled && (
+                  <div className="p-3 bg-green-50 dark:bg-green-950/20 rounded">
+                    <div className="flex justify-between">
+                      <span className="text-sm text-green-800 dark:text-green-200">
+                        Bonus ({bonusSettings.defaultValue}%) :
+                      </span>
+                      <span className="font-semibold text-green-800 dark:text-green-200">
+                        +{(levels.reduce((total, level) => {
+                          const isActive = level.key === 'l1y1' || level.key === 'l1y2' || level.key === 'l2' || level.key === 'l3' ||
+                                           (level.key === 'l4' && 10 >= apqlThresholds.l4) ||
+                                           (level.key === 'l5' && 10 >= apqlThresholds.l5) ||
+                                           (level.key === 'l6' && 10 >= apqlThresholds.l6) ||
+                                           (level.key === 'l7' && 10 >= apqlThresholds.l7);
+                          return total + (isActive ? (10000 * percents[level.key]) / 100 : 0);
+                        }, 0) * bonusSettings.defaultValue / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 })}
+                      </span>
+                    </div>
+                  </div>
+                )}
+
+                <div className="p-3 bg-primary/10 rounded">
+                  <div className="flex justify-between">
+                    <span className="font-semibold text-primary">Total final :</span>
+                    <span className="font-bold text-primary">
+                      {(() => {
+                        const base = levels.reduce((total, level) => {
+                          const isActive = level.key === 'l1y1' || level.key === 'l1y2' || level.key === 'l2' || level.key === 'l3' ||
+                                           (level.key === 'l4' && 10 >= apqlThresholds.l4) ||
+                                           (level.key === 'l5' && 10 >= apqlThresholds.l5) ||
+                                           (level.key === 'l6' && 10 >= apqlThresholds.l6) ||
+                                           (level.key === 'l7' && 10 >= apqlThresholds.l7);
+                          return total + (isActive ? (10000 * percents[level.key]) / 100 : 0);
+                        }, 0);
+                        const bonus = bonusSettings.enabled ? (base * bonusSettings.defaultValue / 100) : 0;
+                        return (base + bonus).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 });
+                      })()}
                     </span>
                   </div>
                 </div>
               </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Instructions</CardTitle>
-          </CardHeader>
-          <CardContent className="prose prose-sm max-w-none">
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>• Les pourcentages représentent la part des commissions reversée à chaque niveau</li>
-              <li>• L1 Année 1 : pourcentage pour la première ligne la première année</li>
-              <li>• L1 Année 2+ : pourcentage pour la première ligne à partir de la deuxième année</li>
-              <li>• L2-L7 : pourcentages pour les lignes 2 à 7 de votre organisation</li>
-              <li>• Ces paramètres sont utilisés dans le calculateur RevShare de la page publique</li>
-              <li>• Attention : un total trop élevé peut impacter la rentabilité</li>
-            </ul>
+            </div>
           </CardContent>
         </Card>
       </div>

@@ -12,7 +12,7 @@ import { useRevShareSettings } from '@/contexts/RevShareSettingsContext';
 
 const JoinExp = () => {
   const { t } = useTranslation();
-  const { percents } = useRevShareSettings();
+  const { percents, apqlThresholds, bonusSettings } = useRevShareSettings();
 
   const keyConditions = [
     {
@@ -253,7 +253,11 @@ const JoinExp = () => {
             Ajustez les hypothèses et visualisez un ordre de grandeur (à titre indicatif).
           </p>
         </div>
-        <RevShareCalculator initialPercents={percents} />
+        <RevShareCalculator 
+          initialPercents={percents}
+          apqlThresholds={apqlThresholds}
+          bonusSettings={bonusSettings}
+        />
       </section>
 
       {/* FAQ Section */}
