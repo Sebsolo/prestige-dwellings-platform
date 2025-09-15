@@ -9,7 +9,7 @@ const Footer = () => {
   } = useTranslation();
   return <footer className="bg-card border-t border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Company Info */}
           <div className="space-y-4 -my-4 md:col-span-2">
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
@@ -26,29 +26,26 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Contact Info */}
-          <div className="space-y-4 md:order-4">
+          {/* Legal */}
+          <div className="space-y-4">
             <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider">
-              Contact
+              Légal
             </h4>
             <div className="space-y-2">
-              <div className="flex items-center text-sm text-muted-foreground">
-                <Phone className="h-4 w-4 mr-2 text-primary" />
-                <span>+33 6 01 77 10 11</span>
-              </div>
-              <div className="flex items-center text-sm text-muted-foreground">
-                <Mail className="h-4 w-4 mr-2 text-primary" />
-                <span>sebastien@yvelines-immo.fr</span>
-              </div>
-              <div className="flex items-center text-sm text-muted-foreground">
-                <MapPin className="h-4 w-4 mr-2 text-primary" />
-                <span>Chavenay, France</span>
-              </div>
+              <Link to="/mentions-legales" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+                {t('footer.legalNotice')}
+              </Link>
+              <Link to="/rgpd" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+                {t('footer.privacy')}
+              </Link>
+              <a href="https://www.expfrance.fr/fr/mentions-legales/honoraires" target="_blank" rel="noopener noreferrer" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+                {t('footer.terms')}
+              </a>
             </div>
           </div>
 
           {/* Services */}
-          <div className="space-y-4 md:order-3">
+          <div className="space-y-4">
             <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider">
               Services
             </h4>
@@ -68,21 +65,24 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Legal */}
-          <div className="space-y-4 md:order-2">
+          {/* Contact Info */}
+          <div className="space-y-4">
             <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider">
-              Légal
+              Contact
             </h4>
             <div className="space-y-2">
-              <Link to="/mentions-legales" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                {t('footer.legalNotice')}
-              </Link>
-              <Link to="/rgpd" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                {t('footer.privacy')}
-              </Link>
-              <a href="https://www.expfrance.fr/fr/mentions-legales/honoraires" target="_blank" rel="noopener noreferrer" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                {t('footer.terms')}
-              </a>
+              <div className="flex items-center text-sm text-muted-foreground">
+                <Phone className="h-4 w-4 mr-2 text-primary" />
+                <span>+33 6 01 77 10 11</span>
+              </div>
+              <div className="flex items-center text-sm text-muted-foreground">
+                <Mail className="h-4 w-4 mr-2 text-primary" />
+                <span>sebastien@yvelines-immo.fr</span>
+              </div>
+              <div className="flex items-center text-sm text-muted-foreground">
+                <MapPin className="h-4 w-4 mr-2 text-primary" />
+                <span>Chavenay, France</span>
+              </div>
             </div>
           </div>
         </div>
