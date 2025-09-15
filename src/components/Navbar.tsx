@@ -40,7 +40,7 @@ const Navbar = () => {
               <img 
                 src={expLogo} 
                 alt="eXp Realty" 
-                className="h-12 md:h-16 w-auto md:mt-8"
+                className="h-12 md:h-16 w-auto"
               />
             </div>
           </Link>
