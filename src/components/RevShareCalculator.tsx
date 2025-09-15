@@ -161,8 +161,8 @@ const RevShareCalculator = ({
                               </div>}
                           </div>
                           
-                          <div className="flex gap-2 flex-1">
-                            <div className="flex-1">
+                          <div className="flex gap-2">
+                            <div className="w-20">
                               <Label htmlFor={`agents-${level.key}`} className="text-xs font-medium block mb-1">
                                 Nombre d'agents
                               </Label>
@@ -172,7 +172,7 @@ const RevShareCalculator = ({
                           }))} className="h-8 text-sm" min={0} />
                             </div>
                             
-                            <div className="flex-1">
+                            <div className="w-28">
                               <Label htmlFor={`revenue-${level.key}`} className="text-xs font-medium block mb-1">
                                 CA moyen/agent (€)
                               </Label>
