@@ -17,9 +17,18 @@ const RevShareCalculator = ({
   apqlThresholds,
   bonusSettings 
 }: RevShareCalculatorProps) => {
-  const [monthlyRevenue, setMonthlyRevenue] = useState<number>(10000);
   const [apql, setApql] = useState<number>(0);
   const [bonus, setBonus] = useState<number>(bonusSettings?.defaultValue || 0);
+  
+  // Number of agents per level
+  const [agentCounts, setAgentCounts] = useState<Record<keyof LevelPercents, number>>({
+    l1y1: 0, l1y2: 0, l2: 0, l3: 0, l4: 0, l5: 0, l6: 0, l7: 0
+  });
+  
+  // Average revenue per agent per level
+  const [avgRevenues, setAvgRevenues] = useState<Record<keyof LevelPercents, number>>({
+    l1y1: 5000, l1y2: 5000, l2: 3000, l3: 2000, l4: 1500, l5: 1000, l6: 1500, l7: 2000
+  });
   
   const percents = initialPercents || {
     l1y1: 5.0, l1y2: 3.5, l2: 4.0, l3: 2.5,
@@ -39,7 +48,8 @@ const RevShareCalculator = ({
 
   const calculateRevShare = (level: keyof LevelPercents): number => {
     if (!isLevelActive(level)) return 0;
-    return (monthlyRevenue * percents[level]) / 100;
+    const totalLevelRevenue = agentCounts[level] * avgRevenues[level];
+    return (totalLevelRevenue * percents[level]) / 100;
   };
 
   const levels = [
@@ -94,21 +104,76 @@ const RevShareCalculator = ({
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
-                <Label htmlFor="monthly-revenue" className="text-sm font-medium">
-                  Chiffre d'affaires mensuel de votre équipe (€)
+                <Label className="text-sm font-medium mb-4 block">
+                  Configuration par niveau
                 </Label>
-                <Input
-                  id="monthly-revenue"
-                  type="number"
-                  value={monthlyRevenue}
-                  onChange={(e) => setMonthlyRevenue(Number(e.target.value))}
-                  className="mt-2 text-lg"
-                  min={0}
-                  step={1000}
-                />
-                <p className="text-sm text-muted-foreground mt-1">
-                  Basé sur les commissions générées par votre organisation
-                </p>
+                <div className="space-y-4">
+                  {levels.map((level) => {
+                    const isActive = isLevelActive(level.key);
+                    const requiredApql = getRequiredApql(level.key);
+                    
+                    return (
+                      <div 
+                        key={level.key} 
+                        className={`p-4 rounded-xl border transition-all ${
+                          isActive ? 'border-primary/20 bg-primary/5' : 'border-muted bg-muted/30 opacity-60'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between mb-3">
+                          <div>
+                            <div className={`font-medium ${isActive ? '' : 'text-muted-foreground'}`}>
+                              {level.label} ({percents[level.key]}%)
+                            </div>
+                            {requiredApql > 0 && (
+                              <div className={`text-xs ${isActive ? 'text-green-600 dark:text-green-400' : 'text-red-500 dark:text-red-400'}`}>
+                                {requiredApql} APQL requis
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                          <div>
+                            <Label htmlFor={`agents-${level.key}`} className="text-xs font-medium">
+                              Nombre d'agents
+                            </Label>
+                            <Input
+                              id={`agents-${level.key}`}
+                              type="number"
+                              value={agentCounts[level.key]}
+                              onChange={(e) => setAgentCounts(prev => ({
+                                ...prev,
+                                [level.key]: Math.max(0, Number(e.target.value) || 0)
+                              }))}
+                              className="mt-1"
+                              min={0}
+                              disabled={!isActive}
+                            />
+                          </div>
+                          
+                          <div>
+                            <Label htmlFor={`revenue-${level.key}`} className="text-xs font-medium">
+                              CA moyen/agent (€)
+                            </Label>
+                            <Input
+                              id={`revenue-${level.key}`}
+                              type="number"
+                              value={avgRevenues[level.key]}
+                              onChange={(e) => setAvgRevenues(prev => ({
+                                ...prev,
+                                [level.key]: Math.max(0, Number(e.target.value) || 0)
+                              }))}
+                              className="mt-1"
+                              min={0}
+                              step={500}
+                              disabled={!isActive}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
 
               <div>
@@ -153,8 +218,8 @@ const RevShareCalculator = ({
               <div className="p-4 bg-primary/5 rounded-xl">
                 <h4 className="font-semibold text-primary mb-2">💡 Comment ça marche ?</h4>
                 <p className="text-sm text-muted-foreground">
-                  Le RevShare eXp vous permet de percevoir un pourcentage sur les commissions 
-                  générées par votre organisation. Les niveaux 4-7 nécessitent un certain nombre d'APQL.
+                  Le RevShare eXp calcule vos revenus basés sur le nombre d'agents et leur CA moyen par niveau. 
+                  Les niveaux 4-7 nécessitent un certain nombre d'APQL pour être débloqués.
                 </p>
               </div>
             </CardContent>
@@ -183,19 +248,19 @@ const RevShareCalculator = ({
                         {!isActive && requiredApql > 0 && (
                           <Lock className="h-4 w-4 text-muted-foreground" />
                         )}
-                        <div>
-                          <div className={`font-medium ${isActive ? '' : 'text-muted-foreground'}`}>
-                            {level.label}
-                          </div>
-                          <div className="text-xs text-muted-foreground">
-                            {percents[level.key]}%
-                            {requiredApql > 0 && (
-                              <span className={`ml-2 ${isActive ? 'text-green-600 dark:text-green-400' : 'text-red-500 dark:text-red-400'}`}>
-                                • {requiredApql} APQL requis
-                              </span>
-                            )}
-                          </div>
-                        </div>
+                         <div>
+                           <div className={`font-medium ${isActive ? '' : 'text-muted-foreground'}`}>
+                             {level.label}
+                           </div>
+                           <div className="text-xs text-muted-foreground">
+                             {agentCounts[level.key]} agents × {avgRevenues[level.key].toLocaleString('fr-FR')}€ × {percents[level.key]}%
+                             {requiredApql > 0 && (
+                               <div className={`${isActive ? 'text-green-600 dark:text-green-400' : 'text-red-500 dark:text-red-400'}`}>
+                                 • {requiredApql} APQL requis
+                               </div>
+                             )}
+                           </div>
+                         </div>
                       </div>
                       <Badge 
                         variant={isActive ? "secondary" : "outline"} 
