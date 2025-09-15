@@ -17,14 +17,14 @@ const Footer = () => {
                 <img 
                   src={logo} 
                   alt="Sebastien Pons Immobilier" 
-                  className="h-36 md:h-52 w-auto"
+                  className="h-36 md:h-42 w-auto"
                 />
               </Link>
               <a href="https://www.expfrance.fr" target="_blank" rel="noopener noreferrer">
                 <img 
                   src={expLogo} 
                   alt="eXp Realty" 
-                  className="h-12 md:h-16 w-auto"
+                  className="h-12 md:h-14 w-auto"
                 />
               </a>
             </div>
