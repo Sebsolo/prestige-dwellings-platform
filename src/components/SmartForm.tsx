@@ -30,7 +30,7 @@ const formSchema = z.object({
   firstname: z.string().min(2, 'Le prénom doit contenir au moins 2 caractères'),
   lastname: z.string().min(2, 'Le nom doit contenir au moins 2 caractères'),
   email: z.string().email('Adresse email invalide'),
-  phone: z.string().optional(),
+  phone: z.string().optional().refine(val => !val || /^(?:\+33|0)[1-9](?:[0-9]{8})$/.test(val.replace(/\s/g, '')), 'Format de téléphone invalide (ex: 01 23 45 67 89)'),
   message: z.string().min(10, 'Le message doit contenir au moins 10 caractères'),
   privacyAccepted: z.boolean().refine(val => val === true, 'Vous devez accepter la politique de confidentialité'),
   honeypot: z.string().max(0, 'Spam détecté'), // Hidden field, should remain empty

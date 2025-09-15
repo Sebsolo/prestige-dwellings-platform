@@ -71,7 +71,7 @@ const Valuation = () => {
       <section className="py-20">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <SmartForm
-            source="estimation"
+            source="estimate"
             title="Demande d'estimation"
             description="Remplissez ce formulaire pour recevoir une estimation personnalisée de votre bien par notre expert."
             className="bg-card shadow-lg rounded-2xl"
