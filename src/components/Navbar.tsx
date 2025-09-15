@@ -30,18 +30,22 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-36 md:h-44">
           {/* Logos */}
-          <Link to="/" className="flex-shrink-0 flex flex-col md:flex-row items-center gap-2 md:gap-4">
-            <img 
-              src={logo} 
-              alt="Sebastien Pons Immobilier" 
-              className="h-48 md:h-64 w-auto"
-            />
-            <img 
-              src={expLogo} 
-              alt="eXp Realty" 
-              className="h-16 md:h-20 w-auto"
-            />
-          </Link>
+          <div className="flex-shrink-0 flex flex-col md:flex-row items-center gap-2 md:gap-4">
+            <Link to="/">
+              <img 
+                src={logo} 
+                alt="Sebastien Pons Immobilier" 
+                className="h-24 md:h-32 w-auto"
+              />
+            </Link>
+            <a href="https://www.expfrance.fr" target="_blank" rel="noopener noreferrer">
+              <img 
+                src={expLogo} 
+                alt="eXp Realty" 
+                className="h-12 md:h-16 w-auto"
+              />
+            </a>
+          </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">

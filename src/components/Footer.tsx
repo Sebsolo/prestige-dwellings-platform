@@ -13,33 +13,19 @@ const Footer = () => {
           {/* Company Info - Hidden on mobile, shown on desktop */}
           <div className="hidden md:block space-y-4 -my-4 md:col-span-2">
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-              <img 
-                src={logo} 
-                alt="Sebastien Pons Immobilier" 
-                className="h-48 md:h-64 w-auto"
-              />
-              <img 
-                src={expLogo} 
-                alt="eXp Realty" 
-                className="h-16 md:h-20 w-auto"
-              />
-            </div>
-          </div>
-
-          {/* Legal */}
-          <div className="space-y-4">
-            <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider">
-              Légal
-            </h4>
-            <div className="space-y-2">
-              <Link to="/mentions-legales" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                {t('footer.legalNotice')}
+              <Link to="/">
+                <img 
+                  src={logo} 
+                  alt="Sebastien Pons Immobilier" 
+                  className="h-48 md:h-64 w-auto"
+                />
               </Link>
-              <Link to="/rgpd" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                {t('footer.privacy')}
-              </Link>
-              <a href="https://www.expfrance.fr/fr/mentions-legales/honoraires" target="_blank" rel="noopener noreferrer" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                {t('footer.terms')}
+              <a href="https://www.expfrance.fr" target="_blank" rel="noopener noreferrer">
+                <img 
+                  src={expLogo} 
+                  alt="eXp Realty" 
+                  className="h-16 md:h-20 w-auto"
+                />
               </a>
             </div>
           </div>
@@ -62,6 +48,24 @@ const Footer = () => {
               <Link to="/rejoindre-exp" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
                 Rejoindre eXp
               </Link>
+            </div>
+          </div>
+
+          {/* Legal */}
+          <div className="space-y-4">
+            <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider">
+              Légal
+            </h4>
+            <div className="space-y-2">
+              <Link to="/mentions-legales" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+                {t('footer.legalNotice')}
+              </Link>
+              <Link to="/rgpd" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+                {t('footer.privacy')}
+              </Link>
+              <a href="https://www.expfrance.fr/fr/mentions-legales/honoraires" target="_blank" rel="noopener noreferrer" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+                {t('footer.terms')}
+              </a>
             </div>
           </div>
 
@@ -89,16 +93,20 @@ const Footer = () => {
           {/* Company Info - Mobile only, shown after menu */}
           <div className="md:hidden space-y-4 -my-4 col-span-full">
             <div className="flex flex-col items-center gap-4">
-              <img 
-                src={logo} 
-                alt="Sebastien Pons Immobilier" 
-                className="h-48 w-auto"
-              />
-              <img 
-                src={expLogo} 
-                alt="eXp Realty" 
-                className="h-16 w-auto"
-              />
+              <Link to="/">
+                <img 
+                  src={logo} 
+                  alt="Sebastien Pons Immobilier" 
+                  className="h-48 w-auto"
+                />
+              </Link>
+              <a href="https://www.expfrance.fr" target="_blank" rel="noopener noreferrer">
+                <img 
+                  src={expLogo} 
+                  alt="eXp Realty" 
+                  className="h-16 w-auto"
+                />
+              </a>
             </div>
           </div>
         </div>
