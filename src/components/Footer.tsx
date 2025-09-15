@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Mail, Phone, MapPin } from 'lucide-react';
 import logo from '@/assets/logo.svg';
+import expLogo from '@/assets/exp-logo.webp';
 const Footer = () => {
   const {
     t
@@ -11,11 +12,18 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="space-y-4 -my-4">
-            <img 
-              src={logo} 
-              alt="Sebastien Pons Immobilier" 
-              className="h-48 md:h-64 w-auto"
-            />
+            <div className="flex flex-col md:flex-row items-start gap-2 md:gap-4">
+              <img 
+                src={logo} 
+                alt="Sebastien Pons Immobilier" 
+                className="h-48 md:h-64 w-auto"
+              />
+              <img 
+                src={expLogo} 
+                alt="eXp Realty" 
+                className="h-12 md:h-16 w-auto md:mt-8"
+              />
+            </div>
           </div>
 
           {/* Contact Info */}
