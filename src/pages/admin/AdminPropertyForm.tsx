@@ -17,7 +17,7 @@ import { toast } from 'sonner';
 import { ArrowLeft, Upload, X, Camera } from 'lucide-react';
 
 const propertySchema = z.object({
-  transaction: z.enum(['sale', 'rental']),
+  transaction: z.enum(['sale', 'rent']),
   type: z.string().min(1, 'Le type est requis'),
   status: z.enum(['draft', 'published']),
   ref: z.string().optional(),
@@ -266,7 +266,7 @@ const AdminPropertyForm = () => {
                               </FormControl>
                               <SelectContent>
                                 <SelectItem value="sale">Vente</SelectItem>
-                                <SelectItem value="rental">Location</SelectItem>
+                                <SelectItem value="rent">Location</SelectItem>
                               </SelectContent>
                             </Select>
                             <FormMessage />
