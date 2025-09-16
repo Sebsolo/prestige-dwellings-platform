@@ -20,7 +20,7 @@ const Rentals = () => {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const data = await propertiesApi.list({ transaction: 'rental' });
+        const data = await propertiesApi.list({ transaction: 'rent' });
         setProperties(data);
         setFilteredProperties(data);
       } catch (error) {
@@ -93,7 +93,7 @@ const Rentals = () => {
             <PropertyFiltersComponent
               filters={filters}
               onFiltersChange={setFilters}
-              transaction="rental"
+              transaction="rent"
             />
           </div>
 

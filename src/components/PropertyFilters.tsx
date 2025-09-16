@@ -19,7 +19,7 @@ export interface PropertyFiltersType {
 interface PropertyFiltersProps {
   filters: PropertyFiltersType;
   onFiltersChange: (filters: PropertyFiltersType) => void;
-  transaction: 'sale' | 'rental';
+  transaction: 'sale' | 'rent';
 }
 
 const PropertyFiltersComponent = ({ filters, onFiltersChange, transaction }: PropertyFiltersProps) => {

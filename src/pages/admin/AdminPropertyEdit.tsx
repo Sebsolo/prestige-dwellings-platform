@@ -18,7 +18,7 @@ import { ArrowLeft, Upload, X, Camera } from 'lucide-react';
 import { propertiesApi } from '@/services/propertiesApi';
 
 const propertySchema = z.object({
-  transaction: z.enum(['sale', 'rental']),
+  transaction: z.enum(['sale', 'rent']),
   type: z.enum(['apartment', 'house', 'commercial', 'land', 'other']),
   status: z.enum(['draft', 'published', 'under_offer', 'sold', 'rented']),
   ref: z.string().optional(),

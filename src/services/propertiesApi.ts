@@ -5,7 +5,7 @@ import { Property, PropertyWithMedia, Media } from '@/types/index';
 const db = supabase as any;
 
 interface PropertyFilters {
-  transaction?: 'sale' | 'rental';
+  transaction?: 'sale' | 'rent';
   city?: string;
   type?: string;
   priceMin?: number;
@@ -46,7 +46,7 @@ export const propertiesApi = {
     }
 
     if (filters.priceMin) {
-      if (filters.transaction === 'rental') {
+      if (filters.transaction === 'rent') {
         query = query.gte('rent_cc', filters.priceMin);
       } else {
         query = query.gte('price', filters.priceMin);
@@ -54,7 +54,7 @@ export const propertiesApi = {
     }
 
     if (filters.priceMax) {
-      if (filters.transaction === 'rental') {
+      if (filters.transaction === 'rent') {
         query = query.lte('rent_cc', filters.priceMax);
       } else {
         query = query.lte('price', filters.priceMax);

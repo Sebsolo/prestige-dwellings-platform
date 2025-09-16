@@ -168,7 +168,7 @@ const PropertyDetail = () => {
                 <span>{property.address || property.city}</span>
               </div>
               <div className="text-3xl font-bold text-primary mb-4">
-                {property.transaction === 'rental' && property.rent_cc ? (
+                {property.transaction === 'rent' && property.rent_cc ? (
                   `${new Intl.NumberFormat('fr-FR', {
                     style: 'currency',
                     currency: 'EUR',

@@ -14,7 +14,7 @@ export interface Property {
   bedrooms?: number;
   bathrooms?: number;
   type: 'apartment' | 'house' | 'commercial' | 'land' | 'other';
-  transaction: 'sale' | 'rental';
+  transaction: 'sale' | 'rent';
   city: string;
   address?: string;
   postal_code?: string;

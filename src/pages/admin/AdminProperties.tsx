@@ -27,7 +27,7 @@ const AdminProperties = () => {
       setLoading(true);
       // Admin should see all properties regardless of status
       const data = await propertiesApi.list({ 
-        transaction: activeTab as 'sale' | 'rental',
+        transaction: activeTab as 'sale' | 'rent',
         status: 'all' // Show all properties for admin
       });
       setProperties(data);
@@ -98,7 +98,7 @@ const AdminProperties = () => {
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList>
             <TabsTrigger value="sale">Vente</TabsTrigger>
-            <TabsTrigger value="rental">Location</TabsTrigger>
+            <TabsTrigger value="rent">Location</TabsTrigger>
           </TabsList>
 
           <TabsContent value={activeTab} className="space-y-4">
