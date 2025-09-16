@@ -28,15 +28,10 @@ const RichTextEditor = React.forwardRef<ReactQuill, RichTextEditorProps>(
         [{ 'size': ['small', false, 'large', 'huge'] }],
         ['blockquote', 'code-block'],
         ['link', 'image', 'video'],
-        [{ 'float': ['left', 'right', 'none'] }],
         ['clean']
       ],
       clipboard: {
         matchVisual: false,
-      },
-      imageResize: {
-        displaySize: true,
-        modules: ['Resize', 'DisplaySize', 'Toolbar']
       }
     };
 
@@ -47,8 +42,7 @@ const RichTextEditor = React.forwardRef<ReactQuill, RichTextEditorProps>(
       'list', 'bullet', 'indent',
       'align', 'size',
       'blockquote', 'code-block',
-      'link', 'image', 'video',
-      'float'
+      'link', 'image', 'video'
     ];
 
     return (
