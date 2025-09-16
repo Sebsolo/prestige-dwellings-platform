@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import BookingCTA from './BookingCTA';
 import { X } from 'lucide-react';
 
 const StickyFooterCTA = () => {
+  const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
 
@@ -30,13 +32,13 @@ const StickyFooterCTA = () => {
     <div className="fixed bottom-0 left-0 right-0 bg-background border-t border-border shadow-luxury z-50 animate-in slide-in-from-bottom duration-300">
       <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <span className="font-medium text-foreground">Prêt à en parler ?</span>
-          <BookingCTA label="Réserver un rendez-vous" size="sm" />
+          <span className="font-medium text-foreground">{t('joinExp.sticky_cta')}</span>
+          <BookingCTA label={t('joinExp.sticky_cta_button')} size="sm" />
         </div>
         <button
           onClick={handleDismiss}
           className="text-muted-foreground hover:text-foreground transition-colors"
-          aria-label="Fermer"
+          aria-label={t('common.close')}
         >
           <X className="h-5 w-5" />
         </button>

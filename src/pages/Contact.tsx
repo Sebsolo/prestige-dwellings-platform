@@ -1,8 +1,11 @@
+import { useTranslation } from 'react-i18next';
 import Layout from '@/components/Layout';
 import SmartForm from '@/components/SmartForm';
 import { Phone, Mail, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
 
 const Contact = () => {
+  const { t } = useTranslation();
+  
   return (
     <Layout title="Contact | Sebastien Pons Immobilier" description="Contactez Sebastien Pons, agent immobilier eXp. Téléphone, email et formulaire de contact disponibles.">
       <div className="min-h-screen bg-background py-20">
@@ -11,14 +14,14 @@ const Contact = () => {
             {/* Contact Information */}
             <div>
               <h1 className="text-4xl font-serif font-bold text-foreground mb-8">
-                Contactez-moi
+                {t('contact.title')}
               </h1>
               
               <div className="space-y-6 mb-8">
                 <div className="flex items-center space-x-4">
                   <Phone className="h-6 w-6 text-primary" />
                   <div>
-                    <p className="font-medium text-foreground">Téléphone</p>
+                    <p className="font-medium text-foreground">{t('contact.phone_label')}</p>
                     <a href="tel:0601771011" className="text-muted-foreground hover:text-primary transition-colors">
                       06 01 77 10 11
                     </a>
@@ -28,7 +31,7 @@ const Contact = () => {
                 <div className="flex items-center space-x-4">
                   <Mail className="h-6 w-6 text-primary" />
                   <div>
-                    <p className="font-medium text-foreground">Email</p>
+                    <p className="font-medium text-foreground">{t('contact.email_label')}</p>
                     <a 
                       href="mailto:sebastien.pons@expfrance.fr" 
                       className="text-muted-foreground hover:text-primary transition-colors"
@@ -41,7 +44,7 @@ const Contact = () => {
 
               {/* Social Media Links */}
               <div>
-                <p className="font-medium text-foreground mb-4">Suivez-moi sur les réseaux</p>
+                <p className="font-medium text-foreground mb-4">{t('contact.social_follow')}</p>
                 <div className="flex space-x-4">
                   <a 
                     href="https://www.facebook.com/sebpons.immo" 
@@ -86,13 +89,13 @@ const Contact = () => {
             {/* Contact Form */}
             <div>
               <h2 className="text-2xl font-serif font-bold text-foreground mb-6">
-                Envoyez-moi un message
+                {t('contact.form_title')}
               </h2>
               
               <SmartForm 
                 source="contact"
-                title="Envoyez-moi un message"
-                description="Remplissez le formulaire ci-dessous et je vous répondrai rapidement."
+                title={t('contact.form_title')}
+                description={t('contact.form_description')}
                 className="space-y-6"
                 onSuccess={() => {
                   // Form success is handled by SmartForm internally

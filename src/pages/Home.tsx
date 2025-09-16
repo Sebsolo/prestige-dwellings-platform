@@ -105,7 +105,7 @@ const Home = () => {
               // Fallback content when no featured properties
               <div className="col-span-full text-center py-12">
                 <p className="text-muted-foreground text-lg">
-                  Aucun bien vedette disponible pour le moment
+                  {t('home.no_featured_properties')}
                 </p>
               </div>
             )}
@@ -117,13 +117,13 @@ const Home = () => {
       <section className="py-20 bg-gradient-primary text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">
-            {t('home.hero_cta1')}
+            {t('home.valuation_cta_title')}
           </h2>
           <p className="text-xl text-white/90 mb-8">
-            Obtenez une estimation gratuite de votre bien en quelques minutes
+            {t('home.valuation_cta_subtitle')}
           </p>
           <Button size="lg" variant="outline" className="bg-white text-primary hover:bg-white/90">
-            Demander une estimation
+            {t('home.valuation_cta_button')}
             <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
         </div>
@@ -134,10 +134,10 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-4">
-              Ils nous font confiance
+              {t('home.testimonials_title')}
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Découvrez les avis de nos clients sur Google Business
+              {t('home.testimonials_subtitle')}
             </p>
           </div>
           
@@ -150,10 +150,10 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-4">
-              Actualités Immobilières
+              {t('home.blog_title')}
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Découvrez nos dernières analyses et conseils sur le marché immobilier
+              {t('home.blog_subtitle')}
             </p>
           </div>
           
@@ -187,7 +187,7 @@ const Home = () => {
                       to={`/blog/${post.slug}`}
                       className="inline-flex items-center text-primary hover:text-primary/80 font-medium"
                     >
-                      Lire la suite
+                      {t('common.readMore')}
                       <ArrowRight className="ml-1 h-4 w-4" />
                     </Link>
                   </div>
@@ -198,11 +198,11 @@ const Home = () => {
                 <div key={i} className="bg-card rounded-lg shadow-card overflow-hidden">
                   <div className="h-48 bg-muted"></div>
                   <div className="p-6">
-                    <h3 className="text-lg font-semibold mb-2">Article à venir #{i}</h3>
+                    <h3 className="text-lg font-semibold mb-2">{t('home.article_preview', { number: i })}</h3>
                     <p className="text-muted-foreground mb-4">
-                      Découvrez les tendances du marché immobilier...
+                      {t('home.article_preview_description')}
                     </p>
-                    <span className="text-primary font-medium">Bientôt disponible</span>
+                    <span className="text-primary font-medium">{t('common.comingSoon')}</span>
                   </div>
                 </div>
               ))
@@ -212,7 +212,7 @@ const Home = () => {
           <div className="text-center mt-8">
             <Link to="/blog">
               <Button variant="outline" size="lg">
-                Voir tous les articles
+                {t('common.seeAll')}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>

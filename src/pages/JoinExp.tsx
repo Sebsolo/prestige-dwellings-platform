@@ -127,17 +127,17 @@ const JoinExp = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <Badge variant="outline" className="mb-6 border-primary/20 text-primary">
-                Indépendant, mais jamais seul
+                {t('joinExp.hero_badge')}
               </Badge>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6 leading-tight">
-                Rejoindre eXp : libérez votre potentiel d'agent immobilier
+                {t('joinExp.hero_title')}
               </h1>
               <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-                Un modèle clair, des outils puissants et un réseau international — tout en restant 100% entrepreneur.
+                {t('joinExp.hero_subtitle')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <BookingCTA label="Réserver un rendez-vous" size="lg" />
-                <BookingCTA label="Parler à Sébastien" variant="outline" size="lg" />
+                <BookingCTA label={t('joinExp.hero_cta1')} size="lg" />
+                <BookingCTA label={t('joinExp.hero_cta2')} variant="outline" size="lg" />
               </div>
             </div>
             <div className="relative">
@@ -146,8 +146,8 @@ const JoinExp = () => {
                   <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-4 mx-auto">
                     <TrendingUp className="h-8 w-8" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-2">Tableau de bord agent</h3>
-                  <p className="text-white/80">Outils de gestion intégrés</p>
+                  <h3 className="text-xl font-semibold mb-2">{t('joinExp.dashboard_title')}</h3>
+                  <p className="text-white/80">{t('joinExp.dashboard_subtitle')}</p>
                 </div>
               </div>
             </div>
@@ -160,10 +160,10 @@ const JoinExp = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-serif font-bold mb-4">
-              Les conditions clés en France
+              {t('joinExp.key_conditions_title')}
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Modèle transparent : split initial, 100% après cap, revenu partagé à 7 niveaux et opportunités en actions dont l'award ICON.
+              {t('joinExp.key_conditions_subtitle')}
             </p>
           </div>
           
@@ -191,7 +191,7 @@ const JoinExp = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-serif font-bold mb-4">
-              Pourquoi eXp ?
+              {t('joinExp.why_title')}
             </h2>
           </div>
           
@@ -218,7 +218,7 @@ const JoinExp = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-serif font-bold mb-4">
-              Démarrer en 4 étapes
+              {t('joinExp.steps_title')}
             </h2>
           </div>
           
@@ -247,10 +247,10 @@ const JoinExp = () => {
       <section id="revshare-calculator" className="mt-16 border-t border-muted pt-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-8">
           <h2 className="text-2xl font-bold tracking-tight mb-2">
-            Calculez votre potentiel de revenus eXp
+            {t('joinExp.calculator_title')}
           </h2>
           <p className="text-muted-foreground mb-6">
-            Ajustez les hypothèses et visualisez un ordre de grandeur (à titre indicatif).
+            {t('joinExp.calculator_subtitle')}
           </p>
         </div>
         <RevShareCalculator 
@@ -265,7 +265,7 @@ const JoinExp = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-serif font-bold mb-4">
-              Questions fréquentes
+              {t('joinExp.faq_title')}
             </h2>
           </div>
           
@@ -288,7 +288,7 @@ const JoinExp = () => {
       <section className="py-8 bg-muted/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-center text-sm text-muted-foreground">
-            Informations indicatives susceptibles d'évolution. Détails, conditions et éligibilité selon la politique eXp France en vigueur.
+            {t('joinExp.legal_notice')}
           </p>
         </div>
       </section>

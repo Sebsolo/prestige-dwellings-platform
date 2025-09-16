@@ -30,7 +30,13 @@ const resources = {
         name: 'Nom',
         email: 'Email',
         phone: 'Téléphone',
-        message: 'Message'
+        message: 'Message',
+        readMore: 'Lire la suite',
+        seeAll: 'Voir tous les articles',
+        comingSoon: 'Bientôt disponible',
+        noResults: 'Aucun résultat trouvé',
+        close: 'Fermer',
+        viewDetails: 'Voir le détail'
       },
       home: {
         title: 'Sebastien Pons Immobilier – France & International',
@@ -40,7 +46,15 @@ const resources = {
         featured_title: 'Biens Vedettes',
         featured_subtitle: 'Une sélection exclusive de nos plus belles propriétés',
         testimonials_title: 'Ils nous font confiance',
-        blog_title: 'Actualités Immobilières'
+        testimonials_subtitle: 'Découvrez les avis de nos clients sur Google Business',
+        blog_title: 'Actualités Immobilières',
+        blog_subtitle: 'Découvrez nos dernières analyses et conseils sur le marché immobilier',
+        valuation_cta_title: 'Estimation gratuite',
+        valuation_cta_subtitle: 'Obtenez une estimation gratuite de votre bien en quelques minutes',
+        valuation_cta_button: 'Demander une estimation',
+        no_featured_properties: 'Aucun bien vedette disponible pour le moment',
+        article_preview: 'Article à venir #{{number}}',
+        article_preview_description: 'Découvrez les tendances du marché immobilier...'
       },
       property: {
         visit_request: 'Demander une visite',
@@ -50,8 +64,12 @@ const resources = {
         location: 'Localisation'
       },
       contact: {
-        title: 'Nous contacter',
-        subtitle: 'Une question ? Un projet ? Contactez-nous',
+        title: 'Contactez-moi',
+        form_title: 'Envoyez-moi un message',
+        form_description: 'Remplissez le formulaire ci-dessous et je vous répondrai rapidement.',
+        phone_label: 'Téléphone',
+        email_label: 'Email',
+        social_follow: 'Suivez-moi sur les réseaux',
         form_sent: 'Votre message a été envoyé avec succès'
       },
       valuation: {
@@ -61,10 +79,23 @@ const resources = {
         property_address: 'Adresse du bien'
       },
       joinExp: {
-        title: 'Rejoindre eXp Realty',
-        subtitle: 'Développez votre carrière dans l\'immobilier',
-        why_title: 'Pourquoi rejoindre eXp ?',
-        faq_title: 'Questions fréquentes'
+        hero_badge: 'Indépendant, mais jamais seul',
+        hero_title: 'Rejoindre eXp : libérez votre potentiel d\'agent immobilier',
+        hero_subtitle: 'Un modèle clair, des outils puissants et un réseau international — tout en restant 100% entrepreneur.',
+        hero_cta1: 'Réserver un rendez-vous',
+        hero_cta2: 'Parler à Sébastien',
+        dashboard_title: 'Tableau de bord agent',
+        dashboard_subtitle: 'Outils de gestion intégrés',
+        key_conditions_title: 'Les conditions clés en France',
+        key_conditions_subtitle: 'Modèle transparent : split initial, 100% après cap, revenu partagé à 7 niveaux et opportunités en actions dont l\'award ICON.',
+        why_title: 'Pourquoi eXp ?',
+        steps_title: 'Démarrer en 4 étapes',
+        calculator_title: 'Calculez votre potentiel de revenus eXp',
+        calculator_subtitle: 'Ajustez les hypothèses et visualisez un ordre de grandeur (à titre indicatif).',
+        faq_title: 'Questions fréquentes',
+        legal_notice: 'Informations indicatives susceptibles d\'évolution. Détails, conditions et éligibilité selon la politique eXp France en vigueur.',
+        sticky_cta: 'Prêt à en parler ?',
+        sticky_cta_button: 'Réserver un rendez-vous'
       },
       blog: {
         title: 'Blog Immobilier',
@@ -107,7 +138,13 @@ const resources = {
         name: 'Name',
         email: 'Email',
         phone: 'Phone',
-        message: 'Message'
+        message: 'Message',
+        readMore: 'Read more',
+        seeAll: 'See all articles',
+        comingSoon: 'Coming soon',
+        noResults: 'No results found',
+        close: 'Close',
+        viewDetails: 'View details'
       },
       home: {
         title: 'Sebastien Pons Real Estate – France & International',
@@ -117,7 +154,15 @@ const resources = {
         featured_title: 'Featured Properties',
         featured_subtitle: 'An exclusive selection of our finest properties',
         testimonials_title: 'They trust us',
-        blog_title: 'Real Estate News'
+        testimonials_subtitle: 'Discover our clients\' reviews on Google Business',
+        blog_title: 'Real Estate News',
+        blog_subtitle: 'Discover our latest analysis and advice on the real estate market',
+        valuation_cta_title: 'Free valuation',
+        valuation_cta_subtitle: 'Get a free valuation of your property in minutes',
+        valuation_cta_button: 'Request a valuation',
+        no_featured_properties: 'No featured properties available at the moment',
+        article_preview: 'Upcoming article #{{number}}',
+        article_preview_description: 'Discover real estate market trends...'
       },
       property: {
         visit_request: 'Request a visit',
@@ -127,8 +172,12 @@ const resources = {
         location: 'Location'
       },
       contact: {
-        title: 'Contact us',
-        subtitle: 'A question? A project? Contact us',
+        title: 'Contact me',
+        form_title: 'Send me a message',
+        form_description: 'Fill out the form below and I will reply quickly.',
+        phone_label: 'Phone',
+        email_label: 'Email',
+        social_follow: 'Follow me on social media',
         form_sent: 'Your message has been sent successfully'
       },
       valuation: {
@@ -138,10 +187,23 @@ const resources = {
         property_address: 'Property address'
       },
       joinExp: {
-        title: 'Join eXp Realty',
-        subtitle: 'Develop your real estate career',
-        why_title: 'Why join eXp?',
-        faq_title: 'Frequently Asked Questions'
+        hero_badge: 'Independent, but never alone',
+        hero_title: 'Join eXp: unleash your potential as a real estate agent',
+        hero_subtitle: 'A clear model, powerful tools and an international network — while remaining 100% entrepreneur.',
+        hero_cta1: 'Book an appointment',
+        hero_cta2: 'Talk to Sebastien',
+        dashboard_title: 'Agent dashboard',
+        dashboard_subtitle: 'Integrated management tools',
+        key_conditions_title: 'Key conditions in France',
+        key_conditions_subtitle: 'Transparent model: initial split, 100% after cap, revenue shared over 7 levels and opportunities in shares including the ICON award.',
+        why_title: 'Why eXp?',
+        steps_title: 'Get started in 4 steps',
+        calculator_title: 'Calculate your eXp revenue potential',
+        calculator_subtitle: 'Adjust assumptions and visualize an order of magnitude (for information only).',
+        faq_title: 'Frequently Asked Questions',
+        legal_notice: 'Indicative information subject to change. Details, conditions and eligibility according to current eXp France policy.',
+        sticky_cta: 'Ready to talk?',
+        sticky_cta_button: 'Book an appointment'
       },
       blog: {
         title: 'Real Estate Blog',
