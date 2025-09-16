@@ -12,7 +12,7 @@ interface PropertyCardProps {
 
 const PropertyCard = ({ property }: PropertyCardProps) => {
   const { t } = useTranslation();
-  const mainImage = property.media?.[0]?.path;
+  const mainImage = property.media?.length > 0 ? property.media[0]?.path : null;
   
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('fr-FR', {
@@ -27,9 +27,10 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
       <div className="aspect-[4/3] relative overflow-hidden">
         {mainImage ? (
           <img
-            src={mainImage}
+            src={`https://gxzifrexmsouvfnriyym.supabase.co/storage/v1/object/public/property-images/${mainImage}`}
             alt={property.title_fr || ''}
             className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+            loading="lazy"
           />
         ) : (
           <div className="w-full h-full bg-muted flex items-center justify-center">
