@@ -120,13 +120,13 @@ const AdminBlogEdit = () => {
 
     try {
       const { data, error } = await supabase.storage
-        .from('media')
+        .from('blog-covers')
         .upload(fileName, file);
 
       if (error) throw error;
 
       const { data: { publicUrl } } = supabase.storage
-        .from('media')
+        .from('blog-covers')
         .getPublicUrl(fileName);
 
       setCoverImage([{
