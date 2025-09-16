@@ -96,7 +96,7 @@ const Blog = () => {
                 <Card key={post.id} className="group hover:shadow-lg transition-shadow">
                   <div className="aspect-video bg-muted overflow-hidden">
                     <img 
-                      src={post.cover_path || '/placeholder.svg'} 
+                      src={post.cover_path ? `https://gxzifrexmsouvfnriyym.supabase.co/storage/v1/object/public/blog-covers/${post.cover_path}` : '/placeholder.svg'} 
                       alt={post.title_fr}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                     />

@@ -12,7 +12,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Company Info - Hidden on mobile, shown on desktop */}
           <div className="hidden md:block space-y-4 -my-4 md:col-span-2">
-            <div className="flex flex-col lg:flex-row items-center gap-4">
+            <div className="flex flex-col lg:flex-row items-end gap-4">
               <Link to="/">
                 <img 
                   src={logo} 
@@ -20,7 +20,7 @@ const Footer = () => {
                   className="h-36 md:h-36 w-auto"
                 />
               </Link>
-              <a href="https://www.expfrance.fr" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.expfrance.fr" target="_blank" rel="noopener noreferrer" className="mb-2">
                 <img 
                   src={expLogo} 
                   alt="eXp Realty" 
