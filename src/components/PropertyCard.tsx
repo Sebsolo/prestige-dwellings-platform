@@ -12,7 +12,8 @@ interface PropertyCardProps {
 
 const PropertyCard = ({ property }: PropertyCardProps) => {
   const { t } = useTranslation();
-  const mainImage = property.media?.length > 0 ? property.media[0]?.path : null;
+  const mainImage = property.media?.find(media => media.order_index === 0) || property.media?.[0];
+  const imageUrl = mainImage?.path ? `https://gxzifrexmsouvfnriyym.supabase.co/storage/v1/object/public/property-images/${mainImage.path}` : null;
   
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('fr-FR', {
@@ -25,10 +26,10 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-shadow">
       <div className="aspect-[4/3] relative overflow-hidden">
-        {mainImage ? (
+        {imageUrl ? (
           <img
-            src={`https://gxzifrexmsouvfnriyym.supabase.co/storage/v1/object/public/property-images/${mainImage}`}
-            alt={property.title_fr || ''}
+            src={imageUrl}
+            alt={mainImage?.title || property.title_fr || ''}
             className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
             loading="lazy"
           />
@@ -89,10 +90,14 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
         
         <div className="flex items-center justify-between">
           <div className="text-xl font-bold text-primary">
-            {property.price && formatPrice(property.price)}
-            {property.rent_cc && (
-              <span className="text-sm font-normal"> /mois CC</span>
-            )}
+            {property.transaction === 'rent' && property.rent_cc ? (
+              <>
+                {formatPrice(property.rent_cc)}
+                <span className="text-sm font-normal"> /mois CC</span>
+              </>
+            ) : property.price ? (
+              formatPrice(property.price)
+            ) : null}
           </div>
           
           <Button asChild size="sm">
