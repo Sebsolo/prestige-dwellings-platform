@@ -25,12 +25,18 @@ const RichTextEditor = React.forwardRef<ReactQuill, RichTextEditorProps>(
         [{ 'list': 'ordered'}, { 'list': 'bullet' }],
         [{ 'indent': '-1'}, { 'indent': '+1' }],
         [{ 'align': [] }],
+        [{ 'size': ['small', false, 'large', 'huge'] }],
         ['blockquote', 'code-block'],
         ['link', 'image', 'video'],
+        [{ 'float': ['left', 'right', 'none'] }],
         ['clean']
       ],
       clipboard: {
         matchVisual: false,
+      },
+      imageResize: {
+        displaySize: true,
+        modules: ['Resize', 'DisplaySize', 'Toolbar']
       }
     };
 
@@ -39,9 +45,10 @@ const RichTextEditor = React.forwardRef<ReactQuill, RichTextEditorProps>(
       'bold', 'italic', 'underline', 'strike',
       'color', 'background',
       'list', 'bullet', 'indent',
-      'align',
+      'align', 'size',
       'blockquote', 'code-block',
-      'link', 'image', 'video'
+      'link', 'image', 'video',
+      'float'
     ];
 
     return (
@@ -119,6 +126,38 @@ const RichTextEditor = React.forwardRef<ReactQuill, RichTextEditorProps>(
           
           .ql-toolbar button.ql-active .ql-fill {
             fill: hsl(var(--primary));
+          }
+
+          .ql-editor img {
+            max-width: 100%;
+            height: auto;
+          }
+
+          .ql-editor img.ql-align-left {
+            float: left;
+            margin: 0 15px 10px 0;
+          }
+
+          .ql-editor img.ql-align-right {
+            float: right;
+            margin: 0 0 10px 15px;
+          }
+
+          .ql-editor img.ql-align-center {
+            display: block;
+            margin: 10px auto;
+          }
+
+          .ql-size-small {
+            font-size: 0.75em;
+          }
+
+          .ql-size-large {
+            font-size: 1.5em;
+          }
+
+          .ql-size-huge {
+            font-size: 2.5em;
           }
         `}</style>
       </div>

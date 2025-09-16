@@ -11,6 +11,7 @@ import { Input } from '@/components/ui/input';
 import { RichTextEditor } from '@/components/ui/rich-text-editor';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { FileUpload, FilePreview } from '@/components/ui/file-upload';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { ArrowLeft, Loader } from 'lucide-react';
@@ -35,6 +36,7 @@ const AdminBlogEdit = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingPost, setIsLoadingPost] = useState(true);
   const [activeTab, setActiveTab] = useState('french');
+  const [coverImage, setCoverImage] = useState<Array<{ file?: File; preview: string; id: string; title?: string }>>([]);
 
   const form = useForm<BlogFormData>({
     resolver: zodResolver(blogSchema),
@@ -69,6 +71,15 @@ const AdminBlogEdit = () => {
             status: data.status as 'draft' | 'published',
             cover_path: data.cover_path || '',
           });
+
+          // Set cover image if exists
+          if (data.cover_path) {
+            setCoverImage([{
+              preview: data.cover_path,
+              id: 'existing-cover',
+              title: 'Image de couverture'
+            }]);
+          }
         }
       } catch (error) {
         console.error('Error fetching post:', error);
@@ -98,6 +109,44 @@ const AdminBlogEdit = () => {
   const generateExcerpt = (content: string) => {
     const cleanContent = content.replace(/<[^>]*>/g, ''); // Remove HTML tags
     return cleanContent.substring(0, 200) + (cleanContent.length > 200 ? '...' : '');
+  };
+
+  // Handle file upload for cover image
+  const handleCoverImageUpload = async (files: File[]) => {
+    if (files.length === 0) return;
+
+    const file = files[0];
+    const fileName = `blog-covers/${Date.now()}-${file.name}`;
+
+    try {
+      const { data, error } = await supabase.storage
+        .from('media')
+        .upload(fileName, file);
+
+      if (error) throw error;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('media')
+        .getPublicUrl(fileName);
+
+      setCoverImage([{
+        file,
+        preview: publicUrl,
+        id: 'new-cover',
+        title: file.name
+      }]);
+
+      form.setValue('cover_path', publicUrl);
+      toast.success('Image de couverture uploadée avec succès');
+    } catch (error) {
+      console.error('Error uploading cover image:', error);
+      toast.error('Erreur lors de l\'upload de l\'image');
+    }
+  };
+
+  const handleRemoveCoverImage = (id: string) => {
+    setCoverImage([]);
+    form.setValue('cover_path', '');
   };
 
   const onSubmit = async (data: BlogFormData) => {
@@ -215,12 +264,33 @@ const AdminBlogEdit = () => {
                   name="cover_path"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Image de couverture (URL)</FormLabel>
+                      <FormLabel>Image de couverture</FormLabel>
                       <FormControl>
-                        <Input 
-                          placeholder="https://example.com/image.jpg" 
-                          {...field} 
-                        />
+                        <div className="space-y-4">
+                          <FileUpload
+                            onFileSelect={handleCoverImageUpload}
+                            accept="image/png,image/jpeg,image/jpg,image/webp"
+                            maxFiles={1}
+                          />
+                          <FilePreview
+                            files={coverImage}
+                            onRemove={handleRemoveCoverImage}
+                          />
+                          <Input 
+                            placeholder="ou collez une URL d'image..." 
+                            {...field}
+                            onChange={(e) => {
+                              field.onChange(e);
+                              if (e.target.value && !coverImage.length) {
+                                setCoverImage([{
+                                  preview: e.target.value,
+                                  id: 'url-cover',
+                                  title: 'Image depuis URL'
+                                }]);
+                              }
+                            }}
+                          />
+                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
