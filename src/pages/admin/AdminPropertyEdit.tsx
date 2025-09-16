@@ -15,6 +15,7 @@ import { Switch } from '@/components/ui/switch';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { ArrowLeft, Upload, X, Camera } from 'lucide-react';
+import { FileUpload, FilePreview } from '@/components/ui/file-upload';
 import { propertiesApi } from '@/services/propertiesApi';
 
 const propertySchema = z.object({
@@ -133,11 +134,8 @@ const AdminPropertyEdit = () => {
     }
   };
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (!files) return;
-
-    Array.from(files).forEach(file => {
+  const handleImageUpload = (files: File[]) => {
+    files.forEach(file => {
       if (file.type.startsWith('image/')) {
         const preview = URL.createObjectURL(file);
         const newId = Math.random().toString(36).substr(2, 9);
@@ -791,83 +789,33 @@ const AdminPropertyEdit = () => {
                   <CardContent className="space-y-4">
                     {/* Existing Images */}
                     {existingImages.length > 0 && (
-                      <div>
-                        <h4 className="text-sm font-medium mb-2">Images existantes</h4>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                          {existingImages.map((image) => (
-                            <div key={image.id} className="relative group">
-                              <img
-                                src={image.preview}
-                                alt="Property"
-                                className="w-full h-32 object-cover rounded-lg"
-                              />
-                              <Button
-                                type="button"
-                                size="sm"
-                                variant="destructive"
-                                className="absolute top-2 right-2 h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                                onClick={() => removeExistingImage(image.id)}
-                              >
-                                <X className="h-3 w-3" />
-                              </Button>
-                            </div>
-                          ))}
-                        </div>
+                      <div className="space-y-2">
+                        <h4 className="text-sm font-medium">Images existantes</h4>
+                        <FilePreview
+                          files={existingImages}
+                          onRemove={removeExistingImage}
+                        />
                       </div>
                     )}
 
                     {/* New Images */}
                     {uploadedImages.length > 0 && (
-                      <div>
-                        <h4 className="text-sm font-medium mb-2">Nouvelles images</h4>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                          {uploadedImages.map((image) => (
-                            <div key={image.id} className="relative group">
-                              <img
-                                src={image.preview}
-                                alt="Property"
-                                className="w-full h-32 object-cover rounded-lg"
-                              />
-                              <Button
-                                type="button"
-                                size="sm"
-                                variant="destructive"
-                                className="absolute top-2 right-2 h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                                onClick={() => removeNewImage(image.id)}
-                              >
-                                <X className="h-3 w-3" />
-                              </Button>
-                            </div>
-                          ))}
-                        </div>
+                      <div className="space-y-2">
+                        <h4 className="text-sm font-medium">Nouvelles images</h4>
+                        <FilePreview
+                          files={uploadedImages}
+                          onRemove={removeNewImage}
+                        />
                       </div>
                     )}
 
                     {/* Upload Input */}
-                    <div className="border-2 border-dashed border-muted rounded-lg p-6">
-                      <div className="text-center">
-                        <Camera className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                        <p className="text-sm text-muted-foreground mb-4">
-                          Ajoutez des photos du bien
-                        </p>
-                        <label htmlFor="image-upload" className="cursor-pointer">
-                          <Button type="button" variant="outline" asChild>
-                            <span>
-                              <Upload className="h-4 w-4 mr-2" />
-                              Choisir des fichiers
-                            </span>
-                          </Button>
-                        </label>
-                        <input
-                          id="image-upload"
-                          type="file"
-                          multiple
-                          accept="image/*"
-                          className="hidden"
-                          onChange={handleImageUpload}
-                        />
-                      </div>
-                    </div>
+                    <FileUpload
+                      onFileSelect={handleImageUpload}
+                      multiple
+                      accept="image/png,image/jpeg,image/jpg,image/webp"
+                      maxFiles={20}
+                    />
                   </CardContent>
                 </Card>
               </TabsContent>

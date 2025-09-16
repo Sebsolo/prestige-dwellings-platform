@@ -14,7 +14,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Switch } from '@/components/ui/switch';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { ArrowLeft, Upload, X, Camera } from 'lucide-react';
+import { ArrowLeft, Camera } from 'lucide-react';
+import { FileUpload, FilePreview } from '@/components/ui/file-upload';
 
 const propertySchema = z.object({
   transaction: z.enum(['sale', 'rent']),
@@ -66,11 +67,8 @@ const AdminPropertyForm = () => {
     },
   });
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (!files) return;
-
-    Array.from(files).forEach(file => {
+  const handleImageUpload = (files: File[]) => {
+    files.forEach(file => {
       if (file.type.startsWith('image/')) {
         const preview = URL.createObjectURL(file);
         const id = Math.random().toString(36).substr(2, 9);
@@ -689,49 +687,17 @@ const AdminPropertyForm = () => {
                         <h3 className="font-medium">Photos du bien</h3>
                       </div>
                       
-                      <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center">
-                        <input
-                          type="file"
-                          id="image-upload"
-                          multiple
-                          accept="image/*"
-                          onChange={handleImageUpload}
-                          className="hidden"
-                        />
-                        <label
-                          htmlFor="image-upload"
-                          className="cursor-pointer flex flex-col items-center gap-2"
-                        >
-                          <Upload className="h-8 w-8 text-muted-foreground" />
-                          <span className="text-sm text-muted-foreground">
-                            Cliquez pour ajouter des photos ou glissez-déposez
-                          </span>
-                          <span className="text-xs text-muted-foreground">
-                            Formats acceptés: JPG, PNG, WebP
-                          </span>
-                        </label>
-                      </div>
+                      <FileUpload
+                        onFileSelect={handleImageUpload}
+                        multiple
+                        accept="image/png,image/jpeg,image/jpg,image/webp"
+                        maxFiles={20}
+                      />
 
-                      {uploadedImages.length > 0 && (
-                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                          {uploadedImages.map((image) => (
-                            <div key={image.id} className="relative group">
-                              <img
-                                src={image.preview}
-                                alt="Preview"
-                                className="w-full h-32 object-cover rounded-lg border"
-                              />
-                              <button
-                                type="button"
-                                onClick={() => removeImage(image.id)}
-                                className="absolute top-2 right-2 bg-destructive text-destructive-foreground rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
-                              >
-                                <X className="h-4 w-4" />
-                              </button>
-                            </div>
-                          ))}
-                        </div>
-                      )}
+                      <FilePreview
+                        files={uploadedImages}
+                        onRemove={removeImage}
+                      />
                     </div>
 
                     {/* YouTube Video Section */}
