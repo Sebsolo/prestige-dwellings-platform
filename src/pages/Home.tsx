@@ -5,7 +5,6 @@ import Layout from '@/components/Layout';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Calendar, User } from 'lucide-react';
 import GoogleReviews from '@/components/GoogleReviews';
-import { LuxuryVideoShowcase } from '@/components/LuxuryVideoShowcase';
 import PropertyCard from '@/components/PropertyCard';
 import { propertiesApi } from '@/services/propertiesApi';
 import { PropertyWithMedia } from '@/types/index';
@@ -80,21 +79,6 @@ const Home = () => {
               </Link>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Luxury Video Showcase */}
-      <section className="py-20 bg-gradient-to-br from-background via-muted/50 to-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-4">
-              Découvrez nos biens d'exception
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Une sélection exclusive de propriétés de prestige en France et à l'international
-            </p>
-          </div>
-          <LuxuryVideoShowcase />
         </div>
       </section>
 

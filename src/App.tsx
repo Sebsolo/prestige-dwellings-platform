@@ -30,8 +30,6 @@ import AdminTestimonials from "./pages/admin/AdminTestimonials";
 import AdminLeads from "./pages/admin/AdminLeads";
 import AdminSettings from "./pages/admin/AdminSettings";
 import AdminRevShare from "./pages/admin/AdminRevShare";
-import AdminShowcase from "./components/admin/AdminShowcase";
-import AdminShowcaseForm from "./components/admin/AdminShowcaseForm";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -143,30 +141,6 @@ const App = () => (
                 element={
                   <RequireRole allowedRoles={['admin']}>
                     <AdminRevShare />
-                  </RequireRole>
-                } 
-              />
-              <Route 
-                path="/admin/showcase" 
-                element={
-                  <RequireRole allowedRoles={['admin', 'editor']}>
-                    <AdminShowcase />
-                  </RequireRole>
-                } 
-              />
-              <Route 
-                path="/admin/showcase/new" 
-                element={
-                  <RequireRole allowedRoles={['admin', 'editor']}>
-                    <AdminShowcaseForm />
-                  </RequireRole>
-                } 
-              />
-              <Route 
-                path="/admin/showcase/edit/:id" 
-                element={
-                  <RequireRole allowedRoles={['admin', 'editor']}>
-                    <AdminShowcaseForm />
                   </RequireRole>
                 } 
               />
