@@ -5,8 +5,7 @@ import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import LanguageSwitcher from './LanguageSwitcher';
 import { cn } from '@/lib/utils';
-import logo from '@/assets/logo-v2.png';
-import expLogo from '@/assets/exp-logo.webp';
+import logo from '@/assets/sebastien-pons-exp-logo.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,22 +28,15 @@ const Navbar = () => {
     <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border shadow-card">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-36 md:h-44">
-          {/* Logos */}
-          <div className="flex-shrink-0 flex flex-col md:flex-row items-center gap-2 md:gap-4">
+          {/* Logo */}
+          <div className="flex-shrink-0">
             <Link to="/">
               <img 
                 src={logo} 
-                alt="Sebastien Pons Immobilier" 
-                className="h-24 md:h-32 w-auto"
+                alt="Sebastien Pons Immobilier - eXp Realty" 
+                className="h-20 md:h-24 w-auto"
               />
             </Link>
-            <a href="https://www.expfrance.fr" target="_blank" rel="noopener noreferrer">
-              <img 
-                src={expLogo} 
-                alt="eXp Realty" 
-                className="h-11 md:h-14 w-auto"
-              />
-            </a>
           </div>
 
           {/* Desktop Navigation */}

@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Mail, Phone, MapPin } from 'lucide-react';
-import logo from '@/assets/logo-v2.png';
-import expLogo from '@/assets/exp-logo.webp';
+import logo from '@/assets/sebastien-pons-exp-logo.png';
 const Footer = () => {
   const {
     t
@@ -12,22 +11,13 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Company Info - Hidden on mobile, shown on desktop */}
           <div className="hidden md:block space-y-4 -my-4 md:col-span-2">
-            <div className="flex flex-col lg:flex-row items-end gap-4">
-              <Link to="/">
-                <img 
-                  src={logo} 
-                  alt="Sebastien Pons Immobilier" 
-                  className="h-36 md:h-36 w-auto"
-                />
-              </Link>
-              <a href="https://www.expfrance.fr" target="_blank" rel="noopener noreferrer" className="mb-2">
-                <img 
-                  src={expLogo} 
-                  alt="eXp Realty" 
-                  className="h-12 md:h-12 w-auto"
-                />
-              </a>
-            </div>
+            <Link to="/">
+              <img 
+                src={logo} 
+                alt="Sebastien Pons Immobilier - eXp Realty" 
+                className="h-24 w-auto"
+              />
+            </Link>
           </div>
 
           {/* Services */}
@@ -92,21 +82,14 @@ const Footer = () => {
 
           {/* Company Info - Mobile only, shown after menu */}
           <div className="md:hidden space-y-4 -my-4 col-span-full">
-            <div className="flex flex-col items-center gap-4">
+            <div className="flex justify-center">
               <Link to="/">
                 <img 
                   src={logo} 
-                  alt="Sebastien Pons Immobilier" 
-                  className="h-36 w-auto"
+                  alt="Sebastien Pons Immobilier - eXp Realty" 
+                  className="h-20 w-auto"
                 />
               </Link>
-              <a href="https://www.expfrance.fr" target="_blank" rel="noopener noreferrer">
-                <img 
-                  src={expLogo} 
-                  alt="eXp Realty" 
-                  className="h-12 w-auto"
-                />
-              </a>
             </div>
           </div>
         </div>
