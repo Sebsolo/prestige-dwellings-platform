@@ -34,7 +34,7 @@ const Navbar = () => {
               <img 
                 src={logo} 
                 alt="Sebastien Pons Immobilier - eXp Realty" 
-                className="h-20 md:h-24 w-auto"
+                className="h-50 md:h-60 w-auto"
               />
             </Link>
           </div>

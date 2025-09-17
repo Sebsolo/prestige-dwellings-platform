@@ -15,7 +15,7 @@ const Footer = () => {
               <img 
                 src={logo} 
                 alt="Sebastien Pons Immobilier - eXp Realty" 
-                className="h-24 w-auto"
+                className="h-60 w-auto"
               />
             </Link>
           </div>
@@ -27,16 +27,16 @@ const Footer = () => {
             </h4>
             <div className="space-y-2">
               <Link to="/ventes" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                Ventes
+                {t('nav.sales')}
               </Link>
               <Link to="/locations" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                Locations
+                {t('nav.rentals')}
               </Link>
               <Link to="/estimation" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                Estimations
+                {t('nav.valuation')}
               </Link>
               <Link to="/rejoindre-exp" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                Rejoindre eXp
+                {t('nav.joinExp')}
               </Link>
             </div>
           </div>
@@ -87,7 +87,7 @@ const Footer = () => {
                 <img 
                   src={logo} 
                   alt="Sebastien Pons Immobilier - eXp Realty" 
-                  className="h-20 w-auto"
+                  className="h-50 w-auto"
                 />
               </Link>
             </div>

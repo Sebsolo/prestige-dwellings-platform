@@ -66,13 +66,17 @@ const Home = () => {
               {t('home.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-gradient-primary shadow-luxury">
-                {t('home.hero_cta1')}
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-              <Button variant="outline" size="lg">
-                {t('home.hero_cta2')}
-              </Button>
+              <Link to="/estimation">
+                <Button size="lg" className="bg-gradient-primary shadow-luxury">
+                  {t('home.hero_cta1')}
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+              <Link to="/rejoindre-exp">
+                <Button variant="outline" size="lg">
+                  {t('home.hero_cta2')}
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -122,10 +126,12 @@ const Home = () => {
           <p className="text-xl text-white/90 mb-8">
             {t('home.valuation_cta_subtitle')}
           </p>
-          <Button size="lg" variant="outline" className="bg-white text-primary hover:bg-white/90">
-            {t('home.valuation_cta_button')}
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
+          <Link to="/estimation">
+            <Button size="lg" variant="outline" className="bg-white text-primary hover:bg-white/90">
+              {t('home.valuation_cta_button')}
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </Link>
         </div>
       </section>
 
