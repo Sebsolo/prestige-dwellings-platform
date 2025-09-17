@@ -180,7 +180,7 @@ const AdminCarousel = () => {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-bold text-foreground">Gestion du carrousel</h2>
-          <Button onClick={() => setShowUpload(!showUpload)}>
+          <Button onClick={() => setShowUpload(!showUpload)} className="bg-primary text-primary-foreground hover:bg-primary/90">
             <Plus className="h-4 w-4 mr-2" />
             Ajouter des images
           </Button>
@@ -229,8 +229,9 @@ const AdminCarousel = () => {
                 <Button 
                   onClick={handleUpload} 
                   disabled={isUploading || uploadedImages.length === 0 || !newTitle.trim()}
+                  className="bg-green-600 hover:bg-green-700 text-white"
                 >
-                  {isUploading ? 'Ajout en cours...' : 'Ajouter les images'}
+                  {isUploading ? 'Ajout en cours...' : 'Enregistrer les images'}
                 </Button>
                 <Button variant="outline" onClick={() => setShowUpload(false)}>
                   Annuler
