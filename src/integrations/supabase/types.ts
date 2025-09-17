@@ -283,6 +283,57 @@ export type Database = {
         }
         Relationships: []
       }
+      showcase_items: {
+        Row: {
+          created_at: string
+          detail_url: string
+          group_slug: string
+          id: number
+          location_label: string
+          poster_bucket: string
+          poster_path: string
+          price_label: string
+          published: boolean
+          sort_order: number
+          updated_at: string
+          video_bucket: string
+          video_mp4_path: string | null
+          video_webm_path: string | null
+        }
+        Insert: {
+          created_at?: string
+          detail_url: string
+          group_slug?: string
+          id?: number
+          location_label: string
+          poster_bucket?: string
+          poster_path: string
+          price_label: string
+          published?: boolean
+          sort_order?: number
+          updated_at?: string
+          video_bucket?: string
+          video_mp4_path?: string | null
+          video_webm_path?: string | null
+        }
+        Update: {
+          created_at?: string
+          detail_url?: string
+          group_slug?: string
+          id?: number
+          location_label?: string
+          poster_bucket?: string
+          poster_path?: string
+          price_label?: string
+          published?: boolean
+          sort_order?: number
+          updated_at?: string
+          video_bucket?: string
+          video_mp4_path?: string | null
+          video_webm_path?: string | null
+        }
+        Relationships: []
+      }
       site_settings: {
         Row: {
           appointment_url: string | null
