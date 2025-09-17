@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      home_carousel_images: {
+        Row: {
+          active: boolean | null
+          alt_text: string | null
+          created_at: string | null
+          id: number
+          image_path: string
+          sort_order: number | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          active?: boolean | null
+          alt_text?: string | null
+          created_at?: string | null
+          id?: never
+          image_path: string
+          sort_order?: number | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          active?: boolean | null
+          alt_text?: string | null
+          created_at?: string | null
+          id?: never
+          image_path?: string
+          sort_order?: number | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           created_at: string | null
@@ -280,6 +313,57 @@ export type Database = {
           id?: string
           percents?: Json
           updated_at?: string
+        }
+        Relationships: []
+      }
+      showcase_items: {
+        Row: {
+          created_at: string
+          detail_url: string
+          group_slug: string
+          id: number
+          location_label: string
+          poster_bucket: string
+          poster_path: string
+          price_label: string
+          published: boolean
+          sort_order: number
+          updated_at: string
+          video_bucket: string
+          video_mp4_path: string | null
+          video_webm_path: string | null
+        }
+        Insert: {
+          created_at?: string
+          detail_url: string
+          group_slug?: string
+          id?: number
+          location_label: string
+          poster_bucket?: string
+          poster_path: string
+          price_label: string
+          published?: boolean
+          sort_order?: number
+          updated_at?: string
+          video_bucket?: string
+          video_mp4_path?: string | null
+          video_webm_path?: string | null
+        }
+        Update: {
+          created_at?: string
+          detail_url?: string
+          group_slug?: string
+          id?: number
+          location_label?: string
+          poster_bucket?: string
+          poster_path?: string
+          price_label?: string
+          published?: boolean
+          sort_order?: number
+          updated_at?: string
+          video_bucket?: string
+          video_mp4_path?: string | null
+          video_webm_path?: string | null
         }
         Relationships: []
       }

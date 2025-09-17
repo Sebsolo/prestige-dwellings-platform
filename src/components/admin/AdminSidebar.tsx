@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { Building2, FileText, MessageSquare, Users, Settings, ChevronLeft, LogOut, Calculator } from 'lucide-react';
+import { Building2, FileText, MessageSquare, Users, Settings, ChevronLeft, LogOut, Calculator, Image } from 'lucide-react';
 import {
   Sidebar,
   SidebarContent,
@@ -21,6 +21,7 @@ const adminItems = [
   { title: 'Blog', url: '/admin/blog', icon: FileText, roles: ['admin', 'editor'] },
   { title: 'Témoignages', url: '/admin/testimonials', icon: MessageSquare, roles: ['admin', 'editor'] },
   { title: 'Leads', url: '/admin/leads', icon: Users, roles: ['admin', 'editor', 'agent'] },
+  { title: 'Carrousel', url: '/admin/carousel', icon: Image, roles: ['admin', 'editor'] },
   { title: 'RevShare', url: '/admin/revshare', icon: Calculator, roles: ['admin'] },
   { title: 'Paramètres', url: '/admin/settings', icon: Settings, roles: ['admin'] },
 ];

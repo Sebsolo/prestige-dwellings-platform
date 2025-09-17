@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Calendar, User } from 'lucide-react';
 import GoogleReviews from '@/components/GoogleReviews';
 import PropertyCard from '@/components/PropertyCard';
+import HomeCarousel from '@/components/HomeCarousel';
 import { propertiesApi } from '@/services/propertiesApi';
 import { PropertyWithMedia } from '@/types/index';
 import { supabase } from '@/integrations/supabase/client';
@@ -56,8 +57,9 @@ const Home = () => {
       keywords="immobilier prestige luxe sebastien pons"
     >
       {/* Hero Section */}
-      <section className="relative bg-gradient-subtle min-h-[80vh] flex items-center">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <section className="relative min-h-[80vh] flex items-center overflow-hidden">
+        <HomeCarousel />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-serif font-bold text-foreground mb-6">
               {t('home.title')}
