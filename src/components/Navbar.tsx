@@ -27,14 +27,14 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border shadow-card">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20 md:h-24">
+        <div className="flex justify-between items-center h-36 md:h-44">
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link to="/">
               <img 
                 src={logo} 
                 alt="Sebastien Pons Immobilier - eXp Realty" 
-                className="h-16 md:h-20 w-auto max-w-[200px] md:max-w-none"
+                className="h-30 md:h-60 w-auto"
               />
             </Link>
           </div>
