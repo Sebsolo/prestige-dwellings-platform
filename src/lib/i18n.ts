@@ -39,7 +39,7 @@ const resources = {
         viewDetails: 'Voir le détail'
       },
       home: {
-        title: 'Sebastien Pons Immobilier – France & International',
+        title: 'Sebastien Pons Immobilier',
         subtitle: 'Votre expert en immobilier de prestige',
         hero_cta1: 'Estimation gratuite',
         hero_cta2: 'Rejoindre eXp',
@@ -147,7 +147,7 @@ const resources = {
         viewDetails: 'View details'
       },
       home: {
-        title: 'Sebastien Pons Real Estate – France & International',
+        title: 'Sebastien Pons Real Estate',
         subtitle: 'Your luxury real estate expert',
         hero_cta1: 'Free valuation',
         hero_cta2: 'Join eXp',
