@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { Plus, Search, Image, Edit, Trash2, GripVertical } from 'lucide-react';
+import { Plus, Search, Edit, Trash2, GripVertical } from 'lucide-react';
 import { FileUpload, FilePreview } from '@/components/ui/file-upload';
 
 interface CarouselImage {
@@ -79,14 +79,75 @@ const AdminCarousel = () => {
     }
 
     setIsUploading(true);
+
+    // Compress large images client-side to avoid "Payload too large" (413)
+    const MAX_BYTES = 10 * 1024 * 1024; // 10MB threshold before compress
+    const compressIfNeeded = async (file: File): Promise<File> => {
+      if (file.size <= MAX_BYTES) return file;
+      try {
+        // Try createImageBitmap first for performance
+        const fallbackWithImgEl = async () => {
+          const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+            const image = new Image();
+            image.onload = () => resolve(image);
+            image.onerror = reject;
+            image.src = URL.createObjectURL(file);
+          });
+          const canvas = document.createElement('canvas');
+          const maxW = 1920;
+          const scale = Math.min(1, maxW / img.width);
+          canvas.width = Math.round(img.width * scale);
+          canvas.height = Math.round(img.height * scale);
+          const ctx = canvas.getContext('2d');
+          if (!ctx) return file;
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          return await new Promise<File>((resolve) => {
+            canvas.toBlob((blob) => {
+              if (blob) {
+                resolve(new File([blob], file.name.replace(/\.[^.]+$/, '.webp'), { type: 'image/webp' }));
+              } else {
+                resolve(file);
+              }
+            }, 'image/webp', 0.8);
+          });
+        };
+
+        const bitmap = await (window as any).createImageBitmap?.(file).catch(() => null);
+        if (!bitmap) return await fallbackWithImgEl();
+        const canvas = document.createElement('canvas');
+        const maxW = 1920;
+        const scale = Math.min(1, maxW / bitmap.width);
+        canvas.width = Math.round(bitmap.width * scale);
+        canvas.height = Math.round(bitmap.height * scale);
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return file;
+        ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+        return await new Promise<File>((resolve) => {
+          canvas.toBlob((blob) => {
+            if (blob) {
+              resolve(new File([blob], file.name.replace(/\.[^.]+$/, '.webp'), { type: 'image/webp' }));
+            } else {
+              resolve(file);
+            }
+          }, 'image/webp', 0.8);
+        });
+      } catch {
+        return file;
+      }
+    };
+
     try {
       for (const image of uploadedImages) {
-        const fileName = `${Date.now()}_${image.file.name}`;
+        const processed = await compressIfNeeded(image.file);
+        const fileNameBase = `${Date.now()}_${image.file.name}`.replace(/\s+/g, '_');
+        const fileName = processed.type === 'image/webp'
+          ? fileNameBase.replace(/\.[^.]+$/, '.webp')
+          : fileNameBase;
         
         // Upload to storage
         const { error: uploadError } = await supabase.storage
           .from('home-carousel')
-          .upload(fileName, image.file);
+          .upload(fileName, processed, { cacheControl: '3600', upsert: false });
 
         if (uploadError) throw uploadError;
 
@@ -113,9 +174,12 @@ const AdminCarousel = () => {
       setNewAltText('');
       setShowUpload(false);
       fetchImages();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error uploading images:', error);
-      toast.error('Erreur lors de l\'ajout des images');
+      const message = error?.message?.includes('exceeded the maximum allowed size')
+        ? 'Image trop lourde. Compression automatique effectuée, réessayez.'
+        : "Erreur lors de l'ajout des images";
+      toast.error(message);
     } finally {
       setIsUploading(false);
     }
@@ -229,7 +293,6 @@ const AdminCarousel = () => {
                 <Button 
                   onClick={handleUpload} 
                   disabled={isUploading || uploadedImages.length === 0 || !newTitle.trim()}
-                  className="bg-green-600 hover:bg-green-700 text-white"
                 >
                   {isUploading ? 'Ajout en cours...' : 'Enregistrer les images'}
                 </Button>
