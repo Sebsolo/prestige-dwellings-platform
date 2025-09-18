@@ -9,8 +9,8 @@ const Footer = () => {
   return <footer className="bg-card border-t border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
-          {/* Company Info - Hidden on mobile, shown on desktop */}
-          <div className="hidden md:block space-y-4 -my-4 md:col-span-2">
+          {/* Company Info - Hidden on mobile and tablet, shown on desktop only */}
+          <div className="hidden lg:block space-y-4 -my-4 lg:col-span-2">
             <Link to="/">
               <img 
                 src={logo} 
@@ -80,8 +80,8 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Company Info - Mobile only, shown after menu */}
-          <div className="md:hidden space-y-4 -my-4 col-span-full">
+          {/* Company Info - Mobile and tablet, shown after menu */}
+          <div className="lg:hidden space-y-4 -my-4 col-span-full">
             <div className="flex justify-center">
               <Link to="/">
                 <img 
