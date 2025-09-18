@@ -120,14 +120,30 @@ const AdminProperties = () => {
                   properties.map((property) => (
                     <Card key={property.id}>
                       <CardHeader>
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <CardTitle className="text-lg">
-                              {property.title_fr || 'Titre non défini'}
-                            </CardTitle>
-                            <CardDescription>
-                              {property.city} • {property.type} • {property.area_m2}m²
-                            </CardDescription>
+                        <div className="flex justify-between items-start gap-4">
+                          <div className="flex gap-4 flex-1">
+                            {/* Property Image Preview */}
+                            <div className="flex-shrink-0">
+                              {property.media && property.media.length > 0 ? (
+                                <img
+                                  src={`https://gxzifrexmsouvfnriyym.supabase.co/storage/v1/object/public/property-images/${property.media[0].path}`}
+                                  alt={property.media[0].title || 'Property image'}
+                                  className="w-20 h-20 object-cover rounded-md border"
+                                />
+                              ) : (
+                                <div className="w-20 h-20 bg-muted rounded-md border flex items-center justify-center">
+                                  <span className="text-xs text-muted-foreground">No image</span>
+                                </div>
+                              )}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <CardTitle className="text-lg truncate">
+                                {property.title_fr || 'Titre non défini'}
+                              </CardTitle>
+                              <CardDescription>
+                                {property.city} • {property.type} • {property.area_m2}m²
+                              </CardDescription>
+                            </div>
                           </div>
                           <div className="flex items-center gap-2">
                             {getStatusBadge(property.status)}
