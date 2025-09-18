@@ -28,9 +28,9 @@ export const propertiesApi = {
     // Apply status filter based on context
     if (filters.status && filters.status !== 'all') {
       query = query.eq('status', filters.status);
-    } else if (filters.status !== 'all' && filters.transaction) {
-      // For public listings, only show published properties
-      query = query.in('status', ['published', 'under_offer']);
+    } else if (filters.status !== 'all') {
+      // For public listings, show published, under_offer, sold, and rented properties
+      query = query.in('status', ['published', 'under_offer', 'sold', 'rented']);
     }
 
     if (filters.transaction) {

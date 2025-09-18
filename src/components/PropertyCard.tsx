@@ -38,11 +38,28 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
             <Home className="h-12 w-12 text-muted-foreground" />
           </div>
         )}
-        {property.transaction && (
-          <Badge className="absolute top-3 left-3 bg-primary text-primary-foreground">
-            {property.transaction === 'sale' ? 'Vente' : 'Location'}
-          </Badge>
-        )}
+        <div className="absolute top-3 left-3 flex flex-col gap-1">
+          {property.transaction && (
+            <Badge className="bg-primary text-primary-foreground">
+              {property.transaction === 'sale' ? 'Vente' : 'Location'}
+            </Badge>
+          )}
+          {property.status === 'sold' && (
+            <Badge variant="destructive">
+              Vendu
+            </Badge>
+          )}
+          {property.status === 'under_offer' && (
+            <Badge variant="secondary">
+              Sous offre
+            </Badge>
+          )}
+          {property.status === 'rented' && (
+            <Badge variant="destructive">
+              Loué
+            </Badge>
+          )}
+        </div>
         {property.dpe_letter && (
           <Badge 
             variant="outline" 

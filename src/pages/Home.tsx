@@ -36,8 +36,7 @@ const Home = () => {
     const fetchFeaturedProperties = async () => {
       try {
         const properties = await propertiesApi.list({ 
-          featured: true, 
-          status: 'published' 
+          featured: true
         });
         // Limit to 3 featured properties
         setFeaturedProperties(properties.slice(0, 3));
