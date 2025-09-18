@@ -5,7 +5,7 @@ import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import LanguageSwitcher from './LanguageSwitcher';
 import { cn } from '@/lib/utils';
-import logo from '@/assets/sebastien-pons-exp-logo.png';
+import logo from '@/assets/sebastien-pons-logo-new.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
