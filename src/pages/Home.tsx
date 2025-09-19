@@ -119,6 +119,24 @@ const Home = () => {
         </div>
       </section>
 
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-primary text-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">
+            {t('home.valuation_cta_title')}
+          </h2>
+          <p className="text-xl text-white/90 mb-8">
+            {t('home.valuation_cta_subtitle')}
+          </p>
+          <Link to="/estimation">
+            <Button size="lg" variant="outline" className="bg-white text-primary hover:bg-white/90">
+              {t('home.valuation_cta_button')}
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </Link>
+        </div>
+      </section>
+
       {/* Services Section */}
       <section id="mes-services" className="py-20 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -188,24 +206,6 @@ const Home = () => {
               </Button>
             </Link>
           </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-primary text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">
-            {t('home.valuation_cta_title')}
-          </h2>
-          <p className="text-xl text-white/90 mb-8">
-            {t('home.valuation_cta_subtitle')}
-          </p>
-          <Link to="/estimation">
-            <Button size="lg" variant="outline" className="bg-white text-primary hover:bg-white/90">
-              {t('home.valuation_cta_button')}
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-          </Link>
         </div>
       </section>
 
