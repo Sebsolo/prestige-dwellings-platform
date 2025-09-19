@@ -45,6 +45,30 @@ const resources = {
         hero_cta2: 'Rejoindre eXp',
         featured_title: 'Biens Vedettes',
         featured_subtitle: 'Une sélection exclusive de nos plus belles propriétés',
+        services: {
+          title: 'Mes services',
+          subtitle: 'Mon rôle : maximiser la valeur de votre bien, communiquer clairement à chaque étape et rester disponible quand vous en avez besoin.',
+          card1: {
+            title: 'Mise en valeur du bien',
+            bullet1: 'Photos professionnelles & plans clairs',
+            bullet2: 'Présentation du bien en video',
+            bullet3: 'Diffusion ciblée (portails + réseaux + acheteurs qualifiés)'
+          },
+          card2: {
+            title: 'Échange & transparence',
+            bullet1: 'Un brief clair dès le départ (prix, délais, stratégie)',
+            bullet2: 'Compte-rendu régulier des visites & retours',
+            bullet3: 'Conseils actionnables jusqu\'à la signature'
+          },
+          card3: {
+            title: 'Disponibilité & réactivité',
+            bullet1: 'Réponses rapides, créneaux de visite élargis',
+            bullet2: 'Coordination artisans/diagnostics si besoin',
+            bullet3: 'Suivi administratif jusqu\'à l\'acte'
+          },
+          cta_primary: 'Demander une estimation',
+          cta_secondary: 'Me contacter'
+        },
         testimonials_title: 'Ils nous font confiance',
         testimonials_subtitle: 'Découvrez les avis de nos clients sur Google Business',
         blog_title: 'Actualités Immobilières',
@@ -153,6 +177,30 @@ const resources = {
         hero_cta2: 'Join eXp',
         featured_title: 'Featured Properties',
         featured_subtitle: 'An exclusive selection of our finest properties',
+        services: {
+          title: 'My services',
+          subtitle: 'My role: maximize the value of your property, communicate clearly at each step and remain available when you need it.',
+          card1: {
+            title: 'Property enhancement',
+            bullet1: 'Professional photos & clear plans',
+            bullet2: 'Video property presentation',
+            bullet3: 'Targeted distribution (portals + networks + qualified buyers)'
+          },
+          card2: {
+            title: 'Exchange & transparency',
+            bullet1: 'Clear brief from the start (price, timeline, strategy)',
+            bullet2: 'Regular reports on visits & feedback',
+            bullet3: 'Actionable advice until signing'
+          },
+          card3: {
+            title: 'Availability & responsiveness',
+            bullet1: 'Quick responses, extended visit slots',
+            bullet2: 'Coordination of craftsmen/diagnostics if needed',
+            bullet3: 'Administrative follow-up until the deed'
+          },
+          cta_primary: 'Request a valuation',
+          cta_secondary: 'Contact me'
+        },
         testimonials_title: 'They trust us',
         testimonials_subtitle: 'Discover our clients\' reviews on Google Business',
         blog_title: 'Real Estate News',

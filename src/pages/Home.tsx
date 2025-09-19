@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Calendar, User } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { ArrowRight, Calendar, User, Camera, MessageSquare, Clock } from 'lucide-react';
 import GoogleReviews from '@/components/GoogleReviews';
 import PropertyCard from '@/components/PropertyCard';
 import HomeCarousel from '@/components/HomeCarousel';
@@ -114,6 +115,78 @@ const Home = () => {
                 </p>
               </div>
             )}
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section id="mes-services" className="py-20 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-4">
+              {t('home.services.title')}
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              {t('home.services.subtitle')}
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <Card className="text-center">
+              <CardContent className="p-6">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <Camera className="h-6 w-6 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold mb-4">{t('home.services.card1.title')}</h3>
+                <ul className="text-muted-foreground space-y-2 text-left">
+                  <li>• {t('home.services.card1.bullet1')}</li>
+                  <li>• {t('home.services.card1.bullet2')}</li>
+                  <li>• {t('home.services.card1.bullet3')}</li>
+                </ul>
+              </CardContent>
+            </Card>
+            
+            <Card className="text-center">
+              <CardContent className="p-6">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <MessageSquare className="h-6 w-6 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold mb-4">{t('home.services.card2.title')}</h3>
+                <ul className="text-muted-foreground space-y-2 text-left">
+                  <li>• {t('home.services.card2.bullet1')}</li>
+                  <li>• {t('home.services.card2.bullet2')}</li>
+                  <li>• {t('home.services.card2.bullet3')}</li>
+                </ul>
+              </CardContent>
+            </Card>
+            
+            <Card className="text-center">
+              <CardContent className="p-6">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <Clock className="h-6 w-6 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold mb-4">{t('home.services.card3.title')}</h3>
+                <ul className="text-muted-foreground space-y-2 text-left">
+                  <li>• {t('home.services.card3.bullet1')}</li>
+                  <li>• {t('home.services.card3.bullet2')}</li>
+                  <li>• {t('home.services.card3.bullet3')}</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/estimation">
+              <Button size="lg" aria-label="Demander une estimation gratuite">
+                {t('home.services.cta_primary')}
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+            <Link to="/contact">
+              <Button variant="ghost" size="lg" aria-label="Contacter Sebastien Pons">
+                {t('home.services.cta_secondary')}
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
