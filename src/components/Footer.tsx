@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
 import logo from '@/assets/sebastien-pons-logo-new.png';
 const Footer = () => {
   const {
@@ -10,7 +10,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Company Info - Hidden on mobile and tablet, shown on desktop only */}
-          <div className="hidden lg:block space-y-4 -my-4 lg:col-span-2">
+          <div className="hidden lg:block space-y-4 lg:col-span-2" style={{ marginTop: '-3.4px', marginBottom: '-3.4px' }}>
             <Link to="/">
               <img 
                 src={logo} 
@@ -80,8 +80,50 @@ const Footer = () => {
             </div>
           </div>
 
+          {/* Social Media Links */}
+          <div className="space-y-4 col-span-full">
+            <div className="flex justify-center space-x-4">
+              <a 
+                href="https://www.facebook.com/sebpons.immo" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="p-3 rounded-full bg-secondary hover:bg-secondary/80 transition-colors"
+                aria-label="Facebook"
+              >
+                <Facebook className="h-5 w-5 text-secondary-foreground" />
+              </a>
+              <a 
+                href="https://www.instagram.com/sebpons_immo/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="p-3 rounded-full bg-secondary hover:bg-secondary/80 transition-colors"
+                aria-label="Instagram"
+              >
+                <Instagram className="h-5 w-5 text-secondary-foreground" />
+              </a>
+              <a 
+                href="https://www.linkedin.com/in/sebastienpons88/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="p-3 rounded-full bg-secondary hover:bg-secondary/80 transition-colors"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="h-5 w-5 text-secondary-foreground" />
+              </a>
+              <a 
+                href="https://www.youtube.com/@SebastienPonsImmobilier" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="p-3 rounded-full bg-secondary hover:bg-secondary/80 transition-colors"
+                aria-label="YouTube"
+              >
+                <Youtube className="h-5 w-5 text-secondary-foreground" />
+              </a>
+            </div>
+          </div>
+
           {/* Company Info - Mobile and tablet, shown after menu */}
-          <div className="lg:hidden space-y-4 -my-4 col-span-full">
+          <div className="lg:hidden space-y-4 col-span-full" style={{ marginTop: '-3.4px', marginBottom: '-3.4px' }}>
             <div className="flex justify-center">
               <Link to="/">
                 <img 

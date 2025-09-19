@@ -193,16 +193,11 @@ const Home = () => {
             </Card>
           </div>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/estimation">
-              <Button size="lg" aria-label="Demander une estimation gratuite">
-                {t('home.services.cta_primary')}
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
+          <div className="flex justify-center">
             <Link to="/contact">
-              <Button variant="ghost" size="lg" aria-label="Contacter Sebastien Pons">
+              <Button size="lg" aria-label="Contacter Sebastien Pons">
                 {t('home.services.cta_secondary')}
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
           </div>
