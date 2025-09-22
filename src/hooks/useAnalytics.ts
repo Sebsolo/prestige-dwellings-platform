@@ -18,7 +18,7 @@ declare global {
   interface Window {
     _paq?: any[];
     gtag?: (...args: any[]) => void;
-    dataLayer?: any[];
+    dataLayer: any[];
   }
 }
 
