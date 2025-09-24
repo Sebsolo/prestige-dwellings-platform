@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { AuthProvider } from "./contexts/AuthContext";
 import { loadGTM, pushPageView } from "./lib/gtm";
+import { bindCMPToGTM } from "./lib/cmp-bridge";
 import RequireRole from "./components/RequireRole";
 import Home from "./pages/Home";
 import Sales from "./pages/Sales";
@@ -42,6 +43,13 @@ const GTMTracker = () => {
 
   useEffect(() => {
     loadGTM();
+    
+    // Initialize CMP integration after a short delay to ensure Axeptio loads
+    const timer = setTimeout(() => {
+      bindCMPToGTM();
+    }, 1000);
+    
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {

@@ -13,6 +13,20 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
       crossorigin="" />
+    
+    <!-- Axeptio CMP -->
+    <script>
+      window.axeptioSettings = {
+        clientId: "your-axeptio-client-id", // Replace with your actual client ID
+        cookiesVersion: "your-cookies-version", // Replace with your version
+      };
+      
+      (function(d, s) {
+        var t = d.getElementsByTagName(s)[0], e = d.createElement(s);
+        e.async = true; e.src = "//static.axept.io/sdk.js";
+        t.parentNode.insertBefore(e, t);
+      })(document, "script");
+    </script>
 
     <meta property="og:title" content="Sebastien Pons Immobilier" />
     <meta property="og:description" content="Luxury Real Estate - Premium Properties" />
