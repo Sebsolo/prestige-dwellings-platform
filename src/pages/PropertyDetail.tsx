@@ -29,6 +29,9 @@ const PropertyDetail = () => {
   };
 
   useEffect(() => {
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
+    
     console.log('PropertyDetail mounted, idOrSlug:', idOrSlug);
     const fetchProperty = async () => {
       if (!idOrSlug) return;
@@ -134,27 +137,6 @@ const PropertyDetail = () => {
           )}
         </div>
 
-        {/* YouTube Video */}
-        {property.youtube_url && (
-          <div className="mb-8">
-            <Card>
-              <CardHeader>
-                <CardTitle>Visite virtuelle</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="aspect-video">
-                  <iframe
-                    src={getYouTubeEmbedUrl(property.youtube_url) || ''}
-                    title="Visite virtuelle"
-                    className="w-full h-full rounded-lg"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
@@ -165,7 +147,7 @@ const PropertyDetail = () => {
               </h1>
               <div className="flex items-center text-muted-foreground mb-4">
                 <MapPin className="h-4 w-4 mr-1" />
-                <span>{property.address || property.city}</span>
+                <span>{property.city}</span>
               </div>
               <div className="text-3xl font-bold text-primary mb-4">
                 {property.transaction === 'rent' && property.rent_cc ? (
@@ -231,6 +213,26 @@ const PropertyDetail = () => {
                 </p>
               </CardContent>
             </Card>
+
+            {/* YouTube Video */}
+            {property.youtube_url && (
+              <Card className="mb-6">
+                <CardHeader>
+                  <CardTitle>Visite virtuelle</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="aspect-video">
+                    <iframe
+                      src={getYouTubeEmbedUrl(property.youtube_url) || ''}
+                      title="Visite virtuelle"
+                      className="w-full h-full rounded-lg"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+            )}
 
             {/* Map */}
             {(property.lat && property.lng) && (
