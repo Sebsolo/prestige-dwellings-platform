@@ -1,8 +1,9 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import IKResponsiveImage from "@/components/IKResponsiveImage";
+import { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { sbImg } from '@/lib/img';
+import IKResponsiveImage from '@/components/IKResponsiveImage';
 
 interface CarouselImage {
   id: number;
@@ -12,123 +13,98 @@ interface CarouselImage {
   sort_order: number;
 }
 
-const SLIDE_INTERVAL_MS = 5000;
-const SLOT_W = 1400;
-const ASPECT = 1400 / 700;
-
-export default function HomeCarousel() {
+const HomeCarousel = () => {
   const [images, setImages] = useState<CarouselImage[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-  // “Hydrated” = après le 1er paint : on évite de rendre plus d’une image avant l’hydratation
-  const [hydrated, setHydrated] = useState(false);
-  useEffect(() => setHydrated(true), []);
-
-  // Fetch images (actives, triées)
   useEffect(() => {
-    let cancelled = false;
-    (async () => {
+    const fetchImages = async () => {
       try {
         const { data, error } = await supabase
-          .from("home_carousel_images")
-          .select("id,title,alt_text,image_path,sort_order")
-          .eq("active", true)
-          .order("sort_order", { ascending: true });
+          .from('home_carousel_images')
+          .select('*')
+          .eq('active', true)
+          .order('sort_order', { ascending: true });
 
         if (error) throw error;
-        if (!cancelled) setImages(data ?? []);
-      } catch (e) {
-        console.error("Error fetching carousel images:", e);
+        console.log('Fetched carousel images:', data);
+        setImages(data || []);
+      } catch (error) {
+        console.error('Error fetching carousel images:', error);
       } finally {
-        if (!cancelled) setIsLoading(false);
+        setIsLoading(false);
       }
-    })();
-    return () => {
-      cancelled = true;
     };
+
+    fetchImages();
   }, []);
 
-  // Auto-rotation (si >1 image)
   useEffect(() => {
-    if (images.length <= 1) return;
-    const id = setInterval(() => {
-      setCurrentIndex((i) => (i === images.length - 1 ? 0 : i + 1));
-    }, SLIDE_INTERVAL_MS);
-    return () => clearInterval(id);
+    if (images.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentIndex((prevIndex) => 
+          prevIndex === images.length - 1 ? 0 : prevIndex + 1
+        );
+      }, 5000);
+
+      return () => clearInterval(interval);
+    }
   }, [images.length]);
 
-  // Encapsule la construction d’URL Supabase (publique) → ImageKit (proxy) sera utilisé par IKResponsiveImage
+  const nextSlide = () => {
+    setCurrentIndex(currentIndex === images.length - 1 ? 0 : currentIndex + 1);
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex(currentIndex === 0 ? images.length - 1 : currentIndex - 1);
+  };
+
   const getImageUrl = (path: string) => {
-    const { data } = supabase.storage.from("home-carousel").getPublicUrl(path);
+    // Generate full Supabase public URL; IKResponsiveImage will fetch via ImageKit using encoded absolute URL
+    const { data } = supabase.storage.from('home-carousel').getPublicUrl(path);
+    console.log('Carousel Supabase public URL for IK:', data.publicUrl);
     return data.publicUrl;
   };
 
-  // Calcule courante / suivante (toujours au plus 2 images dans le DOM)
-  const current = images[currentIndex];
-  const next = images.length > 1 ? images[(currentIndex + 1) % images.length] : undefined;
-
-  // Précharge “silencieusement” la prochaine image (hors DOM)
-  useEffect(() => {
-    if (!next) return;
-    const url = getImageUrl(next.image_path);
-    const img = new Image();
-    img.decoding = "async";
-    img.src = url;
-  }, [next]);
-
-  const goNext = () => setCurrentIndex((i) => (i === images.length - 1 ? 0 : i + 1));
-  const goPrev = () => setCurrentIndex((i) => (i === 0 ? images.length - 1 : i - 1));
-
   if (isLoading || images.length === 0) {
-    return <div className="absolute inset-0 bg-gradient-subtle opacity-50" />;
+    return (
+      <div className="absolute inset-0 bg-gradient-subtle opacity-50" />
+    );
   }
 
   return (
     <div className="absolute inset-0 overflow-hidden">
-      {/* SLIDE COURANTE — unique LCP au premier paint */}
-      <div className="absolute inset-0">
-        <IKResponsiveImage
-          src={getImageUrl(current.image_path)}
-          slotWidth={SLOT_W}
-          aspect={ASPECT}
-          alt={current.alt_text || current.title}
-          className="w-full h-full object-cover transition-opacity duration-700"
-          // LCP uniquement au T0 (avant hydration) et pour l’index 0
-          priority={!hydrated && currentIndex === 0}
-        />
-      </div>
-
-      {/* SLIDE SUIVANTE (optionnel pour crossfade) — jamais candidate LCP */}
-      {hydrated && next && (
+      {/* Background Images */}
+      {images.map((image, index) => (
         <div
-          key={next.id}
-          // on la garde invisible ; si tu veux un vrai crossfade, anime l’opacité quand currentIndex change
-          className="absolute inset-0 opacity-0 pointer-events-none"
-          aria-hidden="true"
+          key={image.id}
+          className={`absolute inset-0 transition-opacity duration-1000 ${
+            index === currentIndex ? 'opacity-50' : 'opacity-0'
+          }`}
         >
           <IKResponsiveImage
-            src={getImageUrl(next.image_path)}
-            slotWidth={SLOT_W}
-            aspect={ASPECT}
-            alt=""
+            src={getImageUrl(image.image_path)}
+            slotWidth={1400}
+            aspect={1400/700}
+            alt={image.alt_text || image.title}
             className="w-full h-full object-cover"
-            priority={false}
+            priority={index === 0 && currentIndex === 0}
           />
         </div>
-      )}
+      ))}
 
-      {/* Overlay */}
+      {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
 
-      {/* Contrôles */}
+      {/* Navigation Controls */}
       {images.length > 1 && (
         <>
           <Button
             variant="outline"
             size="icon"
             className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 border-white/20 text-white hover:bg-white/20 z-10"
-            onClick={goPrev}
+            onClick={prevSlide}
             aria-label="Image précédente"
           >
             <ChevronLeft className="h-4 w-4" />
@@ -138,20 +114,22 @@ export default function HomeCarousel() {
             variant="outline"
             size="icon"
             className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 border-white/20 text-white hover:bg-white/20 z-10"
-            onClick={goNext}
+            onClick={nextSlide}
             aria-label="Image suivante"
           >
             <ChevronRight className="h-4 w-4" />
           </Button>
 
-          {/* Dots */}
+          {/* Dots Indicator */}
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-            {images.map((_, i) => (
+            {images.map((_, index) => (
               <button
-                key={i}
-                className={`w-2 h-2 rounded-full transition-colors ${i === currentIndex ? "bg-white" : "bg-white/50"}`}
-                onClick={() => setCurrentIndex(i)}
-                aria-label={`Aller à l'image ${i + 1}`}
+                key={index}
+                className={`w-2 h-2 rounded-full transition-colors ${
+                  index === currentIndex ? 'bg-white' : 'bg-white/50'
+                }`}
+                onClick={() => setCurrentIndex(index)}
+                aria-label={`Aller à l'image ${index + 1}`}
               />
             ))}
           </div>
@@ -159,4 +137,6 @@ export default function HomeCarousel() {
       )}
     </div>
   );
-}
+};
+
+export default HomeCarousel;
