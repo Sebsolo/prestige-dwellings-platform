@@ -41,6 +41,8 @@ export default function IKResponsiveImage({
       width={slotWidth}
       height={height(slotWidth)}
       loading={priority ? 'eager' : 'lazy'}
+      fetchPriority={priority ? 'high' : 'low'}
+      decoding="async"
       className={className}
       style={{ objectFit: 'cover' }}
     />

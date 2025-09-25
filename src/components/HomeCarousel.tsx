@@ -89,7 +89,7 @@ const HomeCarousel = () => {
             aspect={1400/700}
             alt={image.alt_text || image.title}
             className="w-full h-full object-cover"
-            priority={index === 0}
+            priority={index === 0 && currentIndex === 0}
           />
         </div>
       ))}
