@@ -1,7 +1,8 @@
 import { Image } from '@imagekit/react';
 
 type Props = {
-  src: string;            // URL d'origine (ex: Supabase public URL)
+  src?: string;           // Absolute URL (e.g., Supabase public URL)
+  path?: string;          // ImageKit path relative to configured origin
   slotWidth: number;      // largeur max du conteneur (px)
   aspect?: number;        // ratio W/H (ex: 380/285)
   alt?: string;
@@ -10,7 +11,7 @@ type Props = {
 };
 
 export default function IKResponsiveImage({
-  src, slotWidth, aspect = 1.33, alt = '', className = '', priority = false
+  src, path, slotWidth, aspect = 1.33, alt = '', className = '', priority = false
 }: Props) {
   const sizes = [Math.min(480, slotWidth), Math.min(768, Math.round(slotWidth * 1.5)), Math.min(1200, slotWidth * 2)];
   const height = (w: number) => Math.round(w / aspect);
@@ -18,9 +19,15 @@ export default function IKResponsiveImage({
   // On demande AVIF qualité 70; ajuste si besoin
   const common = (w: number) => [{ width: Math.round(w), height: height(w), quality: 70, format: 'avif' }] as const;
   
+  const imgSourceProps = path ? { path } : src ? { src } : null;
+  if (!imgSourceProps) {
+    console.warn('IKResponsiveImage: missing src or path');
+    return null;
+  }
+  
   return (
     <Image
-      src={src}
+      {...(imgSourceProps as any)}
       alt={alt}
       width={slotWidth}
       height={height(slotWidth)}
