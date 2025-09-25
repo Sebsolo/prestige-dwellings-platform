@@ -34,18 +34,11 @@ export default function ResponsiveImage({
     );
   }
 
-  const w1 = Math.min(480, slotWidth);
-  const w2 = Math.min(768, Math.round(slotWidth * 1.5));
-  const w3 = Math.min(1200, Math.round(slotWidth * 2));
-  const h = (w: number) => Math.round(w / aspect);
-  
-  // Génère 3 variantes AVIF (qualité 70)
-  const s1 = sbImg(bucket, imagePath, { w: w1, h: h(w1), q: 70, format: 'avif' });
-  const s2 = sbImg(bucket, imagePath, { w: w2, h: h(w2), q: 70, format: 'avif' });
-  const s3 = sbImg(bucket, imagePath, { w: w3, h: h(w3), q: 70, format: 'avif' });
+  // Use direct public URL without transformations for now (transforms not enabled)
+  const imageUrl = sbImg(bucket, imagePath);
 
-  // If any of the image URLs failed to generate, fall back to error state
-  if (!s1 || !s2 || !s3) {
+  // If image URL failed to generate, fall back to error state
+  if (!imageUrl) {
     return (
       <div className="w-full h-full bg-muted flex items-center justify-center">
         <span className="text-muted-foreground">Image unavailable</span>
@@ -55,11 +48,9 @@ export default function ResponsiveImage({
 
   return (
     <img
-      src={s2}
-      srcSet={`${s1} ${w1}w, ${s2} ${w2}w, ${s3} ${w3}w`}
-      sizes={`(max-width: 600px) 100vw, (max-width: 1024px) 70vw, ${slotWidth}px`}
+      src={imageUrl}
       width={slotWidth}
-      height={h(slotWidth)}
+      height={Math.round(slotWidth / aspect)}
       alt={alt}
       loading={loading}
       decoding="async"
