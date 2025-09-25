@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { sbImg } from '@/lib/img';
 
 interface CarouselImage {
   id: number;
@@ -57,9 +58,8 @@ const HomeCarousel = () => {
     setCurrentIndex(currentIndex === 0 ? images.length - 1 : currentIndex - 1);
   };
 
-  const getImageUrl = (path: string) => {
-    const { data } = supabase.storage.from('home-carousel').getPublicUrl(path);
-    return data.publicUrl;
+  const getOptimizedImageUrl = (path: string, width: number, height: number, quality = 70) => {
+    return sbImg('home-carousel', path, { w: width, h: height, q: quality, format: 'avif' });
   };
 
   if (isLoading || images.length === 0) {
@@ -79,7 +79,13 @@ const HomeCarousel = () => {
           }`}
         >
           <img
-            src={getImageUrl(image.image_path)}
+            src={getOptimizedImageUrl(image.image_path, 1400, 700)}
+            srcSet={`
+              ${getOptimizedImageUrl(image.image_path, 480, 240)} 480w,
+              ${getOptimizedImageUrl(image.image_path, 768, 384)} 768w,
+              ${getOptimizedImageUrl(image.image_path, 1400, 700)} 1400w
+            `}
+            sizes="100vw"
             alt={image.alt_text || image.title}
             className="w-full h-full object-cover"
             width={1400}

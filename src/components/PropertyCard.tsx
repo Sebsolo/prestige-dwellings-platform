@@ -5,6 +5,7 @@ import { PropertyWithMedia } from '@/types/index';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { MapPin, Home, Bed, Square } from 'lucide-react';
+import ResponsiveImage from '@/components/ResponsiveImage';
 
 interface PropertyCardProps {
   property: PropertyWithMedia;
@@ -13,7 +14,6 @@ interface PropertyCardProps {
 const PropertyCard = ({ property }: PropertyCardProps) => {
   const { t } = useTranslation();
   const mainImage = property.media?.find(media => media.order_index === 0) || property.media?.[0];
-  const imageUrl = mainImage?.path ? `https://gxzifrexmsouvfnriyym.supabase.co/storage/v1/object/public/property-images/${mainImage.path}` : null;
   
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('fr-FR', {
@@ -26,9 +26,12 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-shadow">
       <div className="aspect-[4/3] relative overflow-hidden">
-        {imageUrl ? (
-          <img
-            src={imageUrl}
+        {mainImage?.path ? (
+          <ResponsiveImage
+            bucket="property-images"
+            key={mainImage.path}
+            slotWidth={380}
+            aspect={4/3}
             alt={mainImage?.title || property.title_fr || ''}
             className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
             loading="lazy"
