@@ -235,14 +235,24 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {recentPosts.length > 0 ? (
               recentPosts.map((post) => (
-                <div key={post.id} className="bg-card rounded-lg shadow-card overflow-hidden group hover:shadow-lg transition-shadow">
-                  <div className="h-48 bg-muted overflow-hidden">
-                    <img 
-                      src={post.cover_path || '/placeholder.svg'} 
-                      alt={post.title_fr}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                    />
-                  </div>
+                 <div key={post.id} className="bg-card rounded-lg shadow-card overflow-hidden group hover:shadow-lg transition-shadow">
+                   <div className="h-48 bg-muted overflow-hidden">
+                     {post.cover_path && post.cover_path !== '/placeholder.svg' ? (
+                       <IKResponsiveImage
+                         src={post.cover_path}
+                         slotWidth={400}
+                         aspect={400/192}
+                         alt={post.title_fr}
+                         className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                       />
+                     ) : (
+                       <img 
+                         src="/placeholder.svg" 
+                         alt={post.title_fr}
+                         className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                       />
+                     )}
+                   </div>
                   <div className="p-6">
                     <h3 className="text-lg font-semibold mb-2 line-clamp-2">{post.title_fr}</h3>
                     <p className="text-muted-foreground mb-4 line-clamp-3">
