@@ -15,7 +15,7 @@ interface FileUploadProps {
 export const FileUpload: React.FC<FileUploadProps> = ({
   onFileSelect,
   multiple = false,
-  accept = 'image/png,image/jpeg,image/jpg,image/webp',
+  accept = 'image/png,image/jpeg,image/jpg,image/webp,image/avif',
   maxFiles = 10,
   className,
   disabled = false,
@@ -153,7 +153,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
               Cliquez pour ajouter des photos ou glissez-déposez
             </span>
             <span className="text-xs text-muted-foreground">
-              Formats acceptés: PNG, JPG, WebP
+              Formats acceptés: PNG, JPG, WebP, AVIF
             </span>
           </>
         )}

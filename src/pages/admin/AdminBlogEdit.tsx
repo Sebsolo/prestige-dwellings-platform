@@ -269,7 +269,7 @@ const AdminBlogEdit = () => {
                         <div className="space-y-4">
                           <FileUpload
                             onFileSelect={handleCoverImageUpload}
-                            accept="image/png,image/jpeg,image/jpg,image/webp"
+                            accept="image/png,image/jpeg,image/jpg,image/webp,image/avif"
                             maxFiles={1}
                           />
                           <FilePreview

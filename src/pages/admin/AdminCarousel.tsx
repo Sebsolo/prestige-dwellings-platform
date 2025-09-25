@@ -279,7 +279,7 @@ const AdminCarousel = () => {
                 onFileSelect={handleImageUpload}
                 multiple={true}
                 maxFiles={6}
-                accept="image/png,image/jpeg,image/jpg,image/webp"
+                accept="image/png,image/jpeg,image/jpg,image/webp,image/avif"
               />
 
               {uploadedImages.length > 0 && (

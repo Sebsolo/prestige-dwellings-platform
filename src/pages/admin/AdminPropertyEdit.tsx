@@ -813,7 +813,7 @@ const AdminPropertyEdit = () => {
                     <FileUpload
                       onFileSelect={handleImageUpload}
                       multiple
-                      accept="image/png,image/jpeg,image/jpg,image/webp"
+                      accept="image/png,image/jpeg,image/jpg,image/webp,image/avif"
                       maxFiles={20}
                     />
                   </CardContent>
