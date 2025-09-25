@@ -19,36 +19,60 @@ const Home = () => {
   const [featuredProperties, setFeaturedProperties] = useState<PropertyWithMedia[]>([]);
 
   useEffect(() => {
-    const fetchRecentPosts = async () => {
+    const fetchHomeData = async () => {
       try {
-        const { data, error } = await supabase
-          .from('posts')
-          .select('*')
-          .eq('status', 'published')
-          .order('published_at', { ascending: false })
-          .limit(3);
+        // Use single bootstrap function to reduce critical requests
+        const response = await supabase.functions.invoke('bootstrapHome');
+        
+        if (response.error) {
+          console.error('Bootstrap error:', response.error);
+          // Fallback to individual requests
+          await fetchDataFallback();
+          return;
+        }
 
-        if (error) throw error;
-        setRecentPosts(data || []);
-      } catch (error) {
-        console.error('Error fetching recent posts:', error);
-      }
-    };
-
-    const fetchFeaturedProperties = async () => {
-      try {
-        const properties = await propertiesApi.list({ 
-          featured: true
+        const { settings, slides, properties, posts } = response.data;
+        
+        setFeaturedProperties(properties || []);
+        setRecentPosts(posts || []);
+        
+        console.log('Home data loaded via bootstrap:', {
+          properties: properties?.length,
+          posts: posts?.length
         });
-        // Limit to 3 featured properties
-        setFeaturedProperties(properties.slice(0, 3));
+        
       } catch (error) {
-        console.error('Error fetching featured properties:', error);
+        console.error('Error fetching home data:', error);
+        // Fallback to individual requests
+        await fetchDataFallback();
       }
     };
 
-    fetchRecentPosts();
-    fetchFeaturedProperties();
+    const fetchDataFallback = async () => {
+      try {
+        const [postsResponse, propertiesResponse] = await Promise.all([
+          supabase
+            .from('posts')
+            .select('id, title_fr, title_en, slug, cover_path, published_at')
+            .eq('status', 'published')
+            .order('published_at', { ascending: false })
+            .limit(3),
+          
+          propertiesApi.list({ featured: true })
+        ]);
+
+        if (!postsResponse.error) {
+          setRecentPosts(postsResponse.data || []);
+        }
+        
+        setFeaturedProperties((propertiesResponse || []).slice(0, 3));
+        
+      } catch (error) {
+        console.error('Error in fallback fetch:', error);
+      }
+    };
+
+    fetchHomeData();
   }, []);
 
   return (

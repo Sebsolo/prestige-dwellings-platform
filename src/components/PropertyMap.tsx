@@ -2,8 +2,10 @@ import { useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { PropertyWithMedia } from '@/types/index';
 import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
 import { Link } from 'react-router-dom';
+
+// Load leaflet CSS only when this component is used (lazy-loaded)
+import 'leaflet/dist/leaflet.css';
 
 // Fix for default markers in react-leaflet
 delete (L.Icon.Default.prototype as any)._getIconUrl;
