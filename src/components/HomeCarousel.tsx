@@ -84,7 +84,7 @@ const HomeCarousel = () => {
             className="w-full h-full object-cover"
             width={1400}
             height={700}
-            fetchPriority={index === 0 ? 'high' : undefined}
+            fetchPriority={index === 0 ? 'high' : 'low'}
             decoding="async"
             loading={index === 0 ? 'eager' : 'lazy'}
           />
