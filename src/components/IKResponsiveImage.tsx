@@ -1,4 +1,4 @@
-import { Image } from '@imagekit/react';
+import React from 'react';
 
 type Props = {
   src?: string;           // Absolute URL (e.g., Supabase public URL)
@@ -16,25 +16,33 @@ export default function IKResponsiveImage({
   const sizes = [Math.min(480, slotWidth), Math.min(768, Math.round(slotWidth * 1.5)), Math.min(1200, slotWidth * 2)];
   const height = (w: number) => Math.round(w / aspect);
   
-  // On demande AVIF qualité 70; ajuste si besoin
-  const common = (w: number) => [{ width: Math.round(w), height: height(w), quality: 70, format: 'avif' }] as const;
-  
-  const imgSourceProps = path ? { path } : src ? { src } : null;
-  if (!imgSourceProps) {
+  // For now, let's fall back to a regular img element with the ImageKit URL manually constructed
+  const imageUrl = path 
+    ? `https://ik.imagekit.io/hqhxxhjdvy${path}?tr=w-${slotWidth},h-${height(slotWidth)},q-70,f-avif`
+    : src
+    ? `https://ik.imagekit.io/hqhxxhjdvy/${encodeURIComponent(src)}?tr=w-${slotWidth},h-${height(slotWidth)},q-70,f-avif`
+    : '';
+
+  console.log('IKResponsiveImage URL:', imageUrl);
+
+  if (!imageUrl) {
     console.warn('IKResponsiveImage: missing src or path');
-    return null;
+    return (
+      <div className="w-full h-full bg-muted flex items-center justify-center">
+        <span className="text-muted-foreground">Image unavailable</span>
+      </div>
+    );
   }
   
   return (
-    <Image
-      {...(imgSourceProps as any)}
+    <img
+      src={imageUrl}
       alt={alt}
       width={slotWidth}
       height={height(slotWidth)}
       loading={priority ? 'eager' : 'lazy'}
-      fetchPriority={priority ? 'high' : ('low' as any)}
-      transformation={common(sizes[1]) as any}
       className={className}
+      style={{ objectFit: 'cover' }}
     />
   );
 }
