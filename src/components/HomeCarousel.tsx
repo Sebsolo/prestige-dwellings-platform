@@ -27,6 +27,7 @@ const HomeCarousel = () => {
           .order('sort_order', { ascending: true });
 
         if (error) throw error;
+        console.log('Fetched carousel images:', data);
         setImages(data || []);
       } catch (error) {
         console.error('Error fetching carousel images:', error);
@@ -59,7 +60,9 @@ const HomeCarousel = () => {
   };
 
   const getOptimizedImageUrl = (path: string, width: number, height: number, quality = 70) => {
-    return sbImg('home-carousel', path, { w: width, h: height, q: quality, format: 'avif' });
+    const url = sbImg('home-carousel', path, { w: width, h: height, q: quality, format: 'avif' });
+    console.log('Generated image URL:', url, 'for path:', path);
+    return url;
   };
 
   if (isLoading || images.length === 0) {
