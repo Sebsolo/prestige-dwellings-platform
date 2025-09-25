@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Calendar, User, ArrowLeft, Share2, Loader } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { Link } from 'react-router-dom';
+import IKResponsiveImage from '@/components/IKResponsiveImage';
 
 const BlogPost = () => {
   const { slug } = useParams();
@@ -146,10 +147,13 @@ const BlogPost = () => {
         {/* Featured Image */}
         {post.cover_path && (
           <div className="aspect-video bg-muted rounded-lg overflow-hidden mb-8">
-            <img 
-              src={post.cover_path} 
+            <IKResponsiveImage
+              src={post.cover_path}
+              slotWidth={800}
+              aspect={16/9}
               alt={post.title_fr}
               className="w-full h-full object-cover"
+              priority={true}
             />
           </div>
         )}
@@ -185,15 +189,17 @@ const BlogPost = () => {
                   to={`/blog/${relatedPost.slug}`}
                   className="flex gap-4 group hover:bg-muted/50 p-4 rounded-lg transition-colors"
                 >
-                  <div className="w-24 h-20 bg-muted rounded flex-shrink-0 overflow-hidden">
-                    {relatedPost.cover_path && (
-                      <img 
-                        src={relatedPost.cover_path} 
-                        alt={relatedPost.title_fr}
-                        className="w-full h-full object-cover"
-                      />
-                    )}
-                  </div>
+                   <div className="w-24 h-20 bg-muted rounded flex-shrink-0 overflow-hidden">
+                     {relatedPost.cover_path && (
+                       <IKResponsiveImage
+                         src={relatedPost.cover_path}
+                         slotWidth={96}
+                         aspect={24/20}
+                         alt={relatedPost.title_fr}
+                         className="w-full h-full object-cover"
+                       />
+                     )}
+                   </div>
                   <div>
                     <h4 className="font-semibold mb-1 line-clamp-2 group-hover:text-primary transition-colors">
                       {relatedPost.title_fr}

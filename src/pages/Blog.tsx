@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, User, ArrowRight } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import IKResponsiveImage from '@/components/IKResponsiveImage';
 
 const Blog = () => {
   const { t } = useTranslation();
@@ -93,14 +94,24 @@ const Blog = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {posts.map((post) => (
-                <Card key={post.id} className="group hover:shadow-lg transition-shadow">
-                  <div className="aspect-video bg-muted overflow-hidden">
-                    <img 
-                      src={post.cover_path || '/placeholder.svg'} 
-                      alt={post.title_fr}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                    />
-                  </div>
+                 <Card key={post.id} className="group hover:shadow-lg transition-shadow">
+                   <div className="aspect-video bg-muted overflow-hidden">
+                     {post.cover_path && post.cover_path !== '/placeholder.svg' ? (
+                       <IKResponsiveImage
+                         src={post.cover_path}
+                         slotWidth={400}
+                         aspect={16/9}
+                         alt={post.title_fr}
+                         className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                       />
+                     ) : (
+                       <img 
+                         src="/placeholder.svg" 
+                         alt={post.title_fr}
+                         className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                       />
+                     )}
+                   </div>
                   <CardHeader className="space-y-2">
                     <div className="flex items-center justify-between text-sm text-muted-foreground">
                       <Badge variant="secondary">Article</Badge>
