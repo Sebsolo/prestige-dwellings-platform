@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -22,7 +22,9 @@ import LegalNotice from "./pages/LegalNotice";
 import Privacy from "./pages/Privacy";
 import Cookies from "./pages/Cookies";
 import Login from "./pages/Login";
-import Admin from "./pages/Admin";
+
+// Lazy load admin components
+const Admin = lazy(() => import("./pages/Admin"));
 import AdminProperties from "./pages/admin/AdminProperties";
 import AdminPropertyForm from "./pages/admin/AdminPropertyForm";
 import AdminPropertyEdit from "./pages/admin/AdminPropertyEdit";
@@ -86,7 +88,9 @@ const App = () => (
                 path="/admin" 
                 element={
                   <RequireRole allowedRoles={['admin', 'editor', 'agent']}>
-                    <Admin />
+                    <Suspense fallback={null}>
+                      <Admin />
+                    </Suspense>
                   </RequireRole>
                 } 
               />

@@ -82,6 +82,10 @@ const HomeCarousel = () => {
             src={getImageUrl(image.image_path)}
             alt={image.alt_text || image.title}
             className="w-full h-full object-cover"
+            width={1400}
+            height={700}
+            fetchPriority={index === 0 ? 'high' : undefined}
+            decoding="async"
             loading={index === 0 ? 'eager' : 'lazy'}
           />
         </div>
