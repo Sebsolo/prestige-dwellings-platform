@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { sbImg } from '@/lib/img';
-import IKResponsiveImage from '@/components/IKResponsiveImage';
+import LazyImage from '@/components/LazyImage';
 
 interface CarouselImage {
   id: number;
@@ -52,13 +51,13 @@ const HomeCarousel = () => {
     }
   }, [images.length]);
 
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     setCurrentIndex(currentIndex === images.length - 1 ? 0 : currentIndex + 1);
-  };
+  }, [currentIndex, images.length]);
 
-  const prevSlide = () => {
+  const prevSlide = useCallback(() => {
     setCurrentIndex(currentIndex === 0 ? images.length - 1 : currentIndex - 1);
-  };
+  }, [currentIndex, images.length]);
 
   const getImageUrl = (path: string) => {
     // Generate full Supabase public URL; IKResponsiveImage will fetch via ImageKit using encoded absolute URL
@@ -83,13 +82,13 @@ const HomeCarousel = () => {
             index === currentIndex ? 'opacity-50' : 'opacity-0'
           }`}
         >
-          <IKResponsiveImage
+          <LazyImage
             src={getImageUrl(image.image_path)}
-            slotWidth={1400}
-            aspect={1400/700}
             alt={image.alt_text || image.title}
-            className="w-full h-full object-cover"
+            className="w-full h-full"
+            aspectRatio={1400/700}
             priority={index === 0 && currentIndex === 0}
+            onLoad={() => index === 0 && console.log('Hero carousel image loaded')}
           />
         </div>
       ))}

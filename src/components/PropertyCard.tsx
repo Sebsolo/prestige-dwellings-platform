@@ -5,7 +5,7 @@ import { PropertyWithMedia } from '@/types/index';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { MapPin, Home, Bed, Square } from 'lucide-react';
-import ResponsiveImage from '@/components/ResponsiveImage';
+import LazyImage from '@/components/LazyImage';
 
 interface PropertyCardProps {
   property: PropertyWithMedia;
@@ -24,17 +24,15 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
   };
 
   return (
-    <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+    <Card className="overflow-hidden hover:shadow-luxury transition-all duration-300 hover:-translate-y-1">
       <div className="aspect-[4/3] relative overflow-hidden">
         {mainImage?.path ? (
-          <ResponsiveImage
-            bucket="property-images"
-            imagePath={mainImage.path}
-            slotWidth={380}
-            aspect={4/3}
+          <LazyImage
+            src={`https://gxzifrexmsouvfnriyym.supabase.co/storage/v1/object/public/property-images/${mainImage.path}`}
             alt={mainImage?.title || property.title_fr || ''}
-            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-            loading="lazy"
+            className="w-full h-full hover:scale-105 transition-transform duration-300"
+            aspectRatio={4/3}
+            onLoad={() => console.log('Property image loaded')}
           />
         ) : (
           <div className="w-full h-full bg-muted flex items-center justify-center">

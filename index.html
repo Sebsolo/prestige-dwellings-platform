@@ -1,71 +1,134 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sebastien Pons Immobilier</title>
-    <meta name="description" content="Sebastien Pons Immobilier - Luxury Real Estate" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Sebastien Pons Immobilier - Expert en Immobilier de Prestige</title>
+    <meta name="description" content="Expert en immobilier de prestige à Cannes et la Côte d'Azur. Vente, location et estimation de biens d'exception. Service personnalisé et expertise locale." />
     <meta name="author" content="Sebastien Pons" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#D4AF37" />
+    
     <!-- Critical resource hints for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://ik.imagekit.io" crossorigin>
     <link rel="preconnect" href="https://gxzifrexmsouvfnriyym.supabase.co" crossorigin>
-    <!-- Non-critical DNS prefetch -->
+    
+    <!-- DNS prefetch for non-critical resources -->
     <link rel="dns-prefetch" href="//www.googletagmanager.com">
-    <link rel="dns-prefetch" href="//fonts.googleapis.com">
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link rel="icon" href="/lovable-uploads/7d311420-c757-4cc6-b8a1-fda61618d79e.png" type="image/png">
-    <link rel="preload" as="style"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
-      onload="this.rel='stylesheet'">
-    <noscript><link rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"></noscript>
+    <link rel="dns-prefetch" href="//static.axept.io">
+    
+    <!-- Favicon with multiple sizes -->
+    <link rel="icon" href="/lovable-uploads/7d311420-c757-4cc6-b8a1-fda61618d79e.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="/lovable-uploads/7d311420-c757-4cc6-b8a1-fda61618d79e.png">
+    
+    <!-- Critical fonts with optimal loading -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"></noscript>
     
     <!-- Preload critical assets -->
-    <link rel="preload" href="/assets/hero.avif" as="image">
+    <link rel="preload" href="/src/assets/new-logo.webp" as="image" type="image/webp">
+    <link rel="modulepreload" href="/src/main.tsx">
     
-    <!-- Critical CSS inline -->
+    <!-- Critical CSS inline for above-the-fold content -->
     <style>
-      /* Critical styles for above-the-fold content */
-      html, body { margin: 0; padding: 0; font-family: Inter, sans-serif; }
-      #root { min-height: 100vh; }
-      .hero-section { min-height: 100vh; position: relative; overflow: hidden; }
-      .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 50; }
+      /* Critical styles optimized for CLS prevention */
+      html { scroll-behavior: smooth; }
+      html, body { margin: 0; padding: 0; font-family: Inter, system-ui, sans-serif; font-display: swap; }
+      #root { min-height: 100vh; contain: layout style paint; }
+      .hero-section { min-height: 100vh; position: relative; overflow: hidden; contain: layout; }
+      .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 50; backdrop-filter: blur(8px); }
       .loading-spinner { animation: spin 1s linear infinite; }
       @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+      /* Prevent layout shift */
+      img { height: auto; max-width: 100%; }
+      .aspect-ratio-placeholder { background-color: #f5f4f0; }
+      /* Critical button styles */
+      .btn-primary { background: linear-gradient(135deg, #D4AF37, #B8941F); color: #2C2417; }
     </style>
     
     <!-- Load non-critical CSS asynchronously -->
-    <link rel="preload" href="/assets/non-critical.css" as="style" onload="this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="/assets/non-critical.css"></noscript>
+    <link rel="preload" href="/public/assets/non-critical.css" as="style" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/public/assets/non-critical.css"></noscript>
     
-    <!-- Axeptio CMP -->
+    <!-- Axeptio CMP - Defer non-critical -->
     <script>
       window.axeptioSettings = {
         clientId: "68cb0896e07ca062b2a798cc",
-        cookiesVersion: "your-cookies-version", // Replace with your version
+        cookiesVersion: "sebastien-pons-v1.0",
       };
       
-      (function(d, s) {
+      // Load CMP after critical resources
+      function loadCMP() {
+        var d = document, s = "script";
         var t = d.getElementsByTagName(s)[0], e = d.createElement(s);
-        e.async = true; e.src = "//static.axept.io/sdk.js";
+        e.async = true; 
+        e.src = "//static.axept.io/sdk.js";
         t.parentNode.insertBefore(e, t);
-      })(document, "script");
+      }
+      
+      // Defer CMP loading
+      if (document.readyState === 'complete') {
+        setTimeout(loadCMP, 100);
+      } else {
+        window.addEventListener('load', function() {
+          setTimeout(loadCMP, 100);
+        });
+      }
     </script>
 
-    <meta property="og:title" content="Sebastien Pons Immobilier" />
-    <meta property="og:description" content="Luxury Real Estate - Premium Properties" />
+    <!-- Open Graph optimized -->
+    <meta property="og:title" content="Sebastien Pons Immobilier - Expert en Immobilier de Prestige" />
+    <meta property="og:description" content="Expert en immobilier de prestige à Cannes et la Côte d'Azur. Vente, location et estimation de biens d'exception." />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta property="og:url" content="https://sebastien-pons-immobilier.fr" />
+    <meta property="og:image" content="/src/assets/new-logo.webp" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="Sebastien Pons Immobilier" />
 
+    <!-- Twitter Card optimized -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@lovable_dev" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta name="twitter:title" content="Sebastien Pons Immobilier - Expert en Immobilier de Prestige" />
+    <meta name="twitter:description" content="Expert en immobilier de prestige à Cannes et la Côte d'Azur." />
+    <meta name="twitter:image" content="/src/assets/new-logo.webp" />
+    
+    <!-- Structured data for rich snippets -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "RealEstateAgent",
+      "name": "Sebastien Pons Immobilier",
+      "url": "https://sebastien-pons-immobilier.fr",
+      "logo": "/src/assets/new-logo.webp",
+      "description": "Expert en immobilier de prestige à Cannes et la Côte d'Azur",
+      "areaServed": "Côte d'Azur, Cannes",
+      "serviceType": ["Vente immobilière", "Location immobilière", "Estimation immobilière"]
+    }
+    </script>
   </head>
 
   <body>
-    <div id="root"></div>
+    <!-- App container with loading state -->
+    <div id="root">
+      <div id="initial-loader" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #f9f8f4; display: flex; align-items: center; justify-content: center; z-index: 9999;">
+        <div style="width: 40px; height: 40px; border: 3px solid #f3f3f3; border-top: 3px solid #D4AF37; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+      </div>
+    </div>
+    
+    <!-- Main app script with proper priority -->
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Remove loader when app loads -->
+    <script>
+      window.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+          var loader = document.getElementById('initial-loader');
+          if (loader) loader.style.display = 'none';
+        }, 100);
+      });
+    </script>
   </body>
 </html>
