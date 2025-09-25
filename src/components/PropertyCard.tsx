@@ -29,7 +29,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
         {mainImage?.path ? (
           <ResponsiveImage
             bucket="property-images"
-            key={mainImage.path}
+            imagePath={mainImage.path}
             slotWidth={380}
             aspect={4/3}
             alt={mainImage?.title || property.title_fr || ''}
