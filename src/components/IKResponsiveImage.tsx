@@ -32,12 +32,8 @@ export default function IKResponsiveImage({
       width={slotWidth}
       height={height(slotWidth)}
       loading={priority ? 'eager' : 'lazy'}
-      // fetchpriority améliore le LCP quand priority=true
       fetchPriority={priority ? 'high' : ('low' as any)}
-      decoding="async"
       transformation={common(sizes[1]) as any}
-      // Le SDK génère automatiquement un srcset responsive
-      sizes={`(max-width: 600px) 100vw, (max-width: 1024px) 70vw, ${slotWidth}px`}
       className={className}
     />
   );
