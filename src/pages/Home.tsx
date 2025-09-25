@@ -11,6 +11,7 @@ import HomeCarousel from '@/components/HomeCarousel';
 import { propertiesApi } from '@/services/propertiesApi';
 import { PropertyWithMedia } from '@/types/index';
 import { supabase } from '@/integrations/supabase/client';
+import IKResponsiveImage from '@/components/IKResponsiveImage';
 
 const Home = () => {
   const { t } = useTranslation();
