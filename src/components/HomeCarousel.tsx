@@ -59,8 +59,8 @@ const HomeCarousel = () => {
     setCurrentIndex(currentIndex === 0 ? images.length - 1 : currentIndex - 1);
   };
 
-  const getOptimizedImageUrl = (path: string, width: number, height: number, quality = 70) => {
-    const url = sbImg('home-carousel', path, { w: width, h: height, q: quality, format: 'avif' });
+  const getImageUrl = (path: string) => {
+    const url = sbImg('home-carousel', path);
     console.log('Generated image URL:', url, 'for path:', path);
     return url;
   };
@@ -82,13 +82,7 @@ const HomeCarousel = () => {
           }`}
         >
           <img
-            src={getOptimizedImageUrl(image.image_path, 1400, 700)}
-            srcSet={`
-              ${getOptimizedImageUrl(image.image_path, 480, 240)} 480w,
-              ${getOptimizedImageUrl(image.image_path, 768, 384)} 768w,
-              ${getOptimizedImageUrl(image.image_path, 1400, 700)} 1400w
-            `}
-            sizes="100vw"
+            src={getImageUrl(image.image_path)}
             alt={image.alt_text || image.title}
             className="w-full h-full object-cover"
             width={1400}
