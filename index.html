@@ -24,6 +24,17 @@
     <!-- Preload critical assets -->
     <link rel="preload" href="/assets/hero.avif" as="image">
     
+    <!-- Critical CSS inline -->
+    <style>
+      /* Critical styles for above-the-fold content */
+      html, body { margin: 0; padding: 0; font-family: Inter, sans-serif; }
+      #root { min-height: 100vh; }
+      .hero-section { min-height: 100vh; position: relative; overflow: hidden; }
+      .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 50; }
+      .loading-spinner { animation: spin 1s linear infinite; }
+      @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    </style>
+    
     <!-- Load non-critical CSS asynchronously -->
     <link rel="preload" href="/assets/non-critical.css" as="style" onload="this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="/assets/non-critical.css"></noscript>

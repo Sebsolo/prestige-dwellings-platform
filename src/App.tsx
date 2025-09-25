@@ -14,8 +14,6 @@ import Sales from "./pages/Sales";
 import Rentals from "./pages/Rentals";
 import PropertyDetail from "./pages/PropertyDetail";
 import JoinExp from "./pages/JoinExp";
-import Blog from "./pages/Blog";
-import BlogPost from "./pages/BlogPost";
 import Valuation from "./pages/Valuation";
 import Contact from "./pages/Contact";
 import LegalNotice from "./pages/LegalNotice";
@@ -23,19 +21,21 @@ import Privacy from "./pages/Privacy";
 import Cookies from "./pages/Cookies";
 import Login from "./pages/Login";
 
-// Lazy load admin components
+// Lazy load non-critical components
+const Blog = lazy(() => import("./pages/Blog"));
+const BlogPost = lazy(() => import("./pages/BlogPost"));
 const Admin = lazy(() => import("./pages/Admin"));
-import AdminProperties from "./pages/admin/AdminProperties";
-import AdminPropertyForm from "./pages/admin/AdminPropertyForm";
-import AdminPropertyEdit from "./pages/admin/AdminPropertyEdit";
-import AdminBlog from "./pages/admin/AdminBlog";
-import AdminBlogForm from "./pages/admin/AdminBlogForm";
-import AdminBlogEdit from "./pages/admin/AdminBlogEdit";
-import AdminTestimonials from "./pages/admin/AdminTestimonials";
-import AdminLeads from "./pages/admin/AdminLeads";
-import AdminSettings from "./pages/admin/AdminSettings";
-import AdminRevShare from "./pages/admin/AdminRevShare";
-import AdminCarousel from "./pages/admin/AdminCarousel";
+const AdminProperties = lazy(() => import("./pages/admin/AdminProperties"));
+const AdminPropertyForm = lazy(() => import("./pages/admin/AdminPropertyForm"));
+const AdminPropertyEdit = lazy(() => import("./pages/admin/AdminPropertyEdit"));
+const AdminBlog = lazy(() => import("./pages/admin/AdminBlog"));
+const AdminBlogForm = lazy(() => import("./pages/admin/AdminBlogForm"));
+const AdminBlogEdit = lazy(() => import("./pages/admin/AdminBlogEdit"));
+const AdminTestimonials = lazy(() => import("./pages/admin/AdminTestimonials"));
+const AdminLeads = lazy(() => import("./pages/admin/AdminLeads"));
+const AdminSettings = lazy(() => import("./pages/admin/AdminSettings"));
+const AdminRevShare = lazy(() => import("./pages/admin/AdminRevShare"));
+const AdminCarousel = lazy(() => import("./pages/admin/AdminCarousel"));
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -76,8 +76,8 @@ const App = () => (
               <Route path="/locations" element={<Rentals />} />
               <Route path="/bien/:idOrSlug" element={<PropertyDetail />} />
               <Route path="/rejoindre-exp" element={<JoinExp />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:slug" element={<BlogPost />} />
+              <Route path="/blog" element={<Suspense fallback={null}><Blog /></Suspense>} />
+              <Route path="/blog/:slug" element={<Suspense fallback={null}><BlogPost /></Suspense>} />
               <Route path="/estimation" element={<Valuation />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/mentions-legales" element={<LegalNotice />} />
@@ -98,89 +98,89 @@ const App = () => (
                 path="/admin/properties" 
                 element={
                   <RequireRole allowedRoles={['admin', 'editor', 'agent']}>
-                    <AdminProperties />
+                    <Suspense fallback={null}><AdminProperties /></Suspense>
                   </RequireRole>
-                } 
+                }
               />
               <Route 
                 path="/admin/properties/new" 
                 element={
                   <RequireRole allowedRoles={['admin', 'editor', 'agent']}>
-                    <AdminPropertyForm />
+                    <Suspense fallback={null}><AdminPropertyForm /></Suspense>
                   </RequireRole>
-                } 
+                }
               />
               <Route 
                 path="/admin/properties/edit/:id" 
                 element={
                   <RequireRole allowedRoles={['admin', 'editor', 'agent']}>
-                    <AdminPropertyEdit />
+                    <Suspense fallback={null}><AdminPropertyEdit /></Suspense>
                   </RequireRole>
-                } 
+                }
               />
               <Route 
                 path="/admin/blog"
                 element={
                   <RequireRole allowedRoles={['admin', 'editor']}>
-                    <AdminBlog />
+                    <Suspense fallback={null}><AdminBlog /></Suspense>
                   </RequireRole>
-                } 
+                }
               />
               <Route 
                 path="/admin/blog/new" 
                 element={
                   <RequireRole allowedRoles={['admin', 'editor']}>
-                    <AdminBlogForm />
+                    <Suspense fallback={null}><AdminBlogForm /></Suspense>
                   </RequireRole>
-                } 
+                }
               />
               <Route 
                 path="/admin/blog/edit/:id" 
                 element={
                   <RequireRole allowedRoles={['admin', 'editor']}>
-                    <AdminBlogEdit />
+                    <Suspense fallback={null}><AdminBlogEdit /></Suspense>
                   </RequireRole>
-                } 
+                }
               />
               <Route 
                 path="/admin/testimonials" 
                 element={
                   <RequireRole allowedRoles={['admin', 'editor']}>
-                    <AdminTestimonials />
+                    <Suspense fallback={null}><AdminTestimonials /></Suspense>
                   </RequireRole>
-                } 
+                }
               />
               <Route 
                 path="/admin/leads" 
                 element={
                   <RequireRole allowedRoles={['admin', 'editor', 'agent']}>
-                    <AdminLeads />
+                    <Suspense fallback={null}><AdminLeads /></Suspense>
                   </RequireRole>
-                } 
+                }
               />
               <Route 
                 path="/admin/settings" 
                 element={
                   <RequireRole allowedRoles={['admin']}>
-                    <AdminSettings />
+                    <Suspense fallback={null}><AdminSettings /></Suspense>
                   </RequireRole>
-                } 
+                }
               />
               <Route 
                 path="/admin/revshare" 
                 element={
                   <RequireRole allowedRoles={['admin']}>
-                    <AdminRevShare />
+                    <Suspense fallback={null}><AdminRevShare /></Suspense>
                   </RequireRole>
-                } 
+                }
               />
               <Route 
                 path="/admin/carousel" 
                 element={
                   <RequireRole allowedRoles={['admin', 'editor']}>
-                    <AdminCarousel />
+                    <Suspense fallback={null}><AdminCarousel /></Suspense>
                   </RequireRole>
-                } 
+                }
               />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
