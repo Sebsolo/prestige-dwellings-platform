@@ -61,9 +61,10 @@ const HomeCarousel = () => {
   };
 
   const getImageUrl = (path: string) => {
-    const url = sbImg('home-carousel', path);
-    console.log('Generated image URL:', url, 'for path:', path);
-    return url;
+    // Generate direct Supabase public URL for ImageKit to proxy
+    const { data } = supabase.storage.from('home-carousel').getPublicUrl(path);
+    console.log('Generated Supabase URL for ImageKit:', data.publicUrl, 'for path:', path);
+    return data.publicUrl;
   };
 
   if (isLoading || images.length === 0) {
