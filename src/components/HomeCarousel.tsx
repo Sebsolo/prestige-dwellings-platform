@@ -61,10 +61,10 @@ const HomeCarousel = () => {
   };
 
   const getImageUrl = (path: string) => {
-    // Pass ImageKit-relative path so the provider composes the full IK URL
-    const ikPath = `home-carousel/${path}`;
-    console.log('Using ImageKit path (should hit ik.imagekit.io):', ikPath);
-    return ikPath;
+    // Generate full Supabase public URL for ImageKit to proxy and transform
+    const { data } = supabase.storage.from('home-carousel').getPublicUrl(path);
+    console.log('Generated Supabase URL for ImageKit to proxy:', data.publicUrl);
+    return data.publicUrl;
   };
 
   if (isLoading || images.length === 0) {
