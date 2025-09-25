@@ -10,11 +10,11 @@ import { ImageKitProvider } from '@imagekit/react'
 const IK_ENDPOINT = import.meta.env.VITE_IMAGEKIT_ENDPOINT || 'https://ik.imagekit.io/hqhxxhjdvy/';
 
 createRoot(document.getElementById("root")!).render(
-  <ThemeProvider>
-    <RevShareSettingsProvider>
-      <ImageKitProvider urlEndpoint={IK_ENDPOINT}>
+  <ImageKitProvider urlEndpoint={IK_ENDPOINT}>
+    <ThemeProvider>
+      <RevShareSettingsProvider>
         <App />
-      </ImageKitProvider>
-    </RevShareSettingsProvider>
-  </ThemeProvider>
+      </RevShareSettingsProvider>
+    </ThemeProvider>
+  </ImageKitProvider>
 );
