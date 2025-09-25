@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
-import logo from '@/assets/sebastien-pons-logo-new.png';
+import logo from '@/assets/new-logo.webp';
 const Footer = () => {
   const {
     t
