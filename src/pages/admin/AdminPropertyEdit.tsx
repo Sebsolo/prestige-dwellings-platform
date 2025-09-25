@@ -16,6 +16,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { ArrowLeft, Upload, X, Camera } from 'lucide-react';
 import { FileUpload, FilePreview } from '@/components/ui/file-upload';
+import { DraggableFilePreview } from '@/components/ui/draggable-file-preview';
 import { propertiesApi } from '@/services/propertiesApi';
 
 const propertySchema = z.object({
@@ -165,6 +166,10 @@ const AdminPropertyEdit = () => {
     }
   };
 
+  const handleExistingImagesReorder = (reorderedImages: Array<{ id: string; path: string; preview: string }>) => {
+    setExistingImages(reorderedImages);
+  };
+
   const geocodeAddress = useCallback(async () => {
     const address = form.getValues('address');
     const city = form.getValues('city');
@@ -268,6 +273,15 @@ const AdminPropertyEdit = () => {
         }
         
         setIsUploading(false);
+      }
+
+      // Update sort order for existing images if they were reordered
+      for (let i = 0; i < existingImages.length; i++) {
+        const image = existingImages[i];
+        await supabase
+          .from('media')
+          .update({ sort_order: i })
+          .eq('id', Number(image.id));
       }
 
       toast.success('Bien modifié avec succès');
@@ -788,15 +802,16 @@ const AdminPropertyEdit = () => {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     {/* Existing Images */}
-                    {existingImages.length > 0 && (
-                      <div className="space-y-2">
-                        <h4 className="text-sm font-medium">Images existantes</h4>
-                        <FilePreview
-                          files={existingImages}
-                          onRemove={removeExistingImage}
-                        />
-                      </div>
-                    )}
+                     {existingImages.length > 0 && (
+                       <div className="space-y-2">
+                         <h4 className="text-sm font-medium">Images existantes (glissez pour réorganiser)</h4>
+                         <DraggableFilePreview
+                           files={existingImages}
+                           onRemove={removeExistingImage}
+                           onReorder={handleExistingImagesReorder}
+                         />
+                       </div>
+                     )}
 
                     {/* New Images */}
                     {uploadedImages.length > 0 && (
