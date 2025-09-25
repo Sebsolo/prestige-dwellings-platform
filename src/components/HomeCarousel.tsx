@@ -3,6 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { sbImg } from '@/lib/img';
+import IKResponsiveImage from '@/components/IKResponsiveImage';
 
 interface CarouselImage {
   id: number;
@@ -81,15 +82,13 @@ const HomeCarousel = () => {
             index === currentIndex ? 'opacity-50' : 'opacity-0'
           }`}
         >
-          <img
+          <IKResponsiveImage
             src={getImageUrl(image.image_path)}
+            slotWidth={1400}
+            aspect={1400/700}
             alt={image.alt_text || image.title}
             className="w-full h-full object-cover"
-            width={1400}
-            height={700}
-            fetchPriority={index === 0 ? 'high' : 'low'}
-            decoding="async"
-            loading={index === 0 ? 'eager' : 'lazy'}
+            priority={index === 0}
           />
         </div>
       ))}

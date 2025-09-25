@@ -1,5 +1,6 @@
 import React from 'react';
 import { sbImg } from '@/lib/img';
+import IKResponsiveImage from './IKResponsiveImage';
 
 type Props = {
   bucket: string;
@@ -47,15 +48,13 @@ export default function ResponsiveImage({
   }
 
   return (
-    <img
+    <IKResponsiveImage
       src={imageUrl}
-      width={slotWidth}
-      height={Math.round(slotWidth / aspect)}
+      slotWidth={slotWidth}
+      aspect={aspect}
       alt={alt}
-      loading={loading}
-      decoding="async"
-      fetchPriority={fetchPriority}
       className={className}
+      priority={fetchPriority === 'high'}
     />
   );
 }
