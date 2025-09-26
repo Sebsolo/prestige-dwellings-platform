@@ -20,17 +20,17 @@ interface GoogleReviewsProps {
   className?: string;
 }
 
-const GoogleReviews = ({ placeId, maxReviews = 6, className = "" }: GoogleReviewsProps) => {
+const GoogleReviews = ({ placeId, maxReviews = 3, className = "" }: GoogleReviewsProps) => {
   const [reviews, setReviews] = useState<GoogleReview[]>([]);
   const [loading, setLoading] = useState(true);
   const [googleBusinessUrl, setGoogleBusinessUrl] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
 
-  // Mock reviews data for demonstration (replace with actual Google Places API call)
+  // Prioritized reviews data
   const mockReviews: GoogleReview[] = [
     {
       id: '1',
-      author_name: 'Marie Dubois',
+      author_name: 'Remi Destang',
       rating: 5,
       relative_time_description: 'il y a 2 semaines',
       text: 'Service exceptionnel ! Sebastien a su nous accompagner avec professionnalisme dans notre projet d\'achat. Très à l\'écoute et de bons conseils.',
@@ -39,7 +39,7 @@ const GoogleReviews = ({ placeId, maxReviews = 6, className = "" }: GoogleReview
     },
     {
       id: '2',
-      author_name: 'Jean-Pierre Martin',
+      author_name: 'Julien Pelloile',
       rating: 5,
       relative_time_description: 'il y a 1 mois',
       text: 'Agent immobilier de confiance, très professionnel. La vente de notre maison s\'est déroulée sans encombre grâce à son expertise.',
@@ -48,38 +48,11 @@ const GoogleReviews = ({ placeId, maxReviews = 6, className = "" }: GoogleReview
     },
     {
       id: '3',
-      author_name: 'Sophie Laurent',
+      author_name: 'Floriane Chatelain',
       rating: 5,
       relative_time_description: 'il y a 3 semaines',
       text: 'Excellent accompagnement pour notre premier achat immobilier. Sebastien a pris le temps de nous expliquer chaque étape.',
       time: Date.now() - 1814400000,
-      profile_photo_url: '/placeholder.svg'
-    },
-    {
-      id: '4',
-      author_name: 'Thomas Rousseau',
-      rating: 5,
-      relative_time_description: 'il y a 1 mois',
-      text: 'Très satisfait du service. Réactif, professionnel et de très bons conseils. Je recommande vivement !',
-      time: Date.now() - 2592000000,
-      profile_photo_url: '/placeholder.svg'
-    },
-    {
-      id: '5',
-      author_name: 'Catherine Moreau',
-      rating: 5,
-      relative_time_description: 'il y a 2 mois',
-      text: 'Un grand merci à Sebastien pour son accompagnement dans la vente de notre appartement. Processus fluide et résultat au-delà de nos attentes.',
-      time: Date.now() - 5184000000,
-      profile_photo_url: '/placeholder.svg'
-    },
-    {
-      id: '6',
-      author_name: 'Michel Durand',
-      rating: 5,
-      relative_time_description: 'il y a 6 semaines',
-      text: 'Agent immobilier très compétent et disponible. Nous avons trouvé notre maison rapidement grâce à son réseau et ses conseils avisés.',
-      time: Date.now() - 3628800000,
       profile_photo_url: '/placeholder.svg'
     }
   ];
@@ -108,7 +81,7 @@ const GoogleReviews = ({ placeId, maxReviews = 6, className = "" }: GoogleReview
           
           if (!settingsPlaceId) {
             // Use mock data if no Place ID configured
-            setReviews(mockReviews.slice(0, maxReviews));
+            setReviews(mockReviews);
             setError(null);
             return;
           }
@@ -120,23 +93,33 @@ const GoogleReviews = ({ placeId, maxReviews = 6, className = "" }: GoogleReview
 
           if (functionError) {
             console.error('Error calling fetchGoogleReviews function:', functionError);
-            setReviews(mockReviews.slice(0, maxReviews));
+            setReviews(mockReviews);
             setError(null);
             return;
           }
 
-          setReviews(data.reviews.slice(0, maxReviews));
+          // Filter for priority reviewers first, then others, limited to 3
+          const priorityNames = ['Remi Destang', 'Julien Pelloile', 'Floriane Chatelain'];
+          const priorityReviews = data.reviews.filter((review: GoogleReview) => 
+            priorityNames.includes(review.author_name)
+          );
+          const otherReviews = data.reviews.filter((review: GoogleReview) => 
+            !priorityNames.includes(review.author_name)
+          );
+          
+          const finalReviews = [...priorityReviews, ...otherReviews].slice(0, 3);
+          setReviews(finalReviews);
           setError(null);
         } catch (dbError) {
           console.log('Database not yet configured, using mock data:', dbError);
-          setReviews(mockReviews.slice(0, maxReviews));
+          setReviews(mockReviews);
           setError(null);
         }
         
       } catch (err) {
         console.error('Error fetching reviews:', err);
         setError('Erreur lors du chargement des avis');
-        setReviews(mockReviews.slice(0, maxReviews)); // Fallback to mock data
+        setReviews(mockReviews); // Fallback to mock data
       } finally {
         setLoading(false);
       }
@@ -168,7 +151,7 @@ const GoogleReviews = ({ placeId, maxReviews = 6, className = "" }: GoogleReview
   if (loading) {
     return (
       <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ${className}`}>
-        {[1, 2, 3, 4, 5, 6].map((i) => (
+        {[1, 2, 3].map((i) => (
           <div key={i} className="bg-background rounded-2xl p-6 shadow-card animate-pulse">
             <div className="flex items-center space-x-3 mb-4">
               <div className="w-10 h-10 bg-muted rounded-full"></div>
