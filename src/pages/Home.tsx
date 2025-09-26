@@ -12,6 +12,7 @@ import { propertiesApi } from '@/services/propertiesApi';
 import { PropertyWithMedia } from '@/types/index';
 import { supabase } from '@/integrations/supabase/client';
 import IKResponsiveImage from '@/components/IKResponsiveImage';
+import logo from '@/assets/new-logo.webp';
 
 const Home = () => {
   const { t } = useTranslation();
@@ -94,7 +95,7 @@ const Home = () => {
           <div className="text-center">
             <div className="mb-6 flex justify-center">
               <img 
-                src="/src/assets/new-logo.webp" 
+                src={logo} 
                 alt="Sebastien Pons Immobilier" 
                 className="h-50 md:h-70 w-auto"
               />
