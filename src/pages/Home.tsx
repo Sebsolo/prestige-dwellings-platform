@@ -92,9 +92,13 @@ const Home = () => {
         <HomeCarousel slides={homeData?.slides} />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-serif font-bold text-foreground mb-6">
-              {t('home.title')}
-            </h1>
+            <div className="mb-6 flex justify-center">
+              <img 
+                src="/src/assets/sebastien-pons-exp-logo.png" 
+                alt="Sebastien Pons Immobilier" 
+                className="h-20 md:h-28 w-auto"
+              />
+            </div>
             <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
               {t('home.subtitle')}
             </p>

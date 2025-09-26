@@ -88,7 +88,7 @@ const HomeCarousel = ({ slides }: HomeCarouselProps) => {
         <div
           key={image.id}
           className={`absolute inset-0 transition-opacity duration-1000 ${
-            index === currentIndex ? 'opacity-50' : 'opacity-0'
+            index === currentIndex ? 'opacity-100' : 'opacity-0'
           }`}
         >
           <IKResponsiveImage
