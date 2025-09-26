@@ -135,20 +135,18 @@ const JoinExp = () => {
               <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
                 {t('joinExp.hero_subtitle')}
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex justify-start">
                 <BookingCTA label={t('joinExp.hero_cta1')} size="lg" />
-                <BookingCTA label={t('joinExp.hero_cta2')} variant="outline" size="lg" />
               </div>
             </div>
             <div className="relative">
-              <div className="aspect-[4/3] bg-gradient-primary rounded-2xl shadow-luxury flex items-center justify-center text-white">
-                <div className="text-center p-8">
-                  <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-4 mx-auto">
-                    <TrendingUp className="h-8 w-8" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">{t('joinExp.dashboard_title')}</h3>
-                  <p className="text-white/80">{t('joinExp.dashboard_subtitle')}</p>
-                </div>
+              <div className="aspect-[4/3] rounded-2xl shadow-luxury overflow-hidden">
+                <img 
+                  src="/src/assets/exp-astronaut.jpeg" 
+                  alt="eXp Astronaut - Explore infinite possibilities"
+                  className="w-full h-full object-cover"
+                  loading="eager"
+                />
               </div>
             </div>
           </div>
@@ -234,25 +232,14 @@ const JoinExp = () => {
             ))}
           </div>
           
-          <div className="text-center space-y-4">
+          <div className="text-center">
             <BookingCTA label="Planifier mon rendez-vous" size="lg" />
-            <div>
-              <BookingCTA label="Échanger sur votre projet" variant="outline" />
-            </div>
           </div>
         </div>
       </section>
 
       {/* RevShare Calculator Section */}
-      <section id="revshare-calculator" className="mt-16 border-t border-muted pt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-8">
-          <h2 className="text-2xl font-bold tracking-tight mb-2">
-            {t('joinExp.calculator_title')}
-          </h2>
-          <p className="text-muted-foreground mb-6">
-            {t('joinExp.calculator_subtitle')}
-          </p>
-        </div>
+      <section id="revshare-calculator" className="py-20 bg-muted/30">
         <RevShareCalculator 
           initialPercents={percents}
           apqlThresholds={apqlThresholds}
