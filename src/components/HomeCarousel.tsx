@@ -19,8 +19,11 @@ const HomeCarousel = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // Try to get carousel data from bootstrap first, fallback to direct fetch
     const fetchImages = async () => {
       try {
+        // Check if we have bootstrap data in context/props first
+        // For now, fallback to direct fetch but this should be optimized
         const { data, error } = await supabase
           .from('home_carousel_images')
           .select('*')

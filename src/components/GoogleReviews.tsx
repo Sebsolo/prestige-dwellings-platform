@@ -58,74 +58,79 @@ const GoogleReviews = ({ placeId, maxReviews = 3, className = "" }: GoogleReview
   ];
 
   useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        setLoading(true);
-        
-        // Try to get settings from localStorage first (fallback)
-        const fallbackBusinessUrl = 'https://share.google/LOxi7WwOzlRaYUVJj';
-        setGoogleBusinessUrl(fallbackBusinessUrl);
-        
-        // Try to get settings from database
+    // Defer Google Reviews to reduce critical path
+    const timer = setTimeout(() => {
+      const fetchReviews = async () => {
         try {
-          const { data: settings } = await supabase
-            .from('site_settings')
-            .select('*')
-            .single();
+          setLoading(true);
           
-          if (settings?.google_business_url) {
-            setGoogleBusinessUrl(settings.google_business_url);
-          }
+          // Try to get settings from localStorage first (fallback)
+          const fallbackBusinessUrl = 'https://share.google/LOxi7WwOzlRaYUVJj';
+          setGoogleBusinessUrl(fallbackBusinessUrl);
           
-          const settingsPlaceId = settings?.google_place_id || placeId;
-          
-          if (!settingsPlaceId) {
-            // Use mock data if no Place ID configured
+          // Try to get settings from database
+          try {
+            const { data: settings } = await supabase
+              .from('site_settings')
+              .select('google_business_url, google_place_id')
+              .single();
+            
+            if (settings?.google_business_url) {
+              setGoogleBusinessUrl(settings.google_business_url);
+            }
+            
+            const settingsPlaceId = settings?.google_place_id || placeId;
+            
+            if (!settingsPlaceId) {
+              // Use mock data if no Place ID configured
+              setReviews(mockReviews);
+              setError(null);
+              return;
+            }
+
+            // Call Supabase edge function to fetch Google reviews
+            const { data, error: functionError } = await supabase.functions.invoke('fetchGoogleReviews', {
+              body: { placeId: settingsPlaceId }
+            });
+
+            if (functionError) {
+              console.error('Error calling fetchGoogleReviews function:', functionError);
+              setReviews(mockReviews);
+              setError(null);
+              return;
+            }
+
+            // Filter for priority reviewers first, then others, limited to 3
+            const priorityNames = ['Remi Destang', 'Julien Pelloile', 'Floriane Chatelain'];
+            const priorityReviews = data.reviews.filter((review: GoogleReview) => 
+              priorityNames.includes(review.author_name)
+            );
+            const otherReviews = data.reviews.filter((review: GoogleReview) => 
+              !priorityNames.includes(review.author_name)
+            );
+            
+            const finalReviews = [...priorityReviews, ...otherReviews].slice(0, 3);
+            setReviews(finalReviews);
+            setError(null);
+          } catch (dbError) {
+            console.log('Database not yet configured, using mock data:', dbError);
             setReviews(mockReviews);
             setError(null);
-            return;
           }
-
-          // Call Supabase edge function to fetch Google reviews
-          const { data, error: functionError } = await supabase.functions.invoke('fetchGoogleReviews', {
-            body: { placeId: settingsPlaceId }
-          });
-
-          if (functionError) {
-            console.error('Error calling fetchGoogleReviews function:', functionError);
-            setReviews(mockReviews);
-            setError(null);
-            return;
-          }
-
-          // Filter for priority reviewers first, then others, limited to 3
-          const priorityNames = ['Remi Destang', 'Julien Pelloile', 'Floriane Chatelain'];
-          const priorityReviews = data.reviews.filter((review: GoogleReview) => 
-            priorityNames.includes(review.author_name)
-          );
-          const otherReviews = data.reviews.filter((review: GoogleReview) => 
-            !priorityNames.includes(review.author_name)
-          );
           
-          const finalReviews = [...priorityReviews, ...otherReviews].slice(0, 3);
-          setReviews(finalReviews);
-          setError(null);
-        } catch (dbError) {
-          console.log('Database not yet configured, using mock data:', dbError);
-          setReviews(mockReviews);
-          setError(null);
+        } catch (err) {
+          console.error('Error fetching reviews:', err);
+          setError('Erreur lors du chargement des avis');
+          setReviews(mockReviews); // Fallback to mock data
+        } finally {
+          setLoading(false);
         }
-        
-      } catch (err) {
-        console.error('Error fetching reviews:', err);
-        setError('Erreur lors du chargement des avis');
-        setReviews(mockReviews); // Fallback to mock data
-      } finally {
-        setLoading(false);
-      }
-    };
+      };
 
-    fetchReviews();
+      fetchReviews();
+    }, 200); // Defer by 200ms to prioritize critical content
+
+    return () => clearTimeout(timer);
   }, [placeId, maxReviews]);
 
   const renderStars = (rating: number) => {

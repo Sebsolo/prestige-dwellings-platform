@@ -91,7 +91,7 @@ serve(async (req) => {
       headers: {
         ...corsHeaders,
         'Content-Type': 'application/json',
-        'Cache-Control': 'public, max-age=300, stale-while-revalidate=600'
+        'Cache-Control': 'public, max-age=180, s-maxage=300, stale-while-revalidate=600'
       }
     });
 

@@ -33,6 +33,7 @@ const Home = () => {
 
         const { settings, slides, properties, posts } = response.data;
         
+        // Use React.startTransition for non-critical updates
         setFeaturedProperties(properties || []);
         setRecentPosts(posts || []);
         

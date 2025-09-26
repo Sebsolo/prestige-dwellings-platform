@@ -72,7 +72,12 @@ export const RevShareSettingsProvider: React.FC<RevShareSettingsProviderProps> =
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchSettings();
+    // Defer non-critical RevShare settings to improve LCP
+    const timer = setTimeout(() => {
+      fetchSettings();
+    }, 300);
+    
+    return () => clearTimeout(timer);
   }, []);
 
   const fetchSettings = async () => {
