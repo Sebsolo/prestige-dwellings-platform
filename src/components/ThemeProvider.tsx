@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 
 // Convert hex to HSL
 const hexToHsl = (hex: string): string => {
@@ -29,29 +28,35 @@ const hexToHsl = (hex: string): string => {
 
 interface ThemeProviderProps {
   children: React.ReactNode;
+  bootstrapSettings?: { primary_color?: string; secondary_color?: string } | null;
 }
 
-export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const [settings, setSettings] = useState<any>(null);
+export const ThemeProvider = ({ children, bootstrapSettings }: ThemeProviderProps) => {
+  const [settings, setSettings] = useState<any>(bootstrapSettings || null);
 
+  // Only fetch if no bootstrap data provided
   useEffect(() => {
-    const fetchSettings = async () => {
-      try {
-        const { data } = await supabase
-          .from('site_settings')
-          .select('primary_color, secondary_color')
-          .single();
-        
-        if (data) {
-          setSettings(data);
+    if (!bootstrapSettings) {
+      const fetchSettings = async () => {
+        try {
+          const { supabase } = await import('@/integrations/supabase/client');
+          const { data } = await supabase
+            .from('site_settings')
+            .select('primary_color, secondary_color')
+            .single();
+          
+          if (data) {
+            setSettings(data);
+          }
+        } catch (error) {
+          console.log('No theme settings found, using defaults');
         }
-      } catch (error) {
-        console.log('No theme settings found, using defaults');
-      }
-    };
+      };
 
-    fetchSettings();
-  }, []);
+      // Defer this fetch if no bootstrap data
+      setTimeout(fetchSettings, 200);
+    }
+  }, [bootstrapSettings]);
 
   useEffect(() => {
     if (settings) {

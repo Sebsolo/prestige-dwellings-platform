@@ -1,4 +1,4 @@
-import { useEffect, lazy, Suspense } from "react";
+import { useEffect, lazy, Suspense, useState } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -9,6 +9,9 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { loadGTM, pushPageView } from "./lib/gtm";
 import { bindCMPToGTM } from "./lib/cmp-bridge";
 import RequireRole from "./components/RequireRole";
+import { ThemeProvider } from "./components/ThemeProvider";
+import { RevShareSettingsProvider } from "./contexts/RevShareSettingsContext";
+import { supabase } from "@/integrations/supabase/client";
 import Home from "./pages/Home";
 import Sales from "./pages/Sales";
 import Rentals from "./pages/Rentals";
@@ -61,21 +64,52 @@ const GTMTracker = () => {
   return null;
 };
 
-const App = () => (
-  <HelmetProvider>
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <GTMTracker />
-            <Routes>
+const App = () => {
+  const [themeSettings, setThemeSettings] = useState<any>(null);
+
+  useEffect(() => {
+    // Fetch theme settings early for global application
+    const fetchThemeSettings = async () => {
+      try {
+        const { data } = await supabase
+          .from('site_settings')
+          .select('primary_color, secondary_color')
+          .single();
+        
+        if (data) {
+          setThemeSettings(data);
+        }
+      } catch (error) {
+        console.log('No theme settings found, using defaults');
+      }
+    };
+
+    // Defer theme fetch to not block critical path
+    setTimeout(fetchThemeSettings, 100);
+  }, []);
+
+  return (
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider bootstrapSettings={themeSettings}>
+          <AuthProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <GTMTracker />
+                <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/ventes" element={<Sales />} />
               <Route path="/locations" element={<Rentals />} />
               <Route path="/bien/:idOrSlug" element={<PropertyDetail />} />
-              <Route path="/rejoindre-exp" element={<JoinExp />} />
+              <Route path="/rejoindre-exp" element={
+                <Suspense fallback={<div>Loading...</div>}>
+                  <RevShareSettingsProvider>
+                    <JoinExp />
+                  </RevShareSettingsProvider>
+                </Suspense>
+              } />
               <Route path="/blog" element={<Suspense fallback={null}><Blog /></Suspense>} />
               <Route path="/blog/:slug" element={<Suspense fallback={null}><BlogPost /></Suspense>} />
               <Route path="/estimation" element={<Valuation />} />
@@ -170,7 +204,11 @@ const App = () => (
                 path="/admin/revshare" 
                 element={
                   <RequireRole allowedRoles={['admin']}>
-                    <Suspense fallback={null}><AdminRevShare /></Suspense>
+                    <Suspense fallback={null}>
+                      <RevShareSettingsProvider>
+                        <AdminRevShare />
+                      </RevShareSettingsProvider>
+                    </Suspense>
                   </RequireRole>
                 }
               />
@@ -187,9 +225,11 @@ const App = () => (
             </Routes>
           </BrowserRouter>
         </TooltipProvider>
-      </AuthProvider>
-    </QueryClientProvider>
-  </HelmetProvider>
-);
+          </AuthProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </HelmetProvider>
+  );
+};
 
 export default App;

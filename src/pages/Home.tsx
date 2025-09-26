@@ -17,6 +17,7 @@ const Home = () => {
   const { t } = useTranslation();
   const [recentPosts, setRecentPosts] = useState<any[]>([]);
   const [featuredProperties, setFeaturedProperties] = useState<PropertyWithMedia[]>([]);
+  const [homeData, setHomeData] = useState<any>(null);
 
   useEffect(() => {
     const fetchHomeData = async () => {
@@ -33,13 +34,17 @@ const Home = () => {
 
         const { settings, slides, properties, posts } = response.data;
         
+        // Store all bootstrap data
+        setHomeData(response.data);
+        
         // Use React.startTransition for non-critical updates
         setFeaturedProperties(properties || []);
         setRecentPosts(posts || []);
         
         console.log('Home data loaded via bootstrap:', {
           properties: properties?.length,
-          posts: posts?.length
+          posts: posts?.length,
+          slides: slides?.length
         });
         
       } catch (error) {
@@ -84,7 +89,7 @@ const Home = () => {
     >
       {/* Hero Section */}
       <section className="relative min-h-[80vh] flex items-center overflow-hidden">
-        <HomeCarousel />
+        <HomeCarousel slides={homeData?.slides} />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-serif font-bold text-foreground mb-6">

@@ -13,35 +13,40 @@ interface CarouselImage {
   sort_order: number;
 }
 
-const HomeCarousel = () => {
-  const [images, setImages] = useState<CarouselImage[]>([]);
+interface HomeCarouselProps {
+  slides?: CarouselImage[];
+}
+
+const HomeCarousel = ({ slides }: HomeCarouselProps) => {
+  const [images, setImages] = useState<CarouselImage[]>(slides || []);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(!slides);
 
   useEffect(() => {
-    // Try to get carousel data from bootstrap first, fallback to direct fetch
-    const fetchImages = async () => {
-      try {
-        // Check if we have bootstrap data in context/props first
-        // For now, fallback to direct fetch but this should be optimized
-        const { data, error } = await supabase
-          .from('home_carousel_images')
-          .select('*')
-          .eq('active', true)
-          .order('sort_order', { ascending: true });
+    // Only fetch if no slides provided via props
+    if (!slides) {
+      const fetchImages = async () => {
+        try {
+          const { data, error } = await supabase
+            .from('home_carousel_images')
+            .select('*')
+            .eq('active', true)
+            .order('sort_order', { ascending: true });
 
-        if (error) throw error;
-        console.log('Fetched carousel images:', data);
-        setImages(data || []);
-      } catch (error) {
-        console.error('Error fetching carousel images:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+          if (error) throw error;
+          console.log('Fetched carousel images:', data);
+          setImages(data || []);
+        } catch (error) {
+          console.error('Error fetching carousel images:', error);
+        } finally {
+          setIsLoading(false);
+        }
+      };
 
-    fetchImages();
-  }, []);
+      // Defer fetch if no bootstrap data
+      setTimeout(fetchImages, 150);
+    }
+  }, [slides]);
 
   useEffect(() => {
     if (images.length > 1) {
