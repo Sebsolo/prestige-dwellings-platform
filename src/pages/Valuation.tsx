@@ -9,18 +9,18 @@ const Valuation = () => {
   const steps = [
     {
       icon: <Home className="h-6 w-6" />,
-      title: 'Informations du bien',
-      description: 'Renseignez les caractéristiques de votre propriété'
+      title: t('valuation.steps.step1_title'),
+      description: t('valuation.steps.step1_desc')
     },
     {
       icon: <Calculator className="h-6 w-6" />,
-      title: 'Analyse personnalisée',
-      description: 'Notre agent analyse votre bien en détail'
+      title: t('valuation.steps.step2_title'),
+      description: t('valuation.steps.step2_desc')
     },
     {
       icon: <FileText className="h-6 w-6" />,
-      title: 'Rapport d\'estimation',
-      description: 'Recevez votre estimation par notre expert'
+      title: t('valuation.steps.step3_title'),
+      description: t('valuation.steps.step3_desc')
     }
   ];
 
@@ -41,11 +41,11 @@ const Valuation = () => {
           </p>
           <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
             <CheckCircle className="h-4 w-4 text-green-600" />
-            <span>100% gratuit</span>
+            <span>{t('valuation.free_tag')}</span>
             <CheckCircle className="h-4 w-4 text-green-600" />
-            <span>Sans engagement</span>
+            <span>{t('valuation.no_commitment')}</span>
             <CheckCircle className="h-4 w-4 text-green-600" />
-            <span>Expertise personnalisée</span>
+            <span>{t('valuation.personalized_expertise')}</span>
           </div>
         </div>
       </section>
@@ -72,8 +72,8 @@ const Valuation = () => {
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <SmartForm
             source="estimate"
-            title="Demande d'estimation"
-            description="Remplissez ce formulaire pour recevoir une estimation personnalisée de votre bien par notre expert."
+            title={t('valuation.form_title')}
+            description={t('valuation.form_description')}
             className="bg-card shadow-lg rounded-2xl"
           />
         </div>

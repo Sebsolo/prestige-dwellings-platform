@@ -80,13 +80,6 @@ const resources = {
         article_preview: 'Article à venir #{{number}}',
         article_preview_description: 'Découvrez les tendances du marché immobilier...'
       },
-      property: {
-        visit_request: 'Demander une visite',
-        similar_properties: 'Biens similaires',
-        key_info: 'Informations clés',
-        energy_performance: 'Performance énergétique',
-        location: 'Localisation'
-      },
       contact: {
         title: 'Contactez-moi',
         form_title: 'Envoyez-moi un message',
@@ -100,7 +93,42 @@ const resources = {
         title: 'Estimation gratuite',
         subtitle: 'Obtenez une estimation de votre bien en quelques minutes',
         property_type: 'Type de bien',
-        property_address: 'Adresse du bien'
+        property_address: 'Adresse du bien',
+        free_tag: '100% gratuit',
+        no_commitment: 'Sans engagement',
+        personalized_expertise: 'Expertise personnalisée',
+        steps: {
+          step1_title: 'Informations du bien',
+          step1_desc: 'Renseignez les caractéristiques de votre propriété',
+          step2_title: 'Analyse personnalisée',
+          step2_desc: 'Notre agent analyse votre bien en détail',
+          step3_title: 'Rapport d\'estimation',
+          step3_desc: 'Recevez votre estimation par notre expert'
+        },
+        form_title: 'Demande d\'estimation',
+        form_description: 'Remplissez ce formulaire pour recevoir une estimation personnalisée de votre bien par notre expert.'
+      },
+      property: {
+        visit_request: 'Demander une visite',
+        similar_properties: 'Biens similaires',
+        key_info: 'Informations clés',
+        energy_performance: 'Performance énergétique',
+        location: 'Localisation',
+        loading: 'Chargement...',
+        not_found: 'Bien immobilier non trouvé',
+        not_found_desc: 'Le bien que vous recherchez n\'existe pas ou n\'est plus disponible.',
+        no_images: 'Aucune image disponible',
+        per_month: ' / mois',
+        price_on_request: 'Prix sur demande',
+        bedrooms: 'chambres',
+        rooms: 'pièces',
+        description: 'Description',
+        no_description: 'Aucune description disponible.',
+        virtual_tour: 'Visite virtuelle',
+        enlarge: 'Agrandir',
+        visit_form_title: 'Demande de visite',
+        visit_form_desc: 'Remplissez le formulaire pour demander une visite de ce bien.',
+        similar_property: 'Villa similaire'
       },
       joinExp: {
         hero_badge: 'Indépendant, mais jamais seul',
@@ -125,6 +153,22 @@ const resources = {
         title: 'Blog Immobilier',
         subtitle: 'Conseils, actualités et tendances du marché immobilier',
         read_more: 'Lire la suite'
+      },
+      sales: {
+        title: 'Propriétés à Vendre',
+        count: '{{count}} bien trouvé',
+        count_plural: '{{count}} biens trouvés',
+        no_results: 'Aucun bien ne correspond à vos critères',
+        grid_view: 'Grille',
+        map_view: 'Carte'
+      },
+      rentals: {
+        title: 'Propriétés en Location',
+        count: '{{count}} bien trouvé',
+        count_plural: '{{count}} biens trouvés',
+        no_results: 'Aucun bien ne correspond à vos critères',
+        grid_view: 'Grille',
+        map_view: 'Carte'
       },
       footer: {
         legalNotice: 'Mentions légales',
@@ -212,13 +256,6 @@ const resources = {
         article_preview: 'Upcoming article #{{number}}',
         article_preview_description: 'Discover real estate market trends...'
       },
-      property: {
-        visit_request: 'Request a visit',
-        similar_properties: 'Similar properties',
-        key_info: 'Key information',
-        energy_performance: 'Energy performance',
-        location: 'Location'
-      },
       contact: {
         title: 'Contact me',
         form_title: 'Send me a message',
@@ -232,7 +269,42 @@ const resources = {
         title: 'Free valuation',
         subtitle: 'Get a valuation of your property in minutes',
         property_type: 'Property type',
-        property_address: 'Property address'
+        property_address: 'Property address',
+        free_tag: '100% free',
+        no_commitment: 'No commitment',
+        personalized_expertise: 'Personalized expertise',
+        steps: {
+          step1_title: 'Property information',
+          step1_desc: 'Provide your property characteristics',
+          step2_title: 'Personalized analysis',
+          step2_desc: 'Our agent analyzes your property in detail',
+          step3_title: 'Valuation report',
+          step3_desc: 'Receive your estimate from our expert'
+        },
+        form_title: 'Valuation request',
+        form_description: 'Fill out this form to receive a personalized valuation of your property by our expert.'
+      },
+      property: {
+        visit_request: 'Request a visit',
+        similar_properties: 'Similar properties',
+        key_info: 'Key information',
+        energy_performance: 'Energy performance',
+        location: 'Location',
+        loading: 'Loading...',
+        not_found: 'Property not found',
+        not_found_desc: 'The property you are looking for does not exist or is no longer available.',
+        no_images: 'No images available',
+        per_month: ' / month',
+        price_on_request: 'Price on request',
+        bedrooms: 'bedrooms',
+        rooms: 'rooms',
+        description: 'Description',
+        no_description: 'No description available.',
+        virtual_tour: 'Virtual tour',
+        enlarge: 'Enlarge',
+        visit_form_title: 'Visit request',
+        visit_form_desc: 'Fill out the form to request a visit for this property.',
+        similar_property: 'Similar villa'
       },
       joinExp: {
         hero_badge: 'Independent, but never alone',
@@ -257,6 +329,22 @@ const resources = {
         title: 'Real Estate Blog',
         subtitle: 'Tips, news and market trends',
         read_more: 'Read more'
+      },
+      sales: {
+        title: 'Properties for Sale',
+        count: '{{count}} property found',
+        count_plural: '{{count}} properties found',
+        no_results: 'No properties match your criteria',
+        grid_view: 'Grid',
+        map_view: 'Map'
+      },
+      rentals: {
+        title: 'Properties for Rent',
+        count: '{{count}} property found',
+        count_plural: '{{count}} properties found',
+        no_results: 'No properties match your criteria',
+        grid_view: 'Grid',
+        map_view: 'Map'
       },
       footer: {
         legalNotice: 'Legal Notice',

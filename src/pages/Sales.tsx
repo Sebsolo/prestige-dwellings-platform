@@ -64,7 +64,7 @@ const Sales = () => {
 
   if (loading) {
     return (
-      <Layout title={t('nav.sales')} description="Propriétés à vendre">
+      <Layout title={t('sales.title')} description="Properties for sale">
         <div className="min-h-screen bg-background py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
@@ -77,15 +77,15 @@ const Sales = () => {
   }
 
   return (
-    <Layout title={t('nav.sales')} description="Propriétés à vendre">
+    <Layout title={t('sales.title')} description="Properties for sale">
       <div className="min-h-screen bg-background py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8">
             <h1 className="text-4xl font-serif font-bold text-foreground mb-4">
-              Propriétés à Vendre
+              {t('sales.title')}
             </h1>
             <p className="text-lg text-muted-foreground">
-              {filteredProperties.length} bien{filteredProperties.length > 1 ? 's' : ''} trouvé{filteredProperties.length > 1 ? 's' : ''}
+              {t(filteredProperties.length === 1 ? 'sales.count' : 'sales.count_plural', { count: filteredProperties.length })}
             </p>
           </div>
 
@@ -101,11 +101,11 @@ const Sales = () => {
             <TabsList className="mb-6">
               <TabsTrigger value="grid" className="flex items-center gap-2">
                 <Grid className="h-4 w-4" />
-                Grille
+                {t('sales.grid_view')}
               </TabsTrigger>
               <TabsTrigger value="map" className="flex items-center gap-2">
                 <Map className="h-4 w-4" />
-                Carte
+                {t('sales.map_view')}
               </TabsTrigger>
             </TabsList>
 
@@ -119,7 +119,7 @@ const Sales = () => {
               ) : (
                 <div className="text-center py-12">
                   <p className="text-lg text-muted-foreground">
-                    Aucun bien ne correspond à vos critères
+                    {t('sales.no_results')}
                   </p>
                 </div>
               )}

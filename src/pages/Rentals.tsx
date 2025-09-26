@@ -64,7 +64,7 @@ const Rentals = () => {
 
   if (loading) {
     return (
-      <Layout title={t('nav.rentals')} description="Propriétés en location">
+      <Layout title={t('rentals.title')} description="Properties for rent">
         <div className="min-h-screen bg-background py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
@@ -77,15 +77,15 @@ const Rentals = () => {
   }
 
   return (
-    <Layout title={t('nav.rentals')} description="Propriétés en location">
+    <Layout title={t('rentals.title')} description="Properties for rent">
       <div className="min-h-screen bg-background py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8">
             <h1 className="text-4xl font-serif font-bold text-foreground mb-4">
-              Propriétés en Location
+              {t('rentals.title')}
             </h1>
             <p className="text-lg text-muted-foreground">
-              {filteredProperties.length} bien{filteredProperties.length > 1 ? 's' : ''} trouvé{filteredProperties.length > 1 ? 's' : ''}
+              {t(filteredProperties.length === 1 ? 'rentals.count' : 'rentals.count_plural', { count: filteredProperties.length })}
             </p>
           </div>
 
@@ -101,11 +101,11 @@ const Rentals = () => {
             <TabsList className="mb-6">
               <TabsTrigger value="grid" className="flex items-center gap-2">
                 <Grid className="h-4 w-4" />
-                Grille
+                {t('rentals.grid_view')}
               </TabsTrigger>
               <TabsTrigger value="map" className="flex items-center gap-2">
                 <Map className="h-4 w-4" />
-                Carte
+                {t('rentals.map_view')}
               </TabsTrigger>
             </TabsList>
 
@@ -119,7 +119,7 @@ const Rentals = () => {
               ) : (
                 <div className="text-center py-12">
                   <p className="text-lg text-muted-foreground">
-                    Aucun bien ne correspond à vos critères
+                    {t('rentals.no_results')}
                   </p>
                 </div>
               )}

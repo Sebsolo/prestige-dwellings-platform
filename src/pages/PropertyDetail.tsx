@@ -83,8 +83,8 @@ const PropertyDetail = () => {
       <Layout title="Bien non trouvé">
         <div className="flex justify-center items-center min-h-screen">
           <div className="text-center">
-            <h1 className="text-2xl font-bold mb-4">Bien immobilier non trouvé</h1>
-            <p className="text-muted-foreground">Le bien que vous recherchez n'existe pas ou n'est plus disponible.</p>
+            <h1 className="text-2xl font-bold mb-4">{t('property.not_found')}</h1>
+            <p className="text-muted-foreground">{t('property.not_found_desc')}</p>
           </div>
         </div>
       </Layout>
@@ -120,7 +120,7 @@ const PropertyDetail = () => {
                           onClick={() => setFullscreenImage(url)}
                         >
                           <Maximize2 className="h-4 w-4 mr-2" />
-                          Agrandir
+                          {t('property.enlarge')}
                         </Button>
                       </div>
                     </div>
@@ -132,7 +132,7 @@ const PropertyDetail = () => {
             </Carousel>
           ) : (
             <div className="aspect-video bg-muted rounded-lg mb-4 flex items-center justify-center">
-              <span className="text-muted-foreground">Aucune image disponible</span>
+              <span className="text-muted-foreground">{t('property.no_images')}</span>
             </div>
           )}
         </div>
@@ -155,21 +155,21 @@ const PropertyDetail = () => {
                     style: 'currency',
                     currency: 'EUR',
                     minimumFractionDigits: 0
-                  }).format(property.rent_cc)} / mois`
+                  }).format(property.rent_cc)}${t('property.per_month')}`
                 ) : property.price ? (
                   new Intl.NumberFormat('fr-FR', {
                     style: 'currency',
                     currency: 'EUR',
                     minimumFractionDigits: 0
                   }).format(property.price)
-                ) : 'Prix sur demande'}
+                ) : t('property.price_on_request')}
               </div>
             </div>
 
             {/* Key Info */}
             <Card className="mb-6">
               <CardHeader>
-                <CardTitle>Informations clés</CardTitle>
+                <CardTitle>{t('property.key_info')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -182,13 +182,13 @@ const PropertyDetail = () => {
                   {property.bedrooms && (
                     <div className="flex items-center">
                       <BedDouble className="h-4 w-4 mr-2 text-muted-foreground" />
-                      <span>{property.bedrooms} chambres</span>
+                      <span>{property.bedrooms} {t('property.bedrooms')}</span>
                     </div>
                   )}
                   {property.rooms && (
                     <div className="flex items-center">
                       <Calendar className="h-4 w-4 mr-2 text-muted-foreground" />
-                      <span>{property.rooms} pièces</span>
+                      <span>{property.rooms} {t('property.rooms')}</span>
                     </div>
                   )}
                   {property.dpe_letter && (
@@ -205,11 +205,11 @@ const PropertyDetail = () => {
             {/* Description */}
             <Card className="mb-6">
               <CardHeader>
-                <CardTitle>Description</CardTitle>
+                <CardTitle>{t('property.description')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground leading-relaxed">
-                  {property.description_fr || property.description_en || 'Aucune description disponible.'}
+                  {property.description_fr || property.description_en || t('property.no_description')}
                 </p>
               </CardContent>
             </Card>
@@ -218,13 +218,13 @@ const PropertyDetail = () => {
             {property.youtube_url && (
               <Card className="mb-6">
                 <CardHeader>
-                  <CardTitle>Visite virtuelle</CardTitle>
+                  <CardTitle>{t('property.virtual_tour')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="aspect-video">
                     <iframe
                       src={getYouTubeEmbedUrl(property.youtube_url) || ''}
-                      title="Visite virtuelle"
+                      title={t('property.virtual_tour')}
                       className="w-full h-full rounded-lg"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
@@ -238,7 +238,7 @@ const PropertyDetail = () => {
             {(property.lat && property.lng) && (
               <Card>
                 <CardHeader>
-                  <CardTitle>Localisation</CardTitle>
+                  <CardTitle>{t('property.location')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <BasicLeafletMap 
@@ -262,15 +262,15 @@ const PropertyDetail = () => {
             <SmartForm
               source="visit_request"
               propertyId={property.id?.toString()}
-              title="Demande de visite"
-              description="Remplissez le formulaire pour demander une visite de ce bien."
+              title={t('property.visit_form_title')}
+              description={t('property.visit_form_desc')}
               className="mb-6"
             />
 
             {/* Similar Properties */}
             <Card>
               <CardHeader>
-                <CardTitle>Biens similaires</CardTitle>
+                <CardTitle>{t('property.similar_properties')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -278,7 +278,7 @@ const PropertyDetail = () => {
                     <div key={i} className="flex gap-3">
                       <div className="w-20 h-16 bg-muted rounded"></div>
                       <div className="flex-1">
-                        <h4 className="font-medium text-sm">Villa similaire</h4>
+                        <h4 className="font-medium text-sm">{t('property.similar_property')}</h4>
                         <p className="text-xs text-muted-foreground">Cannes</p>
                         <p className="text-sm font-semibold">€2,200,000</p>
                       </div>
@@ -305,7 +305,7 @@ const PropertyDetail = () => {
               {fullscreenImage && (
                 <img
                   src={fullscreenImage}
-                  alt="Vue agrandie"
+                  alt={t('property.enlarge')}
                   className="max-w-full max-h-full object-contain"
                 />
               )}
