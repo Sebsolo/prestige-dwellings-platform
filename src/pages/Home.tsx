@@ -96,12 +96,9 @@ const Home = () => {
               <img 
                 src="/src/assets/sebastien-pons-exp-logo.png" 
                 alt="Sebastien Pons Immobilier" 
-                className="h-20 md:h-28 w-auto"
+                className="h-50 md:h-70 w-auto"
               />
             </div>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-              {t('home.subtitle')}
-            </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/estimation">
                 <Button size="lg" className="bg-gradient-primary shadow-luxury">
