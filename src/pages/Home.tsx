@@ -94,7 +94,7 @@ const Home = () => {
           <div className="text-center">
             <div className="mb-6 flex justify-center">
               <img 
-                src="/src/assets/sebastien-pons-exp-logo.png" 
+                src="/src/assets/new-logo.webp" 
                 alt="Sebastien Pons Immobilier" 
                 className="h-50 md:h-70 w-auto"
               />
