@@ -40,6 +40,7 @@ const AdminSettings = lazy(() => import("./pages/admin/AdminSettings"));
 const AdminRevShare = lazy(() => import("./pages/admin/AdminRevShare"));
 const AdminCarousel = lazy(() => import("./pages/admin/AdminCarousel"));
 import NotFound from "./pages/NotFound";
+import Sitemap from "./pages/Sitemap";
 
 const queryClient = new QueryClient();
 
@@ -220,6 +221,8 @@ const App = () => {
                   </RequireRole>
                 }
               />
+              {/* Sitemap route */}
+              <Route path="/sitemap.xml" element={<Sitemap />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
