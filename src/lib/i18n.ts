@@ -140,11 +140,87 @@ const resources = {
         dashboard_subtitle: 'Outils de gestion intégrés',
         key_conditions_title: 'Les conditions clés en France',
         key_conditions_subtitle: 'Modèle transparent : split initial, 100% après cap, revenu partagé à 7 niveaux et opportunités en actions dont l\'award ICON.',
+        key_conditions: {
+          commission: 'Commission dès votre première vente',
+          cap: 'Après 80 000€ HT de CA (cap)',
+          revshare: 'Programme de partage des revenus (revshare)',
+          shares: 'en actions — Récompense ICON (sous conditions)'
+        },
         why_title: 'Pourquoi eXp ?',
+        advantages: {
+          tools: {
+            title: 'Outils & marketing',
+            description: 'CRM, e-signature, diffusion, estimation, kit marketing.'
+          },
+          training: {
+            title: 'Formation continue',
+            description: 'Sessions régulières + Loi ALUR, mentoring, masterclasses.'
+          },
+          network: {
+            title: 'Réseau & co-mandats',
+            description: 'Synergies locales et internationales (plus de 20 pays).'
+          },
+          freedom: {
+            title: 'Liberté d\'entreprendre',
+            description: 'Marque locale, agenda et style propres.'
+          },
+          equity: {
+            title: 'Équité (actions)',
+            description: 'Actions à des jalons clés + award ICON.'
+          },
+          workspace: {
+            title: 'Espaces de travail',
+            description: 'Accès Regus + plateforme collaborative cloud.'
+          }
+        },
         steps_title: 'Démarrer en 4 étapes',
+        steps: {
+          discovery: {
+            title: 'Échange découverte',
+            description: '20–30 min'
+          },
+          audit: {
+            title: 'Audit & projection',
+            description: 'Marges, visibilité, pipeline'
+          },
+          onboarding: {
+            title: 'Onboarding 30 jours',
+            description: 'Outils, templates, routines'
+          },
+          launch: {
+            title: 'Lancement',
+            description: 'Rituels commerciaux & suivi'
+          }
+        },
         calculator_title: 'Calculez votre potentiel de revenus eXp',
         calculator_subtitle: 'Ajustez les hypothèses et visualisez un ordre de grandeur (à titre indicatif).',
         faq_title: 'Questions fréquentes',
+        faqs: {
+          independence: {
+            question: 'Suis-je vraiment indépendant ?',
+            answer: 'Oui : vous pilotez marque, prospection et organisation avec l\'appui du réseau.'
+          },
+          cap: {
+            question: 'Quel est le cap ?',
+            answer: '80 000€ HT de CA ; au-delà vous êtes à 100% (voir conditions).'
+          },
+          revshare: {
+            question: 'C\'est quoi le revshare ?',
+            answer: 'Partage des revenus à 7 niveaux, indexé sur le CA généré par votre organisation (selon politique en vigueur).'
+          },
+          shares: {
+            question: 'Quid des actions / ICON ?',
+            answer: 'Des actions peuvent être attribuées à des jalons et via l\'award ICON (sous conditions).'
+          },
+          fees: {
+            question: 'Y a-t-il des frais ?',
+            answer: 'Les frais évoluent ; détail remis lors du RDV et dans la doc officielle la plus récente.'
+          }
+        },
+        buttons: {
+          see_if_exp_for_me: 'Voir si eXp est pour moi',
+          plan_appointment: 'Planifier mon rendez-vous'
+        },
         legal_notice: 'Informations indicatives susceptibles d\'évolution. Détails, conditions et éligibilité selon la politique eXp France en vigueur.',
         sticky_cta: 'Prêt à en parler ?',
         sticky_cta_button: 'Réserver un rendez-vous'
@@ -316,11 +392,87 @@ const resources = {
         dashboard_subtitle: 'Integrated management tools',
         key_conditions_title: 'Key conditions in France',
         key_conditions_subtitle: 'Transparent model: initial split, 100% after cap, revenue shared over 7 levels and opportunities in shares including the ICON award.',
+        key_conditions: {
+          commission: 'Commission from your first sale',
+          cap: 'After €80,000 excl. VAT turnover (cap)',
+          revshare: '7-level revenue sharing program (revshare)',
+          shares: 'in shares — ICON Reward (subject to conditions)'
+        },
         why_title: 'Why eXp?',
+        advantages: {
+          tools: {
+            title: 'Tools & marketing',
+            description: 'CRM, e-signature, distribution, estimation, marketing kit.'
+          },
+          training: {
+            title: 'Ongoing training',
+            description: 'Regular sessions + ALUR Law, mentoring, masterclasses.'
+          },
+          network: {
+            title: 'Network & co-mandates',
+            description: 'Local and international synergies (over 20 countries).'
+          },
+          freedom: {
+            title: 'Freedom to enterprise',
+            description: 'Local brand, own schedule and style.'
+          },
+          equity: {
+            title: 'Equity (shares)',
+            description: 'Shares at key milestones + ICON award.'
+          },
+          workspace: {
+            title: 'Workspaces',
+            description: 'Regus access + cloud collaborative platform.'
+          }
+        },
         steps_title: 'Get started in 4 steps',
+        steps: {
+          discovery: {
+            title: 'Discovery exchange',
+            description: '20–30 min'
+          },
+          audit: {
+            title: 'Audit & projection',
+            description: 'Margins, visibility, pipeline'
+          },
+          onboarding: {
+            title: '30-day onboarding',
+            description: 'Tools, templates, routines'
+          },
+          launch: {
+            title: 'Launch',
+            description: 'Commercial rituals & follow-up'
+          }
+        },
         calculator_title: 'Calculate your eXp revenue potential',
         calculator_subtitle: 'Adjust assumptions and visualize an order of magnitude (for information only).',
         faq_title: 'Frequently Asked Questions',
+        faqs: {
+          independence: {
+            question: 'Am I really independent?',
+            answer: 'Yes: you manage brand, prospecting and organization with network support.'
+          },
+          cap: {
+            question: 'What is the cap?',
+            answer: '€80,000 excl. VAT turnover; beyond that you are at 100% (see conditions).'
+          },
+          revshare: {
+            question: 'What is revshare?',
+            answer: '7-level revenue sharing, indexed to the turnover generated by your organization (according to current policy).'
+          },
+          shares: {
+            question: 'About shares / ICON?',
+            answer: 'Shares can be awarded at milestones and via the ICON award (subject to conditions).'
+          },
+          fees: {
+            question: 'Are there fees?',
+            answer: 'Fees evolve; details provided during the appointment and in the latest official documentation.'
+          }
+        },
+        buttons: {
+          see_if_exp_for_me: 'See if eXp is for me',
+          plan_appointment: 'Schedule my appointment'
+        },
         legal_notice: 'Indicative information subject to change. Details, conditions and eligibility according to current eXp France policy.',
         sticky_cta: 'Ready to talk?',
         sticky_cta_button: 'Book an appointment'

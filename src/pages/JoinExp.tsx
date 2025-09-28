@@ -18,98 +18,98 @@ const JoinExp = () => {
   const keyConditions = [
     {
       number: '75%',
-      label: 'Commission dès votre première vente'
+      label: t('joinExp.key_conditions.commission')
     },
     {
       number: '100%',
-      label: 'Après 80 000€ HT de CA (cap)'
+      label: t('joinExp.key_conditions.cap')
     },
     {
       number: '7 niveaux',
-      label: 'Programme de partage des revenus (revshare)'
+      label: t('joinExp.key_conditions.revshare')
     },
     {
       number: '20 000€',
-      label: 'en actions — Récompense ICON (sous conditions)'
+      label: t('joinExp.key_conditions.shares')
     }
   ];
 
   const advantages = [
     {
       icon: <Zap className="h-6 w-6" />,
-      title: 'Outils & marketing',
-      description: 'CRM, e-signature, diffusion, estimation, kit marketing.'
+      title: t('joinExp.advantages.tools.title'),
+      description: t('joinExp.advantages.tools.description')
     },
     {
       icon: <BookOpen className="h-6 w-6" />,
-      title: 'Formation continue',
-      description: 'Sessions régulières + Loi ALUR, mentoring, masterclasses.'
+      title: t('joinExp.advantages.training.title'),
+      description: t('joinExp.advantages.training.description')
     },
     {
       icon: <Globe className="h-6 w-6" />,
-      title: 'Réseau & co-mandats',
-      description: 'Synergies locales et internationales (plus de 20 pays).'
+      title: t('joinExp.advantages.network.title'),
+      description: t('joinExp.advantages.network.description')
     },
     {
       icon: <Target className="h-6 w-6" />,
-      title: 'Liberté d\'entreprendre',
-      description: 'Marque locale, agenda et style propres.'
+      title: t('joinExp.advantages.freedom.title'),
+      description: t('joinExp.advantages.freedom.description')
     },
     {
       icon: <Star className="h-6 w-6" />,
-      title: 'Équité (actions)',
-      description: 'Actions à des jalons clés + award ICON.'
+      title: t('joinExp.advantages.equity.title'),
+      description: t('joinExp.advantages.equity.description')
     },
     {
       icon: <Building className="h-6 w-6" />,
-      title: 'Espaces de travail',
-      description: 'Accès Regus + plateforme collaborative cloud.'
+      title: t('joinExp.advantages.workspace.title'),
+      description: t('joinExp.advantages.workspace.description')
     }
   ];
 
   const steps = [
     {
       number: '01',
-      title: 'Échange découverte',
-      description: '20–30 min'
+      title: t('joinExp.steps.discovery.title'),
+      description: t('joinExp.steps.discovery.description')
     },
     {
       number: '02',
-      title: 'Audit & projection',
-      description: 'Marges, visibilité, pipeline'
+      title: t('joinExp.steps.audit.title'),
+      description: t('joinExp.steps.audit.description')
     },
     {
       number: '03',
-      title: 'Onboarding 30 jours',
-      description: 'Outils, templates, routines'
+      title: t('joinExp.steps.onboarding.title'),
+      description: t('joinExp.steps.onboarding.description')
     },
     {
       number: '04',
-      title: 'Lancement',
-      description: 'Rituels commerciaux & suivi'
+      title: t('joinExp.steps.launch.title'),
+      description: t('joinExp.steps.launch.description')
     }
   ];
 
   const faqs = [
     {
-      question: 'Suis-je vraiment indépendant ?',
-      answer: 'Oui : vous pilotez marque, prospection et organisation avec l\'appui du réseau.'
+      question: t('joinExp.faqs.independence.question'),
+      answer: t('joinExp.faqs.independence.answer')
     },
     {
-      question: 'Quel est le cap ?',
-      answer: '80 000€ HT de CA ; au-delà vous êtes à 100% (voir conditions).'
+      question: t('joinExp.faqs.cap.question'),
+      answer: t('joinExp.faqs.cap.answer')
     },
     {
-      question: 'C\'est quoi le revshare ?',
-      answer: 'Partage des revenus à 7 niveaux, indexé sur le CA généré par votre organisation (selon politique en vigueur).'
+      question: t('joinExp.faqs.revshare.question'),
+      answer: t('joinExp.faqs.revshare.answer')
     },
     {
-      question: 'Quid des actions / ICON ?',
-      answer: 'Des actions peuvent être attribuées à des jalons et via l\'award ICON (sous conditions).'
+      question: t('joinExp.faqs.shares.question'),
+      answer: t('joinExp.faqs.shares.answer')
     },
     {
-      question: 'Y a-t-il des frais ?',
-      answer: 'Les frais évoluent ; détail remis lors du RDV et dans la doc officielle la plus récente.'
+      question: t('joinExp.faqs.fees.question'),
+      answer: t('joinExp.faqs.fees.answer')
     }
   ];
 
@@ -180,7 +180,7 @@ const JoinExp = () => {
           </div>
           
           <div className="text-center">
-            <BookingCTA label="Voir si eXp est pour moi" />
+            <BookingCTA label={t('joinExp.buttons.see_if_exp_for_me')} />
           </div>
         </div>
       </section>
@@ -234,7 +234,7 @@ const JoinExp = () => {
           </div>
           
           <div className="text-center">
-            <BookingCTA label="Planifier mon rendez-vous" size="lg" />
+            <BookingCTA label={t('joinExp.buttons.plan_appointment')} size="lg" />
           </div>
         </div>
       </section>
