@@ -5,6 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Calculator, TrendingUp, Lock } from 'lucide-react';
 import { LevelPercents, APQLThresholds, BonusSettings } from '@/contexts/RevShareSettingsContext';
+import { useTranslation } from 'react-i18next';
 interface RevShareCalculatorProps {
   initialPercents?: LevelPercents;
   apqlThresholds?: APQLThresholds;
@@ -15,6 +16,7 @@ const RevShareCalculator = ({
   apqlThresholds,
   bonusSettings
 }: RevShareCalculatorProps) => {
+  const { t } = useTranslation();
   const [apql, setApql] = useState<number>(0);
   const [bonus, setBonus] = useState<number>(0);
 
@@ -82,36 +84,36 @@ const RevShareCalculator = ({
   };
   const levels = [{
     key: 'l1y1',
-    label: 'L1 Année 1',
-    description: 'Première ligne, première année'
+    label: t('joinExp.revshare_calculator.levels.l1y1'),
+    description: t('joinExp.revshare_calculator.level_descriptions.l1y1')
   }, {
     key: 'l1y2',
-    label: 'L1 Année 2+',
-    description: 'Première ligne, années suivantes'
+    label: t('joinExp.revshare_calculator.levels.l1y2'),
+    description: t('joinExp.revshare_calculator.level_descriptions.l1y2')
   }, {
     key: 'l2',
-    label: 'L2',
-    description: 'Deuxième ligne'
+    label: t('joinExp.revshare_calculator.levels.l2'),
+    description: t('joinExp.revshare_calculator.level_descriptions.l2')
   }, {
     key: 'l3',
-    label: 'L3',
-    description: 'Troisième ligne'
+    label: t('joinExp.revshare_calculator.levels.l3'),
+    description: t('joinExp.revshare_calculator.level_descriptions.l3')
   }, {
     key: 'l4',
-    label: 'L4',
-    description: 'Quatrième ligne'
+    label: t('joinExp.revshare_calculator.levels.l4'),
+    description: t('joinExp.revshare_calculator.level_descriptions.l4')
   }, {
     key: 'l5',
-    label: 'L5',
-    description: 'Cinquième ligne'
+    label: t('joinExp.revshare_calculator.levels.l5'),
+    description: t('joinExp.revshare_calculator.level_descriptions.l5')
   }, {
     key: 'l6',
-    label: 'L6',
-    description: 'Sixième ligne'
+    label: t('joinExp.revshare_calculator.levels.l6'),
+    description: t('joinExp.revshare_calculator.level_descriptions.l6')
   }, {
     key: 'l7',
-    label: 'L7',
-    description: 'Septième ligne'
+    label: t('joinExp.revshare_calculator.levels.l7'),
+    description: t('joinExp.revshare_calculator.level_descriptions.l7')
   }] as const;
   const baseRevShare = levels.reduce((total, level) => {
     return total + calculateActiveRevShare(level.key);
@@ -132,10 +134,10 @@ const RevShareCalculator = ({
             <Calculator className="h-8 w-8" />
           </div>
           <h2 className="text-3xl lg:text-4xl font-serif font-bold mb-4">
-            Calculateur RevShare
+            {t('joinExp.revshare_calculator.title')}
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Estimez vos revenus passifs avec le système de partage des revenus eXp sur 7 niveaux
+            {t('joinExp.revshare_calculator.subtitle')}
           </p>
         </div>
 
@@ -145,13 +147,13 @@ const RevShareCalculator = ({
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <TrendingUp className="h-5 w-5 text-primary" />
-                Paramètres de calcul
+                {t('joinExp.revshare_calculator.calculation_params')}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
                 <Label className="text-sm font-medium mb-4 block">
-                  Configuration par niveau
+                  {t('joinExp.revshare_calculator.level_configuration')}
                 </Label>
                 <div className="space-y-4">
                   {levels.map(level => {
@@ -164,14 +166,14 @@ const RevShareCalculator = ({
                               {level.label} ({percents[level.key]}%)
                             </div>
                             {requiredApql > 0 && <div className={`text-xs ${isActive ? 'text-green-600 dark:text-green-400' : 'text-amber-600 dark:text-amber-400'}`}>
-                                {requiredApql} APQL requis
+                                {t('joinExp.revshare_calculator.required_apql', { count: requiredApql })}
                               </div>}
                           </div>
                           
                           <div className="flex gap-2 sm:gap-3">
                             <div className="w-24 sm:w-28">
                               <Label htmlFor={`agents-${level.key}`} className="text-xs font-medium block mb-1">
-                                Nombre d'agents
+                                {t('joinExp.revshare_calculator.agent_count')}
                               </Label>
                               <Input id={`agents-${level.key}`} type="number" value={agentCounts[level.key]} onChange={e => setAgentCounts(prev => ({
                             ...prev,
@@ -181,7 +183,7 @@ const RevShareCalculator = ({
                             
                             <div className="w-28 sm:w-32">
                               <Label htmlFor={`revenue-${level.key}`} className="text-xs font-medium block mb-1">
-                                CA moyen/agent (€)
+                                {t('joinExp.revshare_calculator.avg_revenue')}
                               </Label>
                               <Input id={`revenue-${level.key}`} type="number" value={avgRevenues[level.key]} onChange={e => setAvgRevenues(prev => ({
                             ...prev,
@@ -197,25 +199,24 @@ const RevShareCalculator = ({
 
               <div>
                 <Label htmlFor="apql" className="text-sm font-medium">
-                  APQL (Agents Partenaires Qualifiés Licenciés)
+                  {t('joinExp.revshare_calculator.apql_label')}
                 </Label>
                 <Input id="apql" type="number" value={apql} onChange={e => setApql(Number(e.target.value) || 0)} className="mt-2 text-lg" min={0} step={1} />
-                <p className="text-sm text-muted-foreground mt-1">Nombre d'agents qualifiés L1 dans votre organisation (débloque les niveaux)</p>
+                <p className="text-sm text-muted-foreground mt-1">{t('joinExp.revshare_calculator.apql_description')}</p>
               </div>
 
               {bonusSettings?.enabled && <div>
                   <Label htmlFor="bonus" className="text-sm font-medium">
-                    Bonus RevShare (%)
+                    {t('joinExp.revshare_calculator.bonus_label')}
                   </Label>
                   <Input id="bonus" type="number" value={bonus} onChange={e => setBonus(Math.min(100, Number(e.target.value) || 0))} className="mt-2 text-lg" min={0} max={100} step={1} />
-                  <p className="text-sm text-muted-foreground mt-1">Bonus supplémentaire conditionnel appliqué au total (0-100%). En moyenne de 40 %</p>
+                  <p className="text-sm text-muted-foreground mt-1">{t('joinExp.revshare_calculator.bonus_description')}</p>
                 </div>}
 
               <div className="p-4 bg-primary/5 rounded-xl">
-                <h4 className="font-semibold text-primary mb-2">💡 Comment ça marche ?</h4>
+                <h4 className="font-semibold text-primary mb-2">{t('joinExp.revshare_calculator.how_it_works')}</h4>
                 <p className="text-sm text-muted-foreground">
-                  Le RevShare eXp calcule vos revenus basés sur le nombre d'agents et leur CA moyen par niveau. 
-                  Les niveaux 4-7 nécessitent un certain nombre d'APQL pour être débloqués.
+                  {t('joinExp.revshare_calculator.how_it_works_desc')}
                 </p>
               </div>
             </CardContent>
@@ -224,7 +225,7 @@ const RevShareCalculator = ({
           {/* Results Section */}
           <Card className="border-0 shadow-elegant rounded-2xl">
             <CardHeader>
-              <CardTitle>Revenus estimés par niveau</CardTitle>
+              <CardTitle>{t('joinExp.revshare_calculator.estimated_revenue')}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
@@ -243,7 +244,7 @@ const RevShareCalculator = ({
                           <div className="text-xs text-muted-foreground">
                             {agentCounts[level.key]} agents × {avgRevenues[level.key].toLocaleString('fr-FR')}€ × {percents[level.key]}%
                             {requiredApql > 0 && <div className={`${isActive ? 'text-green-600 dark:text-green-400' : 'text-red-500 dark:text-red-400'}`}>
-                                • {requiredApql} APQL requis
+                                • {t('joinExp.revshare_calculator.required_apql', { count: requiredApql })}
                               </div>}
                           </div>
                         </div>
@@ -255,7 +256,7 @@ const RevShareCalculator = ({
                       minimumFractionDigits: 0,
                       maximumFractionDigits: 0
                     })}
-                         {!isActive && revenue > 0 && <span className="text-xs ml-1">(non compté)</span>}
+                         {!isActive && revenue > 0 && <span className="text-xs ml-1">{t('joinExp.revshare_calculator.not_counted')}</span>}
                        </Badge>
                     </div>;
               })}
@@ -265,10 +266,10 @@ const RevShareCalculator = ({
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="font-medium text-green-800 dark:text-green-200">
-                        Bonus RevShare ({bonus}%)
+                        {t('joinExp.revshare_calculator.bonus_revshare')} ({bonus}%)
                       </div>
                       <div className="text-xs text-green-600 dark:text-green-400">
-                        Appliqué sur le total de base
+                        {t('joinExp.revshare_calculator.applied_to_base')}
                       </div>
                     </div>
                     <div className="text-sm font-semibold text-green-800 dark:text-green-200">
@@ -285,8 +286,8 @@ const RevShareCalculator = ({
               <div className="mt-6 p-4 bg-gradient-primary rounded-xl text-white">
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="font-semibold">Total RevShare mensuel</div>
-                    <div className="text-xs text-white/80">Revenus passifs estimés</div>
+                    <div className="font-semibold">{t('joinExp.revshare_calculator.total_monthly')}</div>
+                    <div className="text-xs text-white/80">{t('joinExp.revshare_calculator.passive_income')}</div>
                   </div>
                   <div className="text-2xl font-bold">
                     {totalRevShare.toLocaleString('fr-FR', {
@@ -301,9 +302,7 @@ const RevShareCalculator = ({
 
               <div className="mt-4 p-3 bg-amber-50 dark:bg-amber-950/20 rounded-xl border border-amber-200 dark:border-amber-800">
                 <p className="text-xs text-amber-800 dark:text-amber-200">
-                  <strong>Disclaimer :</strong> Ces calculs sont indicatifs et basés sur les pourcentages 
-                  actuels. Les revenus réels dépendent de l'activité de votre organisation, du nombre d'APQL 
-                  et des conditions eXp en vigueur.
+                  <strong>Disclaimer:</strong> {t('joinExp.revshare_calculator.disclaimer')}
                 </p>
               </div>
             </CardContent>
