@@ -9,6 +9,7 @@ import JsonLdFAQ from '@/components/JsonLdFAQ';
 import StickyFooterCTA from '@/components/StickyFooterCTA';
 import RevShareCalculator from '@/components/RevShareCalculator';
 import { useRevShareSettings } from '@/contexts/RevShareSettingsContext';
+import expAstronautHero from '@/assets/exp-astronaut-hero.jpeg';
 
 const JoinExp = () => {
   const { t } = useTranslation();
@@ -142,7 +143,7 @@ const JoinExp = () => {
             <div className="relative">
               <div className="aspect-[4/3] rounded-2xl shadow-luxury overflow-hidden">
                 <img 
-                  src="/src/assets/exp-astronaut.jpeg" 
+                  src={expAstronautHero} 
                   alt="eXp Astronaut - Explore infinite possibilities"
                   className="w-full h-full object-cover"
                   loading="eager"
