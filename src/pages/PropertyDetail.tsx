@@ -267,26 +267,6 @@ const PropertyDetail = () => {
               className="mb-6"
             />
 
-            {/* Similar Properties */}
-            <Card>
-              <CardHeader>
-                <CardTitle>{t('property.similar_properties')}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {[1,2,3].map(i => (
-                    <div key={i} className="flex gap-3">
-                      <div className="w-20 h-16 bg-muted rounded"></div>
-                      <div className="flex-1">
-                        <h4 className="font-medium text-sm">{t('property.similar_property')}</h4>
-                        <p className="text-xs text-muted-foreground">Cannes</p>
-                        <p className="text-sm font-semibold">€2,200,000</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
           </div>
         </div>
 
