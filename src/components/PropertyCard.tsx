@@ -83,23 +83,23 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
           <span>{property.city} • {property.type === 'apartment' ? 'Appartement' : property.type === 'house' ? 'Maison' : property.type === 'commercial' ? 'Commercial' : property.type === 'land' ? 'Terrain' : 'Autre'}</span>
         </div>
         
-        <div className="flex items-center gap-4 text-sm mb-4 bg-muted/30 p-2 rounded-md">
-          {property.area_m2 && (
+          <div className="flex items-center gap-4 text-sm mb-4 bg-muted/30 p-2 rounded-md">
+          {property.area_m2 && property.area_m2 > 0 && (
             <div className="flex items-center gap-1 font-medium">
               <Square className="h-4 w-4" />
-              <span>{property.area_m2} m²</span>
+              <span>{Number(property.area_m2)} m²</span>
             </div>
           )}
-          {property.rooms && (
+          {property.rooms && property.rooms > 0 && (
             <div className="flex items-center gap-1 font-medium">
               <Home className="h-4 w-4" />
               <span>{property.rooms} pièces</span>
             </div>
           )}
-          {property.land_m2 && (
+          {property.land_m2 && property.land_m2 > 0 && (
             <div className="flex items-center gap-1 font-medium text-green-600">
               <Square className="h-4 w-4" />
-              <span>{property.land_m2} m² terrain</span>
+              <span>{Number(property.land_m2)} m² terrain</span>
             </div>
           )}
         </div>

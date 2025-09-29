@@ -38,7 +38,8 @@ serve(async (req) => {
         .from('properties')
         .select(`
           id, title_fr, title_en, excerpt_fr, excerpt_en, price, rent_cc, 
-          city, transaction, status, youtube_url, featured,
+          city, transaction, status, youtube_url, featured, type,
+          rooms, area_m2, land_m2,
           media(id, path, alt_fr, alt_en, sort_order)
         `)
         .in('status', ['published', 'under_offer', 'sold', 'rented'])
