@@ -1,5 +1,5 @@
 const isProd = import.meta.env.PROD;
-const GTM_ID = import.meta.env.VITE_GTM_ID as string;
+const GTM_ID = 'GTM-5Q3WMWCC'; // Direct GTM ID for production
 export function loadGTM() {
   if (!isProd || !GTM_ID) return;
   window.dataLayer = window.dataLayer || [];
