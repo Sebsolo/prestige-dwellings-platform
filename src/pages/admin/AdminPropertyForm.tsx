@@ -24,8 +24,6 @@ const propertySchema = z.object({
   ref: z.string().optional(),
   title_fr: z.string().min(1, 'Le titre français est requis'),
   title_en: z.string().optional(),
-  excerpt_fr: z.string().optional(),
-  excerpt_en: z.string().optional(),
   description_fr: z.string().optional(),
   description_en: z.string().optional(),
   price: z.coerce.number().optional(),
@@ -144,8 +142,6 @@ const AdminPropertyForm = () => {
         ref: data.ref || null,
         title_fr: data.title_fr || null,
         title_en: data.title_en || null,
-        excerpt_fr: data.excerpt_fr || null,
-        excerpt_en: data.excerpt_en || null,
         description_fr: data.description_fr || null,
         description_en: data.description_en || null,
         price: data.price || null,
@@ -390,43 +386,6 @@ const AdminPropertyForm = () => {
                       />
                     </div>
 
-                    <div className="space-y-4">
-                      <FormField
-                        control={form.control}
-                        name="excerpt_fr"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Résumé (Français)</FormLabel>
-                            <FormControl>
-                              <Textarea 
-                                placeholder="Court résumé du bien..."
-                                className="min-h-[80px]"
-                                {...field} 
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={form.control}
-                        name="excerpt_en"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Résumé (Anglais)</FormLabel>
-                            <FormControl>
-                              <Textarea 
-                                placeholder="Short summary of the property..."
-                                className="min-h-[80px]"
-                                {...field} 
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
                   </CardContent>
                 </Card>
               </TabsContent>

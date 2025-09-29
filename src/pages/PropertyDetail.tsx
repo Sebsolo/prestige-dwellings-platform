@@ -95,7 +95,7 @@ const PropertyDetail = () => {
   return (
     <Layout 
       title={property.title_fr || property.title_en || 'Bien immobilier'}
-      description={property.excerpt_fr || property.description_fr || ''}
+      description={property.description_fr || ''}
       keywords={`immobilier ${property.city} ${property.type}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

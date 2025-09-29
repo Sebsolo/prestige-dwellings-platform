@@ -3,13 +3,12 @@ export interface Property {
   ref?: string;
   title_fr: string;
   title_en?: string;
-  excerpt_fr: string;
-  excerpt_en?: string;
   description_fr: string;
   description_en?: string;
   price?: number;
   rent_cc?: number;
   area_m2?: number;
+  land_m2?: number;
   rooms?: number;
   bedrooms?: number;
   bathrooms?: number;

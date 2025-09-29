@@ -83,27 +83,23 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
           {property.title_fr}
         </h3>
         
-        <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
-          {property.excerpt_fr}
-        </p>
-        
         <div className="flex items-center gap-4 text-sm mb-4">
+          {property.area_m2 && (
+            <div className="flex items-center gap-1">
+              <Square className="h-4 w-4" />
+              <span>{property.area_m2} m²</span>
+            </div>
+          )}
           {property.rooms && (
             <div className="flex items-center gap-1">
               <Home className="h-4 w-4" />
               <span>{property.rooms} pièces</span>
             </div>
           )}
-          {property.bedrooms && (
-            <div className="flex items-center gap-1">
-              <Bed className="h-4 w-4" />
-              <span>{property.bedrooms} ch.</span>
-            </div>
-          )}
-          {property.area_m2 && (
+          {property.land_m2 && (
             <div className="flex items-center gap-1">
               <Square className="h-4 w-4" />
-              <span>{property.area_m2} m²</span>
+              <span>{property.land_m2} m² terrain</span>
             </div>
           )}
         </div>

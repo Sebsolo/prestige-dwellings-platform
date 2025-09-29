@@ -26,8 +26,7 @@ const propertySchema = z.object({
   ref: z.string().optional(),
   title_fr: z.string().min(1, 'Le titre français est requis'),
   title_en: z.string().optional(),
-  excerpt_fr: z.string().optional(),
-  excerpt_en: z.string().optional(),
+  land_m2: z.coerce.number().optional(),
   description_fr: z.string().optional(),
   description_en: z.string().optional(),
   price: z.coerce.number().optional(),
@@ -92,8 +91,7 @@ const AdminPropertyEdit = () => {
         ref: property.ref || '',
         title_fr: property.title_fr || '',
         title_en: property.title_en || '',
-        excerpt_fr: property.excerpt_fr || '',
-        excerpt_en: property.excerpt_en || '',
+        land_m2: property.land_m2 ? Number(property.land_m2) : undefined,
         description_fr: property.description_fr || '',
         description_en: property.description_en || '',
         price: property.price || undefined,
@@ -224,8 +222,7 @@ const AdminPropertyEdit = () => {
         ref: data.ref || null,
         title_fr: data.title_fr || null,
         title_en: data.title_en || null,
-        excerpt_fr: data.excerpt_fr || null,
-        excerpt_en: data.excerpt_en || null,
+        land_m2: data.land_m2 || null,
         description_fr: data.description_fr || null,
         description_en: data.description_en || null,
         price: data.price || null,
@@ -481,43 +478,6 @@ const AdminPropertyEdit = () => {
                       />
                     </div>
 
-                    <div className="space-y-4">
-                      <FormField
-                        control={form.control}
-                        name="excerpt_fr"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Résumé (Français)</FormLabel>
-                            <FormControl>
-                              <Textarea 
-                                placeholder="Court résumé du bien..."
-                                className="min-h-[80px]"
-                                {...field} 
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={form.control}
-                        name="excerpt_en"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Résumé (Anglais)</FormLabel>
-                            <FormControl>
-                              <Textarea 
-                                placeholder="Short summary of the property..."
-                                className="min-h-[80px]"
-                                {...field} 
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
 
                     <div className="space-y-4">
                       <FormField
@@ -625,20 +585,34 @@ const AdminPropertyEdit = () => {
                         )}
                       />
 
-                      <FormField
-                        control={form.control}
-                        name="area_m2"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Surface (m²)</FormLabel>
-                            <FormControl>
-                              <Input type="number" placeholder="75" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
+                     <FormField
+                       control={form.control}
+                       name="area_m2"
+                       render={({ field }) => (
+                         <FormItem>
+                           <FormLabel>Surface (m²)</FormLabel>
+                           <FormControl>
+                             <Input type="number" placeholder="75" {...field} />
+                           </FormControl>
+                           <FormMessage />
+                         </FormItem>
+                       )}
+                     />
+                   </div>
+
+                   <FormField
+                     control={form.control}
+                     name="land_m2"
+                     render={({ field }) => (
+                       <FormItem>
+                         <FormLabel>Terrain (m²)</FormLabel>
+                         <FormControl>
+                           <Input type="number" placeholder="500" {...field} />
+                         </FormControl>
+                         <FormMessage />
+                       </FormItem>
+                     )}
+                   />
 
                     <FormField
                       control={form.control}
