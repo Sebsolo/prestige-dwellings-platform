@@ -74,30 +74,30 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
       </div>
       
       <CardContent className="p-4">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
-          <MapPin className="h-4 w-4" />
-          <span>{property.city}</span>
-        </div>
-        
         <h3 className="font-semibold text-lg mb-2 line-clamp-2">
           {property.title_fr}
         </h3>
         
-        <div className="flex items-center gap-4 text-sm mb-4">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+          <MapPin className="h-4 w-4" />
+          <span>{property.city} • {property.type === 'apartment' ? 'Appartement' : property.type === 'house' ? 'Maison' : property.type === 'commercial' ? 'Commercial' : property.type === 'land' ? 'Terrain' : 'Autre'}</span>
+        </div>
+        
+        <div className="flex items-center gap-4 text-sm mb-4 bg-muted/30 p-2 rounded-md">
           {property.area_m2 && (
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1 font-medium">
               <Square className="h-4 w-4" />
               <span>{property.area_m2} m²</span>
             </div>
           )}
           {property.rooms && (
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1 font-medium">
               <Home className="h-4 w-4" />
               <span>{property.rooms} pièces</span>
             </div>
           )}
           {property.land_m2 && (
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1 font-medium text-green-600">
               <Square className="h-4 w-4" />
               <span>{property.land_m2} m² terrain</span>
             </div>
