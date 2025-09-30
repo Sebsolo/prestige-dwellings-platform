@@ -26,21 +26,25 @@ const propertySchema = z.object({
   ref: z.string().optional(),
   title_fr: z.string().min(1, 'Le titre français est requis'),
   title_en: z.string().optional(),
-  land_m2: z.coerce.number().optional(),
   description_fr: z.string().optional(),
   description_en: z.string().optional(),
   price: z.coerce.number().optional(),
+  rent_hc: z.coerce.number().optional(),
   rent_cc: z.coerce.number().optional(),
   rooms: z.coerce.number().optional(),
   bedrooms: z.coerce.number().optional(),
   area_m2: z.coerce.number().optional(),
+  area_useful_m2: z.coerce.number().optional(),
+  land_m2: z.coerce.number().optional(),
   address: z.string().optional(),
   city: z.string().optional(),
   postal_code: z.string().optional(),
   lat: z.coerce.number().optional(),
   lng: z.coerce.number().optional(),
   dpe_letter: z.enum(['A', 'B', 'C', 'D', 'E', 'F', 'G']).optional(),
-  youtube_url: z.string().url().optional().or(z.literal('')),
+  ges_letter: z.enum(['A', 'B', 'C', 'D', 'E', 'F', 'G']).optional(),
+  availability_date: z.string().optional(),
+  youtube_url: z.string().optional(),
   featured: z.boolean().default(false),
 });
 
@@ -91,7 +95,6 @@ const AdminPropertyEdit = () => {
         ref: property.ref || '',
         title_fr: property.title_fr || '',
         title_en: property.title_en || '',
-        land_m2: property.land_m2 ? Number(property.land_m2) : undefined,
         description_fr: property.description_fr || '',
         description_en: property.description_en || '',
         price: property.price || undefined,
@@ -99,6 +102,7 @@ const AdminPropertyEdit = () => {
         rooms: property.rooms || undefined,
         bedrooms: property.bedrooms || undefined,
         area_m2: property.area_m2 ? Number(property.area_m2) : undefined,
+        land_m2: property.land_m2 ? Number(property.land_m2) : undefined,
         address: property.address || '',
         city: property.city || '',
         postal_code: property.postal_code || '',
@@ -106,6 +110,7 @@ const AdminPropertyEdit = () => {
         lng: property.lng ? Number(property.lng) : undefined,
         dpe_letter: property.dpe_letter || undefined,
         youtube_url: property.youtube_url || '',
+        featured: property.featured || false,
       });
 
       // Load existing images
@@ -222,7 +227,6 @@ const AdminPropertyEdit = () => {
         ref: data.ref || null,
         title_fr: data.title_fr || null,
         title_en: data.title_en || null,
-        land_m2: data.land_m2 || null,
         description_fr: data.description_fr || null,
         description_en: data.description_en || null,
         price: data.price || null,
@@ -230,6 +234,7 @@ const AdminPropertyEdit = () => {
         rooms: data.rooms || null,
         bedrooms: data.bedrooms || null,
         area_m2: data.area_m2 || null,
+        land_m2: data.land_m2 || null,
         address: data.address || null,
         city: data.city || null,
         postal_code: data.postal_code || null,
@@ -237,6 +242,7 @@ const AdminPropertyEdit = () => {
         lng: data.lng || null,
         dpe_letter: data.dpe_letter || null,
         youtube_url: data.youtube_url || null,
+        featured: data.featured,
       };
 
       await propertiesApi.update(id!, propertyData);

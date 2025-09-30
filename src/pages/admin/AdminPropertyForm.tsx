@@ -19,8 +19,8 @@ import { FileUpload, FilePreview } from '@/components/ui/file-upload';
 
 const propertySchema = z.object({
   transaction: z.enum(['sale', 'rent']),
-  type: z.string().min(1, 'Le type est requis'),
-  status: z.enum(['draft', 'published']),
+  type: z.enum(['apartment', 'house', 'commercial', 'land', 'other']),
+  status: z.enum(['draft', 'published', 'under_offer', 'sold', 'rented']),
   ref: z.string().optional(),
   title_fr: z.string().min(1, 'Le titre français est requis'),
   title_en: z.string().optional(),
@@ -39,8 +39,8 @@ const propertySchema = z.object({
   postal_code: z.string().optional(),
   lat: z.coerce.number().optional(),
   lng: z.coerce.number().optional(),
-  dpe_letter: z.string().optional(),
-  ges_letter: z.string().optional(),
+  dpe_letter: z.enum(['A', 'B', 'C', 'D', 'E', 'F', 'G']).optional(),
+  ges_letter: z.enum(['A', 'B', 'C', 'D', 'E', 'F', 'G']).optional(),
   availability_date: z.string().optional(),
   youtube_url: z.string().optional(),
   featured: z.boolean().default(false),
@@ -161,6 +161,7 @@ const AdminPropertyForm = () => {
         ges_letter: data.ges_letter || null,
         availability_date: data.availability_date || null,
         youtube_url: data.youtube_url || null,
+        featured: data.featured,
       };
 
       const { data: property, error } = await supabase
