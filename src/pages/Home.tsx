@@ -170,6 +170,91 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Presentation Section */}
+      <section className="py-20 bg-muted/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-4">
+              Proximité terrain, portée globale
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-4xl mx-auto mb-12">
+              Un suivi exigeant sur l'Ouest parisien, une audience élargie grâce au réseau eXp
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
+            {/* Local expertise */}
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-2xl font-semibold mb-4 text-foreground">
+                  Acteur local, adossé à un groupe international
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Installé dans les Yvelines (78), j'interviens au plus près de vos projets sur Chavenay, Saint-Nom-la-Bretèche et Feucherolles, tout en me déplaçant à Paris et dans les Hauts-de-Seine (92). Cette proximité terrain assure des conseils précis et une mise en valeur adaptée à chaque micro-marché.
+                </p>
+              </div>
+              
+              <div>
+                <h3 className="text-2xl font-semibold mb-4 text-foreground">
+                  La force d'un réseau mondial pour amplifier vos résultats
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Je m'appuie sur eXp, un groupe international "cloud-based" présent dans plus de 25 pays et réunissant plus de 80 000 conseillers (données 2025). Concrètement : diffusion étendue des annonces, accès à des acheteurs en mobilité (France & international) et recommandations croisées entre professionnels pour accélérer les mises en relation qualifiées.
+                </p>
+              </div>
+            </div>
+            
+            {/* Benefits */}
+            <div className="space-y-6">
+              <h3 className="text-2xl font-semibold mb-6 text-foreground">
+                Ce que cela change pour vous
+              </h3>
+              
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-1">Audience élargie</h4>
+                    <p className="text-muted-foreground text-sm">
+                      Visibilité France + international via le réseau eXp, tout en gardant un pilotage local de votre dossier.
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-1">Réactivité & coordination</h4>
+                    <p className="text-muted-foreground text-sm">
+                      Un interlocuteur unique qui orchestre estimation, stratégie de commercialisation, home staging et négociation, jusqu'à la signature.
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-1">Qualité de présentation</h4>
+                    <p className="text-muted-foreground text-sm">
+                      Photos dédiées, textes soignés et parcours digital fluide pour défendre le prix et accélérer la transaction.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-card p-8 rounded-lg shadow-card">
+            <h3 className="text-2xl font-semibold mb-4 text-foreground text-center">
+              Un accompagnement clair et exigeant
+            </h3>
+            <p className="text-muted-foreground leading-relaxed text-center max-w-4xl mx-auto">
+              Vente, achat ou location : je privilégie des échanges directs, des informations utiles et des décisions rapides. Votre projet bénéficie à la fois de l'ancrage local et de la puissance d'un réseau international — sans lourdeurs ni intermédiaires superflus.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Services Section */}
       <section id="mes-services" className="py-20 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
