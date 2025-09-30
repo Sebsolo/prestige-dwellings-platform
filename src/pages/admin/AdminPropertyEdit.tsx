@@ -109,6 +109,7 @@ const AdminPropertyEdit = () => {
         lat: property.lat ? Number(property.lat) : undefined,
         lng: property.lng ? Number(property.lng) : undefined,
         dpe_letter: property.dpe_letter || undefined,
+        ges_letter: property.ges_letter || undefined,
         youtube_url: property.youtube_url || '',
         featured: property.featured || false,
       });
@@ -241,6 +242,7 @@ const AdminPropertyEdit = () => {
         lat: data.lat || null,
         lng: data.lng || null,
         dpe_letter: data.dpe_letter || null,
+        ges_letter: data.ges_letter || null,
         youtube_url: data.youtube_url || null,
         featured: data.featured,
       };
@@ -620,32 +622,61 @@ const AdminPropertyEdit = () => {
                      )}
                    />
 
-                    <FormField
-                      control={form.control}
-                      name="dpe_letter"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>DPE</FormLabel>
-                          <Select onValueChange={field.onChange} value={field.value}>
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Classe énergétique" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="A">A</SelectItem>
-                              <SelectItem value="B">B</SelectItem>
-                              <SelectItem value="C">C</SelectItem>
-                              <SelectItem value="D">D</SelectItem>
-                              <SelectItem value="E">E</SelectItem>
-                              <SelectItem value="F">F</SelectItem>
-                              <SelectItem value="G">G</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <FormField
+                        control={form.control}
+                        name="dpe_letter"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>DPE</FormLabel>
+                            <Select onValueChange={field.onChange} value={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Classe énergétique" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="A">A</SelectItem>
+                                <SelectItem value="B">B</SelectItem>
+                                <SelectItem value="C">C</SelectItem>
+                                <SelectItem value="D">D</SelectItem>
+                                <SelectItem value="E">E</SelectItem>
+                                <SelectItem value="F">F</SelectItem>
+                                <SelectItem value="G">G</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="ges_letter"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Classe GES</FormLabel>
+                            <Select onValueChange={field.onChange} value={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Classe GES" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="A">A</SelectItem>
+                                <SelectItem value="B">B</SelectItem>
+                                <SelectItem value="C">C</SelectItem>
+                                <SelectItem value="D">D</SelectItem>
+                                <SelectItem value="E">E</SelectItem>
+                                <SelectItem value="F">F</SelectItem>
+                                <SelectItem value="G">G</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
                   </CardContent>
                 </Card>
               </TabsContent>

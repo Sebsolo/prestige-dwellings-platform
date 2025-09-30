@@ -20,6 +20,7 @@ export interface Property {
   lat?: number;
   lng?: number;
   dpe_letter?: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G';
+  ges_letter?: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G';
   dpe_value?: number;
   youtube_url?: string;
   year_built?: number;
