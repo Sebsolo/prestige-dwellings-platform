@@ -1,7 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
 const Sitemap = () => {
+  const [sitemapXml, setSitemapXml] = useState<string>('');
+  const [error, setError] = useState<string>('');
+
   useEffect(() => {
     const generateAndServeSitemap = async () => {
       try {
@@ -10,29 +13,46 @@ const Sitemap = () => {
         
         if (error) {
           console.error('Error generating sitemap:', error);
+          setError('Failed to generate sitemap');
           return;
         }
 
-        // Set the response as XML and replace the current page content
-        const blob = new Blob([data], { type: 'application/xml' });
-        const url = URL.createObjectURL(blob);
-        
-        // Replace current page with the sitemap XML
-        window.location.replace(url);
+        // Set the sitemap XML content
+        setSitemapXml(data);
       } catch (error) {
         console.error('Failed to generate sitemap:', error);
+        setError('Failed to generate sitemap');
       }
     };
 
     generateAndServeSitemap();
   }, []);
 
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-2xl font-bold mb-4">Generating Sitemap...</h1>
-        <p className="text-muted-foreground">Please wait while we generate the latest sitemap.</p>
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4 text-destructive">Error</h1>
+          <p className="text-muted-foreground">{error}</p>
+        </div>
       </div>
+    );
+  }
+
+  if (!sitemapXml) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Generating Sitemap...</h1>
+          <p className="text-muted-foreground">Please wait while we generate the latest sitemap.</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-background">
+      <pre className="p-4 overflow-auto text-xs font-mono">{sitemapXml}</pre>
     </div>
   );
 };

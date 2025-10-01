@@ -15,7 +15,8 @@ interface Property {
 interface Post {
   id: number;
   slug: string;
-  updated_at: string;
+  created_at: string;
+  published_at: string | null;
 }
 
 Deno.serve(async (req) => {
@@ -47,16 +48,16 @@ Deno.serve(async (req) => {
     // Fetch published blog posts
     const { data: posts, error: postsError } = await supabase
       .from('posts')
-      .select('id, slug, updated_at')
+      .select('id, slug, created_at, published_at')
       .eq('status', 'published')
-      .order('updated_at', { ascending: false });
+      .order('published_at', { ascending: false });
 
     if (postsError) {
       console.error('Error fetching posts:', postsError);
       throw postsError;
     }
 
-    const baseUrl = 'https://yvelines-immo.fr';
+    const baseUrl = Deno.env.get('SITE_URL') || 'https://sebastien-pons-immobilier.lovable.app';
     const currentDate = new Date().toISOString().split('T')[0];
 
     // Generate XML sitemap
@@ -141,7 +142,7 @@ Deno.serve(async (req) => {
     // Add dynamic blog post pages
     if (posts && posts.length > 0) {
       posts.forEach((post: Post) => {
-        const lastmod = new Date(post.updated_at).toISOString().split('T')[0];
+        const lastmod = new Date(post.published_at || post.created_at).toISOString().split('T')[0];
         
         sitemap += `
   
@@ -187,8 +188,9 @@ Deno.serve(async (req) => {
     return new Response(sitemap, {
       headers: {
         ...corsHeaders,
-        'Content-Type': 'application/xml',
-        'Cache-Control': 'public, max-age=3600', // Cache for 1 hour
+        'Content-Type': 'application/xml; charset=utf-8',
+        'Cache-Control': 'public, max-age=1800, s-maxage=3600, stale-while-revalidate=86400', // Cache for 30min, CDN 1h, serve stale for 24h
+        'X-Robots-Tag': 'noindex', // Don't index the sitemap itself
       },
     });
 
