@@ -19,11 +19,29 @@ export function bindCMPToGTM() {
   }
 
   try {
+    // Check if consent was already given in a previous session
+    window.axeptioSDK.on('ready', () => {
+      debugLog('Axeptio SDK ready, checking existing consent');
+      
+      const cookies = window.axeptioSDK?.getCookies?.() || {};
+      debugLog('Current consent state:', cookies);
+      
+      // Check if analytics is already consented
+      if (cookies.google_analytics || cookies['google-analytics']) {
+        debugLog('Analytics consent already granted from previous session');
+        grantAnalyticsConsent();
+      }
+    });
+
+    // Listen for new consent choices
     window.axeptioSDK.on('cookies:complete', (choices: any) => {
       debugLog('Consent choices received:', choices);
+      debugLog('Accepted vendors:', choices?.acceptedVendors);
       
       const accepted = Array.isArray(choices?.acceptedVendors)
-        ? choices.acceptedVendors.includes('google-analytics') || choices.acceptedVendors.includes('ga')
+        ? choices.acceptedVendors.includes('google-analytics') || 
+          choices.acceptedVendors.includes('google_analytics') ||
+          choices.acceptedVendors.includes('ga')
         : false;
       
       debugLog('Analytics consent:', accepted ? 'granted' : 'denied');
