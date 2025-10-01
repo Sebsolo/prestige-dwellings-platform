@@ -57,7 +57,7 @@ Deno.serve(async (req) => {
       throw postsError;
     }
 
-    const baseUrl = Deno.env.get('SITE_URL') || 'https://sebastien-pons-immobilier.lovable.app';
+    const baseUrl = Deno.env.get('SITE_URL') || 'https://yvelines-immo.fr';
     const currentDate = new Date().toISOString().split('T')[0];
 
     // Generate XML sitemap
