@@ -33,11 +33,11 @@ Deno.serve(async (req) => {
 
     console.log('Generating dynamic sitemap...');
 
-    // Fetch published properties
+    // Fetch all properties except drafts
     const { data: properties, error: propsError } = await supabase
       .from('properties')
       .select('id, title_fr, city, updated_at')
-      .eq('status', 'published')
+      .neq('status', 'draft')
       .order('updated_at', { ascending: false });
 
     if (propsError) {
