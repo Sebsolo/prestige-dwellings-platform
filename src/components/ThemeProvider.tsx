@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 
 // Convert hex to HSL
 const hexToHsl = (hex: string): string => {
@@ -39,7 +40,6 @@ export const ThemeProvider = ({ children, bootstrapSettings }: ThemeProviderProp
     if (!bootstrapSettings) {
       const fetchSettings = async () => {
         try {
-          const { supabase } = await import('@/integrations/supabase/client');
           const { data } = await supabase
             .from('site_settings')
             .select('primary_color, secondary_color')

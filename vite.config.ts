@@ -23,6 +23,43 @@ export default defineConfig(({ mode }) => ({
   esbuild: {
     drop: mode === 'production' ? ['console', 'debugger'] : []
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Vendor chunks
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          'vendor-supabase': ['@supabase/supabase-js'],
+          'vendor-ui': [
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-dropdown-menu',
+            '@radix-ui/react-popover',
+            '@radix-ui/react-select',
+            '@radix-ui/react-tabs',
+            '@radix-ui/react-tooltip',
+            '@radix-ui/react-accordion',
+            '@radix-ui/react-alert-dialog',
+          ],
+          // Admin chunks
+          'admin-core': [
+            './src/components/admin/AdminLayout.tsx',
+            './src/components/admin/AdminSidebar.tsx',
+            './src/contexts/AuthContext.tsx',
+          ],
+          'admin-forms': [
+            './src/pages/admin/AdminPropertyForm.tsx',
+            './src/pages/admin/AdminBlogForm.tsx',
+            './src/components/ui/form.tsx',
+          ],
+          // Heavy dependencies
+          'rich-text-editor': ['react-quill'],
+          'maps': ['leaflet', 'react-leaflet'],
+          'charts': ['recharts'],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 600,
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
