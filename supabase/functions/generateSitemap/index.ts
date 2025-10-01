@@ -124,7 +124,7 @@ Deno.serve(async (req) => {
     // Add dynamic property pages
     if (properties && properties.length > 0) {
       properties.forEach((property: Property) => {
-        const slug = `${property.city?.toLowerCase().replace(/\s+/g, '-')}-${property.id}`;
+        const slug = `${property.id}`;
         const lastmod = new Date(property.updated_at).toISOString().split('T')[0];
         
         sitemap += `
