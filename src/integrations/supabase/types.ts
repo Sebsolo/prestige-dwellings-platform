@@ -10,7 +10,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "13.0.4"
+    PostgrestVersion: "13.0.5"
   }
   public: {
     Tables: {
@@ -187,7 +187,9 @@ export type Database = {
           area_m2: number | null
           area_useful_m2: number | null
           availability_date: string | null
+          bathrooms: number | null
           bedrooms: number | null
+          cellar: boolean | null
           city: string | null
           created_at: string | null
           created_by: string | null
@@ -197,13 +199,22 @@ export type Database = {
           dpe_value: number | null
           excerpt_en: string | null
           excerpt_fr: string | null
+          exposure: string | null
           featured: boolean
           features: Json | null
+          floor_level: string | null
+          furnishing: string | null
           ges_letter: string | null
+          heating: string | null
           id: number
+          indoor_parking: number | null
+          interior_condition: string | null
+          kitchen: string | null
           land_m2: number | null
           lat: number | null
           lng: number | null
+          monthly_charges: number | null
+          pool: boolean | null
           postal_code: string | null
           price: number | null
           ref: string | null
@@ -213,9 +224,12 @@ export type Database = {
           status: string | null
           title_en: string | null
           title_fr: string | null
+          toilets: number | null
+          total_floors: number | null
           transaction: string
           type: string
           updated_at: string | null
+          year_built: number | null
           youtube_url: string | null
         }
         Insert: {
@@ -223,7 +237,9 @@ export type Database = {
           area_m2?: number | null
           area_useful_m2?: number | null
           availability_date?: string | null
+          bathrooms?: number | null
           bedrooms?: number | null
+          cellar?: boolean | null
           city?: string | null
           created_at?: string | null
           created_by?: string | null
@@ -233,13 +249,22 @@ export type Database = {
           dpe_value?: number | null
           excerpt_en?: string | null
           excerpt_fr?: string | null
+          exposure?: string | null
           featured?: boolean
           features?: Json | null
+          floor_level?: string | null
+          furnishing?: string | null
           ges_letter?: string | null
+          heating?: string | null
           id?: never
+          indoor_parking?: number | null
+          interior_condition?: string | null
+          kitchen?: string | null
           land_m2?: number | null
           lat?: number | null
           lng?: number | null
+          monthly_charges?: number | null
+          pool?: boolean | null
           postal_code?: string | null
           price?: number | null
           ref?: string | null
@@ -249,9 +274,12 @@ export type Database = {
           status?: string | null
           title_en?: string | null
           title_fr?: string | null
+          toilets?: number | null
+          total_floors?: number | null
           transaction: string
           type: string
           updated_at?: string | null
+          year_built?: number | null
           youtube_url?: string | null
         }
         Update: {
@@ -259,7 +287,9 @@ export type Database = {
           area_m2?: number | null
           area_useful_m2?: number | null
           availability_date?: string | null
+          bathrooms?: number | null
           bedrooms?: number | null
+          cellar?: boolean | null
           city?: string | null
           created_at?: string | null
           created_by?: string | null
@@ -269,13 +299,22 @@ export type Database = {
           dpe_value?: number | null
           excerpt_en?: string | null
           excerpt_fr?: string | null
+          exposure?: string | null
           featured?: boolean
           features?: Json | null
+          floor_level?: string | null
+          furnishing?: string | null
           ges_letter?: string | null
+          heating?: string | null
           id?: never
+          indoor_parking?: number | null
+          interior_condition?: string | null
+          kitchen?: string | null
           land_m2?: number | null
           lat?: number | null
           lng?: number | null
+          monthly_charges?: number | null
+          pool?: boolean | null
           postal_code?: string | null
           price?: number | null
           ref?: string | null
@@ -285,9 +324,12 @@ export type Database = {
           status?: string | null
           title_en?: string | null
           title_fr?: string | null
+          toilets?: number | null
+          total_floors?: number | null
           transaction?: string
           type?: string
           updated_at?: string | null
+          year_built?: number | null
           youtube_url?: string | null
         }
         Relationships: []
@@ -420,6 +462,27 @@ export type Database = {
           secondary_color?: string | null
           site_description?: string | null
           site_name?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      static_pages: {
+        Row: {
+          id: number
+          path: string
+          published: boolean
+          updated_at: string
+        }
+        Insert: {
+          id?: number
+          path: string
+          published?: boolean
+          updated_at?: string
+        }
+        Update: {
+          id?: number
+          path?: string
+          published?: boolean
           updated_at?: string
         }
         Relationships: []

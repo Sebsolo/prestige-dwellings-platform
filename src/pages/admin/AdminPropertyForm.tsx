@@ -31,6 +31,8 @@ const propertySchema = z.object({
   rent_cc: z.coerce.number().optional(),
   rooms: z.coerce.number().optional(),
   bedrooms: z.coerce.number().optional(),
+  bathrooms: z.coerce.number().optional(),
+  toilets: z.coerce.number().optional(),
   area_m2: z.coerce.number().optional(),
   area_useful_m2: z.coerce.number().optional(),
   land_m2: z.coerce.number().optional(),
@@ -44,6 +46,18 @@ const propertySchema = z.object({
   availability_date: z.string().optional(),
   youtube_url: z.string().optional(),
   featured: z.boolean().default(false),
+  floor_level: z.string().optional(),
+  year_built: z.coerce.number().optional(),
+  total_floors: z.coerce.number().optional(),
+  interior_condition: z.string().optional(),
+  heating: z.string().optional(),
+  kitchen: z.string().optional(),
+  furnishing: z.string().optional(),
+  exposure: z.string().optional(),
+  indoor_parking: z.coerce.number().optional(),
+  cellar: z.boolean().default(false),
+  pool: z.boolean().default(false),
+  monthly_charges: z.coerce.number().optional(),
 });
 
 type PropertyFormData = z.infer<typeof propertySchema>;
@@ -149,6 +163,8 @@ const AdminPropertyForm = () => {
         rent_cc: data.rent_cc || null,
         rooms: data.rooms || null,
         bedrooms: data.bedrooms || null,
+        bathrooms: data.bathrooms || null,
+        toilets: data.toilets || null,
         area_m2: data.area_m2 || null,
         area_useful_m2: data.area_useful_m2 || null,
         land_m2: data.land_m2 || null,
@@ -162,6 +178,18 @@ const AdminPropertyForm = () => {
         availability_date: data.availability_date || null,
         youtube_url: data.youtube_url || null,
         featured: data.featured,
+        floor_level: data.floor_level || null,
+        year_built: data.year_built || null,
+        total_floors: data.total_floors || null,
+        interior_condition: data.interior_condition || null,
+        heating: data.heating || null,
+        kitchen: data.kitchen || null,
+        furnishing: data.furnishing || null,
+        exposure: data.exposure || null,
+        indoor_parking: data.indoor_parking || null,
+        cellar: data.cellar,
+        pool: data.pool,
+        monthly_charges: data.monthly_charges || null,
       };
 
       const { data: property, error } = await supabase
@@ -486,6 +514,50 @@ const AdminPropertyForm = () => {
                       />
                     </div>
 
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <FormField
+                        control={form.control}
+                        name="bathrooms"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Salles de bains</FormLabel>
+                            <FormControl>
+                              <Input type="number" placeholder="1" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="toilets"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>WC</FormLabel>
+                            <FormControl>
+                              <Input type="number" placeholder="1" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="indoor_parking"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Stationnement intérieur</FormLabel>
+                            <FormControl>
+                              <Input type="number" placeholder="1" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <FormField
                         control={form.control}
@@ -511,6 +583,178 @@ const AdminPropertyForm = () => {
                               <Input type="number" placeholder="500" {...field} />
                             </FormControl>
                             <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <FormField
+                        control={form.control}
+                        name="floor_level"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Étage</FormLabel>
+                            <FormControl>
+                              <Input placeholder="RDC, 1, 2..." {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="year_built"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Année de construction</FormLabel>
+                            <FormControl>
+                              <Input type="number" placeholder="1979" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="total_floors"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Nombre d'étages du bâtiment</FormLabel>
+                            <FormControl>
+                              <Input type="number" placeholder="3" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <FormField
+                        control={form.control}
+                        name="heating"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Chauffage</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Gaz/Individuel" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="exposure"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Exposition</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Sud-Est" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <FormField
+                        control={form.control}
+                        name="interior_condition"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>État intérieur</FormLabel>
+                            <FormControl>
+                              <Input placeholder="En bon état" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="kitchen"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Cuisine</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Aménagée et équipée" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <FormField
+                        control={form.control}
+                        name="furnishing"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Ameublement</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Entièrement meublé" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="monthly_charges"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Charges mensuelles (€)</FormLabel>
+                            <FormControl>
+                              <Input type="number" placeholder="125" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <FormField
+                        control={form.control}
+                        name="cellar"
+                        render={({ field }) => (
+                          <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                            <div className="space-y-0.5">
+                              <FormLabel className="text-base">Cave</FormLabel>
+                            </div>
+                            <FormControl>
+                              <Switch
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                              />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="pool"
+                        render={({ field }) => (
+                          <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                            <div className="space-y-0.5">
+                              <FormLabel className="text-base">Piscine</FormLabel>
+                            </div>
+                            <FormControl>
+                              <Switch
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                              />
+                            </FormControl>
                           </FormItem>
                         )}
                       />

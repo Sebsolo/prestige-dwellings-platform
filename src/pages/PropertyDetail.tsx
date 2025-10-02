@@ -202,6 +202,112 @@ const PropertyDetail = () => {
               </CardContent>
             </Card>
 
+            {/* Detailed Characteristics */}
+            {(property.bathrooms || property.toilets || property.floor_level || property.year_built || 
+              property.heating || property.exposure || property.interior_condition || property.kitchen || 
+              property.furnishing || property.indoor_parking || property.cellar || property.pool || 
+              property.total_floors || property.monthly_charges) && (
+              <Card className="mb-6">
+                <CardHeader>
+                  <CardTitle>{i18n.language === 'en' ? 'Detailed Characteristics' : 'Caractéristiques détaillées'}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {property.heating && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="font-medium">{i18n.language === 'en' ? 'Heating' : 'Chauffage'}</span>
+                        <span className="text-muted-foreground">{property.heating}</span>
+                      </div>
+                    )}
+                    {property.elevator !== undefined && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="font-medium">{i18n.language === 'en' ? 'Elevator' : 'Ascenseur'}</span>
+                        <span className="text-muted-foreground">{property.elevator ? (i18n.language === 'en' ? 'Yes' : 'Oui') : (i18n.language === 'en' ? 'No' : 'Non')}</span>
+                      </div>
+                    )}
+                    {property.pool !== undefined && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="font-medium">{i18n.language === 'en' ? 'Pool' : 'Piscine'}</span>
+                        <span className="text-muted-foreground">{property.pool ? (i18n.language === 'en' ? 'Yes' : 'Oui') : (i18n.language === 'en' ? 'No' : 'Non')}</span>
+                      </div>
+                    )}
+                    {property.bathrooms && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="font-medium">{i18n.language === 'en' ? 'Bathrooms' : 'Salle d\'eau / Salle de bains'}</span>
+                        <span className="text-muted-foreground">{property.bathrooms}</span>
+                      </div>
+                    )}
+                    {property.toilets && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="font-medium">WC</span>
+                        <span className="text-muted-foreground">{property.toilets}</span>
+                      </div>
+                    )}
+                    {property.floor_level && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="font-medium">{i18n.language === 'en' ? 'Floor' : 'Étage'}</span>
+                        <span className="text-muted-foreground">{property.floor_level}</span>
+                      </div>
+                    )}
+                    {property.year_built && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="font-medium">{i18n.language === 'en' ? 'Year Built' : 'Construction'}</span>
+                        <span className="text-muted-foreground">{property.year_built}</span>
+                      </div>
+                    )}
+                    {property.interior_condition && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="font-medium">{i18n.language === 'en' ? 'Interior Condition' : 'État intérieur'}</span>
+                        <span className="text-muted-foreground">{property.interior_condition}</span>
+                      </div>
+                    )}
+                    {property.kitchen && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="font-medium">{i18n.language === 'en' ? 'Kitchen' : 'Cuisine'}</span>
+                        <span className="text-muted-foreground">{property.kitchen}</span>
+                      </div>
+                    )}
+                    {property.furnishing && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="font-medium">{i18n.language === 'en' ? 'Furnishing' : 'Ameublement'}</span>
+                        <span className="text-muted-foreground">{property.furnishing}</span>
+                      </div>
+                    )}
+                    {property.exposure && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="font-medium">{i18n.language === 'en' ? 'Exposure' : 'Exposition'}</span>
+                        <span className="text-muted-foreground">{property.exposure}</span>
+                      </div>
+                    )}
+                    {property.indoor_parking !== undefined && property.indoor_parking > 0 && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="font-medium">{i18n.language === 'en' ? 'Indoor Parking' : 'Stationnement intérieur'}</span>
+                        <span className="text-muted-foreground">{property.indoor_parking}</span>
+                      </div>
+                    )}
+                    {property.cellar !== undefined && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="font-medium">{i18n.language === 'en' ? 'Cellar' : 'Cave'}</span>
+                        <span className="text-muted-foreground">{property.cellar ? (i18n.language === 'en' ? 'Yes' : 'Oui') : (i18n.language === 'en' ? 'No' : 'Non')}</span>
+                      </div>
+                    )}
+                    {property.total_floors && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="font-medium">{i18n.language === 'en' ? 'Total Floors in Building' : 'Nombre d\'étages du bâtiment'}</span>
+                        <span className="text-muted-foreground">{property.total_floors}</span>
+                      </div>
+                    )}
+                    {property.monthly_charges && (
+                      <div className="flex justify-between py-2 border-b">
+                        <span className="font-medium">{i18n.language === 'en' ? 'Monthly Charges' : 'Charges'}</span>
+                        <span className="text-muted-foreground">{property.monthly_charges} € {i18n.language === 'en' ? '/month' : '/mois'}</span>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
             {/* Description */}
             <Card className="mb-6">
               <CardHeader>
