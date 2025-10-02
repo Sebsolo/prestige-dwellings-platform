@@ -208,7 +208,7 @@ const PropertyDetail = () => {
                 <CardTitle>{t('property.description')}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
                   {property.description_fr || property.description_en || t('property.no_description')}
                 </p>
               </CardContent>
