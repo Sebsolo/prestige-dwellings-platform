@@ -16,7 +16,7 @@ import SmartForm from '@/components/SmartForm';
 
 const PropertyDetail = () => {
   const { idOrSlug } = useParams();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [property, setProperty] = useState<PropertyWithMedia | null>(null);
   const [loading, setLoading] = useState(true);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
@@ -209,7 +209,10 @@ const PropertyDetail = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
-                  {property.description_fr || property.description_en || t('property.no_description')}
+                  {i18n.language === 'en' 
+                    ? (property.description_en || property.description_fr || t('property.no_description'))
+                    : (property.description_fr || property.description_en || t('property.no_description'))
+                  }
                 </p>
               </CardContent>
             </Card>
