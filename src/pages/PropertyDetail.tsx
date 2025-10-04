@@ -202,6 +202,75 @@ const PropertyDetail = () => {
               </CardContent>
             </Card>
 
+
+            {/* Description */}
+            <Card className="mb-6">
+              <CardHeader>
+                <CardTitle>{t('property.description')}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
+                  {i18n.language === 'en' 
+                    ? (property.description_en || property.description_fr || t('property.no_description'))
+                    : (property.description_fr || property.description_en || t('property.no_description'))
+                  }
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* YouTube Video */}
+            {property.youtube_url && (
+              <Card className="mb-6">
+                <CardHeader>
+                  <CardTitle>{t('property.virtual_tour')}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="aspect-video">
+                    <iframe
+                      src={getYouTubeEmbedUrl(property.youtube_url) || ''}
+                      title={t('property.virtual_tour')}
+                      className="w-full h-full rounded-lg"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Map */}
+            {(property.lat && property.lng) && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>{t('property.location')}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <BasicLeafletMap 
+                    lat={Number(property.lat)}
+                    lng={Number(property.lng)}
+                    title={property.title_fr || property.title_en || undefined}
+                    address={property.address || undefined}
+                    city={property.city || undefined}
+                    zoom={14}
+                    radiusMeters={200}
+                    className="rounded-lg overflow-hidden border"
+                  />
+                </CardContent>
+              </Card>
+            )}
+          </div>
+
+          {/* Sidebar */}
+          <div className="lg:col-span-1">
+            {/* Contact Form */}
+            <SmartForm
+              source="visit_request"
+              propertyId={property.id?.toString()}
+              title={t('property.visit_form_title')}
+              description={t('property.visit_form_desc')}
+              className="mb-6"
+            />
+
             {/* Detailed Characteristics */}
             {(property.bathrooms || property.toilets || property.floor_level || property.year_built || 
               property.heating || property.exposure || property.interior_condition || property.kitchen || 
@@ -307,74 +376,6 @@ const PropertyDetail = () => {
                 </CardContent>
               </Card>
             )}
-
-            {/* Description */}
-            <Card className="mb-6">
-              <CardHeader>
-                <CardTitle>{t('property.description')}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
-                  {i18n.language === 'en' 
-                    ? (property.description_en || property.description_fr || t('property.no_description'))
-                    : (property.description_fr || property.description_en || t('property.no_description'))
-                  }
-                </p>
-              </CardContent>
-            </Card>
-
-            {/* YouTube Video */}
-            {property.youtube_url && (
-              <Card className="mb-6">
-                <CardHeader>
-                  <CardTitle>{t('property.virtual_tour')}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="aspect-video">
-                    <iframe
-                      src={getYouTubeEmbedUrl(property.youtube_url) || ''}
-                      title={t('property.virtual_tour')}
-                      className="w-full h-full rounded-lg"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Map */}
-            {(property.lat && property.lng) && (
-              <Card>
-                <CardHeader>
-                  <CardTitle>{t('property.location')}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <BasicLeafletMap 
-                    lat={Number(property.lat)}
-                    lng={Number(property.lng)}
-                    title={property.title_fr || property.title_en || undefined}
-                    address={property.address || undefined}
-                    city={property.city || undefined}
-                    zoom={14}
-                    radiusMeters={200}
-                    className="rounded-lg overflow-hidden border"
-                  />
-                </CardContent>
-              </Card>
-            )}
-          </div>
-
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            {/* Contact Form */}
-            <SmartForm
-              source="visit_request"
-              propertyId={property.id?.toString()}
-              title={t('property.visit_form_title')}
-              description={t('property.visit_form_desc')}
-              className="mb-6"
-            />
 
           </div>
         </div>
