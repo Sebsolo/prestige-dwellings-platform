@@ -13,7 +13,7 @@ interface PropertyCardProps {
 
 const PropertyCard = ({ property }: PropertyCardProps) => {
   const { t } = useTranslation();
-  const mainImage = property.media?.find(media => media.order_index === 0) || property.media?.[0];
+  const mainImage = property.media?.find(media => media.sort_order === 0) || property.media?.[0];
   
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('fr-FR', {

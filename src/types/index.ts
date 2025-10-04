@@ -55,7 +55,7 @@ export interface Media {
   type: 'image' | 'video' | 'document';
   title?: string;
   description?: string;
-  order_index: number;
+  sort_order: number;
   created_at: string;
 }
 
