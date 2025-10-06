@@ -9,6 +9,7 @@ interface Property {
   id: number;
   title_fr: string;
   city: string;
+  postal_code: string | null;
   type: string;
   transaction: string;
   updated_at: string;
@@ -38,7 +39,7 @@ Deno.serve(async (req) => {
     // Fetch all properties except drafts
     const { data: properties, error: propsError } = await supabase
       .from('properties')
-      .select('id, title_fr, city, type, transaction, updated_at')
+      .select('id, title_fr, city, postal_code, type, transaction, updated_at')
       .neq('status', 'draft')
       .order('updated_at', { ascending: false });
 
@@ -127,12 +128,13 @@ Deno.serve(async (req) => {
     if (properties && properties.length > 0) {
       properties.forEach((property: Property) => {
         const city = property.city?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'ville';
+        const postalCode = property.postal_code || '';
         const type = property.type === 'apartment' ? 'appartement' : 
                      property.type === 'house' ? 'maison' : 
                      property.type === 'commercial' ? 'commercial' : 
                      property.type === 'land' ? 'terrain' : 'bien';
         const transactionPath = property.transaction === 'sale' ? 'vente' : 'location';
-        const slug = `${type}-${city}-${property.id}`;
+        const slug = postalCode ? `${type}-${postalCode}-${city}-${property.id}` : `${type}-${city}-${property.id}`;
         const lastmod = new Date(property.updated_at).toISOString().split('T')[0];
         
         sitemap += `

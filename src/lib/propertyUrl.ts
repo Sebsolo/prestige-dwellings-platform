@@ -1,15 +1,16 @@
 import { Property, PropertyWithMedia } from '@/types';
 
-// Generate a slug from city and property type
+// Generate a slug from city, postal code and property type
 export const generatePropertySlug = (property: Property | PropertyWithMedia): string => {
   const city = property.city?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'ville';
+  const postalCode = property.postal_code || '';
   const type = property.type === 'apartment' ? 'appartement' : 
                property.type === 'house' ? 'maison' : 
                property.type === 'commercial' ? 'commercial' : 
                property.type === 'land' ? 'terrain' : 'bien';
   const id = property.id;
   
-  return `${type}-${city}-${id}`;
+  return postalCode ? `${type}-${postalCode}-${city}-${id}` : `${type}-${city}-${id}`;
 };
 
 // Generate the full URL path for a property
