@@ -103,6 +103,9 @@ const App = () => {
               <Route path="/" element={<Home />} />
               <Route path="/ventes" element={<Sales />} />
               <Route path="/locations" element={<Rentals />} />
+              <Route path="/vente/:slug" element={<PropertyDetail />} />
+              <Route path="/location/:slug" element={<PropertyDetail />} />
+              {/* Legacy route for backward compatibility */}
               <Route path="/bien/:idOrSlug" element={<PropertyDetail />} />
               <Route path="/rejoindre-exp" element={
                 <Suspense fallback={<div>Loading...</div>}>

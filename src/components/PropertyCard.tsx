@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { MapPin, Home, Bed, Square } from 'lucide-react';
 import ResponsiveImage from '@/components/ResponsiveImage';
+import { getPropertyUrl } from '@/lib/propertyUrl';
 
 interface PropertyCardProps {
   property: PropertyWithMedia;
@@ -117,7 +118,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
           </div>
           
           <Button asChild size="sm">
-            <Link to={`/bien/${property.id}`}>
+            <Link to={getPropertyUrl(property)}>
               Voir le détail
             </Link>
           </Button>

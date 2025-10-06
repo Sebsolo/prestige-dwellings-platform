@@ -13,9 +13,10 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import BasicLeafletMap from '@/components/BasicLeafletMap';
 import SmartForm from '@/components/SmartForm';
+import { parsePropertyIdFromSlug } from '@/lib/propertyUrl';
 
 const PropertyDetail = () => {
-  const { idOrSlug } = useParams();
+  const { idOrSlug, slug } = useParams();
   const { t, i18n } = useTranslation();
   const [property, setProperty] = useState<PropertyWithMedia | null>(null);
   const [loading, setLoading] = useState(true);
@@ -32,14 +33,16 @@ const PropertyDetail = () => {
     // Scroll to top when component mounts
     window.scrollTo(0, 0);
     
-    console.log('PropertyDetail mounted, idOrSlug:', idOrSlug);
     const fetchProperty = async () => {
-      if (!idOrSlug) return;
+      // Get property ID from either the new slug format or legacy idOrSlug
+      const propertyId = slug ? parsePropertyIdFromSlug(slug) : idOrSlug;
+      
+      if (!propertyId) return;
       
       try {
-        console.log('Fetching property with ID:', idOrSlug);
+        console.log('Fetching property with ID:', propertyId);
         setLoading(true);
-        const propertyData = await propertiesApi.getById(idOrSlug);
+        const propertyData = await propertiesApi.getById(propertyId);
         console.log('Property data received:', propertyData);
         setProperty(propertyData);
 
@@ -64,7 +67,7 @@ const PropertyDetail = () => {
     };
 
     fetchProperty();
-  }, [idOrSlug]);
+  }, [idOrSlug, slug]);
 
   if (loading) {
     console.log('PropertyDetail loading state');
