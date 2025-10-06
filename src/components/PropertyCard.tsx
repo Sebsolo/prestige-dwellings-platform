@@ -45,22 +45,22 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
         <div className="absolute top-3 left-3 flex flex-col gap-1">
           {property.transaction && (
             <Badge className="bg-primary text-primary-foreground">
-              {property.transaction === 'sale' ? 'Vente' : 'Location'}
+              {property.transaction === 'sale' ? t('property.transaction.sale') : t('property.transaction.rent')}
             </Badge>
           )}
           {property.status === 'sold' && (
             <Badge variant="destructive">
-              Vendu
+              {t('property.status.sold')}
             </Badge>
           )}
           {property.status === 'under_offer' && (
             <Badge variant="secondary">
-              Sous offre
+              {t('property.status.under_offer')}
             </Badge>
           )}
           {property.status === 'rented' && (
             <Badge variant="destructive">
-              Loué
+              {t('property.status.rented')}
             </Badge>
           )}
         </div>
@@ -81,7 +81,13 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
         
         <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
           <MapPin className="h-4 w-4" />
-          <span>{property.city} • {property.type === 'apartment' ? 'Appartement' : property.type === 'house' ? 'Maison' : property.type === 'commercial' ? 'Commercial' : property.type === 'land' ? 'Terrain' : 'Autre'}</span>
+          <span>{property.city} • {
+            property.type === 'apartment' ? t('property.type.apartment') : 
+            property.type === 'house' ? t('property.type.house') : 
+            property.type === 'commercial' ? t('property.type.commercial') : 
+            property.type === 'land' ? t('property.type.land') : 
+            t('property.type.other')
+          }</span>
         </div>
         
           <div className="flex items-center gap-4 text-sm mb-4 bg-muted/30 p-2 rounded-md">
@@ -94,13 +100,13 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
           {property.rooms && property.rooms > 0 && (
             <div className="flex items-center gap-1 font-medium">
               <Home className="h-4 w-4" />
-              <span>{property.rooms} pièces</span>
+              <span>{property.rooms} {t('property.card.rooms')}</span>
             </div>
           )}
           {property.land_m2 && property.land_m2 > 0 && (
             <div className="flex items-center gap-1 font-medium text-green-600">
               <Square className="h-4 w-4" />
-              <span>{Number(property.land_m2)} m² terrain</span>
+              <span>{Number(property.land_m2)} m² {t('property.card.land')}</span>
             </div>
           )}
         </div>
@@ -110,7 +116,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
             {property.transaction === 'rent' && property.rent_cc ? (
               <>
                 {formatPrice(property.rent_cc)}
-                <span className="text-sm font-normal"> /mois CC</span>
+                <span className="text-sm font-normal"> {t('property.card.perMonth')}</span>
               </>
             ) : property.price ? (
               formatPrice(property.price)
@@ -119,7 +125,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
           
           <Button asChild size="sm">
             <Link to={getPropertyUrl(property)}>
-              Voir le détail
+              {t('property.card.seeDetails')}
             </Link>
           </Button>
         </div>

@@ -78,7 +78,24 @@ const resources = {
         valuation_cta_button: 'Demander une estimation',
         no_featured_properties: 'Aucun bien vedette disponible pour le moment',
         article_preview: 'Article à venir #{{number}}',
-        article_preview_description: 'Découvrez les tendances du marché immobilier...'
+        article_preview_description: 'Découvrez les tendances du marché immobilier...',
+        presentation: {
+          title: 'Proximité terrain, portée globale',
+          subtitle: 'Un suivi exigeant sur l\'Ouest parisien, une audience élargie grâce au réseau eXp',
+          local_title: 'Acteur local, adossé à un groupe international',
+          local_description: 'Installé dans les Yvelines (78), j\'interviens au plus près de vos projets sur Chavenay, Saint-Nom-la-Bretèche et Feucherolles, tout en me déplaçant à Paris et dans les Hauts-de-Seine (92). Cette proximité terrain assure des conseils précis et une mise en valeur adaptée à chaque micro-marché.',
+          network_title: 'La force d\'un réseau mondial pour amplifier vos résultats',
+          network_description: 'Je m\'appuie sur eXp, un groupe international "cloud-based" présent dans plus de 25 pays et réunissant plus de 80 000 conseillers (données 2025). Concrètement : diffusion étendue des annonces, accès à des acheteurs en mobilité (France & international) et recommandations croisées entre professionnels pour accélérer les mises en relation qualifiées.',
+          benefits_title: 'Ce que cela change pour vous',
+          benefit1_title: 'Audience élargie',
+          benefit1_description: 'Visibilité France + international via le réseau eXp, tout en gardant un pilotage local de votre dossier.',
+          benefit2_title: 'Réactivité & coordination',
+          benefit2_description: 'Un interlocuteur unique qui orchestre estimation, stratégie de commercialisation, home staging et négociation, jusqu\'à la signature.',
+          benefit3_title: 'Qualité de présentation',
+          benefit3_description: 'Photos dédiées, textes soignés et parcours digital fluide pour défendre le prix et accélérer la transaction.',
+          commitment_title: 'Un accompagnement clair et exigeant',
+          commitment_description: 'Vente, achat ou location : je privilégie des échanges directs, des informations utiles et des décisions rapides. Votre projet bénéficie à la fois de l\'ancrage local et de la puissance d\'un réseau international — sans lourdeurs ni intermédiaires superflus.',
+        }
       },
       contact: {
         title: 'Contactez-moi',
@@ -128,7 +145,29 @@ const resources = {
         enlarge: 'Agrandir',
         visit_form_title: 'Demande de visite',
         visit_form_desc: 'Remplissez le formulaire pour demander une visite de ce bien.',
-        similar_property: 'Villa similaire'
+        similar_property: 'Villa similaire',
+        type: {
+          apartment: 'Appartement',
+          house: 'Maison',
+          commercial: 'Commercial',
+          land: 'Terrain',
+          other: 'Autre',
+        },
+        transaction: {
+          sale: 'Vente',
+          rent: 'Location',
+        },
+        status: {
+          sold: 'Vendu',
+          under_offer: 'Sous offre',
+          rented: 'Loué',
+        },
+        card: {
+          rooms: 'pièces',
+          land: 'terrain',
+          perMonth: '/mois CC',
+          seeDetails: 'Voir le détail',
+        }
       },
       joinExp: {
         hero_badge: 'Indépendant, mais jamais seul',
@@ -372,7 +411,24 @@ const resources = {
         valuation_cta_button: 'Request a valuation',
         no_featured_properties: 'No featured properties available at the moment',
         article_preview: 'Upcoming article #{{number}}',
-        article_preview_description: 'Discover real estate market trends...'
+        article_preview_description: 'Discover real estate market trends...',
+        presentation: {
+          title: 'Local Proximity, Global Reach',
+          subtitle: 'Rigorous follow-up in West Paris, expanded audience thanks to the eXp network',
+          local_title: 'Local Player, Backed by an International Group',
+          local_description: 'Based in Yvelines (78), I operate close to your projects in Chavenay, Saint-Nom-la-Bretèche and Feucherolles, while also traveling to Paris and Hauts-de-Seine (92). This local presence ensures precise advice and showcasing adapted to each micro-market.',
+          network_title: 'The Power of a Global Network to Amplify Your Results',
+          network_description: 'I rely on eXp, a cloud-based international group present in over 25 countries and bringing together more than 80,000 advisors (2025 data). Concretely: extensive listing distribution, access to mobile buyers (France & international) and cross-referrals between professionals to accelerate qualified connections.',
+          benefits_title: 'What This Changes for You',
+          benefit1_title: 'Expanded Audience',
+          benefit1_description: 'France + international visibility through the eXp network, while maintaining local management of your file.',
+          benefit2_title: 'Responsiveness & Coordination',
+          benefit2_description: 'A single point of contact who orchestrates valuation, marketing strategy, home staging and negotiation, right through to signing.',
+          benefit3_title: 'Presentation Quality',
+          benefit3_description: 'Dedicated photos, polished texts and smooth digital journey to defend the price and accelerate the transaction.',
+          commitment_title: 'Clear and Demanding Support',
+          commitment_description: 'Sale, purchase or rental: I favor direct exchanges, useful information and quick decisions. Your project benefits from both local anchoring and the power of an international network — without unnecessary complexity or intermediaries.',
+        }
       },
       contact: {
         title: 'Contact me',
@@ -422,7 +478,29 @@ const resources = {
         enlarge: 'Enlarge',
         visit_form_title: 'Visit request',
         visit_form_desc: 'Fill out the form to request a visit for this property.',
-        similar_property: 'Similar villa'
+        similar_property: 'Similar villa',
+        type: {
+          apartment: 'Apartment',
+          house: 'House',
+          commercial: 'Commercial',
+          land: 'Land',
+          other: 'Other',
+        },
+        transaction: {
+          sale: 'Sale',
+          rent: 'Rental',
+        },
+        status: {
+          sold: 'Sold',
+          under_offer: 'Under Offer',
+          rented: 'Rented',
+        },
+        card: {
+          rooms: 'rooms',
+          land: 'land',
+          perMonth: '/month incl.',
+          seeDetails: 'See details',
+        }
       },
       joinExp: {
         hero_badge: 'Independent, but never alone',
