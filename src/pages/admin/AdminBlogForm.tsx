@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { RichTextEditor } from '@/components/ui/rich-text-editor';
+import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/integrations/supabase/client';
@@ -203,13 +203,12 @@ const AdminBlogForm = () => {
                       name="content_fr"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Contenu *</FormLabel>
+                          <FormLabel>Contenu HTML *</FormLabel>
                           <FormControl>
-                            <RichTextEditor 
-                              placeholder="Écrivez le contenu de votre article en français..."
-                              className="min-h-[300px]"
-                              value={field.value}
-                              onChange={field.onChange}
+                            <Textarea 
+                              placeholder="<p>Écrivez le contenu HTML de votre article en français...</p>"
+                              className="min-h-[400px] font-mono text-sm"
+                              {...field}
                             />
                           </FormControl>
                           <FormMessage />
@@ -248,13 +247,12 @@ const AdminBlogForm = () => {
                       name="content_en"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Contenu</FormLabel>
+                          <FormLabel>Contenu HTML</FormLabel>
                           <FormControl>
-                            <RichTextEditor 
-                              placeholder="Write the content of your article in English..."
-                              className="min-h-[300px]"
-                              value={field.value}
-                              onChange={field.onChange}
+                            <Textarea 
+                              placeholder="<p>Write the HTML content of your article in English...</p>"
+                              className="min-h-[400px] font-mono text-sm"
+                              {...field}
                             />
                           </FormControl>
                           <FormMessage />
