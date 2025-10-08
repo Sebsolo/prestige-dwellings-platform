@@ -32,6 +32,9 @@ const Footer = () => {
               <Link to="/locations" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
                 {t('nav.rentals')}
               </Link>
+              <Link to="/qui-suis-je" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+                {t('nav.about')}
+              </Link>
               <Link to="/estimation" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
                 {t('nav.valuation')}
               </Link>

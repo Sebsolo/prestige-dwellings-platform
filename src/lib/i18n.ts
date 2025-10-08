@@ -8,10 +8,17 @@ const resources = {
         home: 'Accueil',
         sales: 'Ventes',
         rentals: 'Locations',
+        about: 'Qui suis-je ?',
         joinExp: 'Rejoindre eXp',
         blog: 'Blog',
         valuation: 'Estimation',
         contact: 'Contact'
+      },
+      about: {
+        title: 'Qui suis-je ?',
+        meta_title: 'Qui suis-je ? - Sebastien Pons Immobilier',
+        meta_description: 'Découvrez Sebastien Pons, agent immobilier eXp Realty spécialisé dans les Yvelines et l\'Ouest parisien.',
+        content_placeholder: 'Le contenu de cette page sera ajouté prochainement.'
       },
       common: {
         loading: 'Chargement...',
@@ -341,10 +348,17 @@ const resources = {
         home: 'Home',
         sales: 'Sales',
         rentals: 'Rentals',
+        about: 'About me',
         joinExp: 'Join eXp',
         blog: 'Blog',
         valuation: 'Valuation',
         contact: 'Contact'
+      },
+      about: {
+        title: 'About me',
+        meta_title: 'About me - Sebastien Pons Real Estate',
+        meta_description: 'Discover Sebastien Pons, eXp Realty real estate agent specialized in Yvelines and Western Paris.',
+        content_placeholder: 'The content of this page will be added soon.'
       },
       common: {
         loading: 'Loading...',

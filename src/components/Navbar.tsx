@@ -16,6 +16,7 @@ const Navbar = () => {
     { href: '/', label: t('nav.home') },
     { href: '/ventes', label: t('nav.sales') },
     { href: '/locations', label: t('nav.rentals') },
+    { href: '/qui-suis-je', label: t('nav.about') },
     { href: '/rejoindre-exp', label: t('nav.joinExp') },
     { href: '/blog', label: t('nav.blog') },
     { href: '/estimation', label: t('nav.valuation') },

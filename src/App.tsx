@@ -16,6 +16,7 @@ import Home from "./pages/Home";
 import Sales from "./pages/Sales";
 import Rentals from "./pages/Rentals";
 import PropertyDetail from "./pages/PropertyDetail";
+import About from "./pages/About";
 import JoinExp from "./pages/JoinExp";
 import Valuation from "./pages/Valuation";
 import Contact from "./pages/Contact";
@@ -107,6 +108,7 @@ const App = () => {
               <Route path="/location/:slug" element={<PropertyDetail />} />
               {/* Legacy route for backward compatibility */}
               <Route path="/bien/:idOrSlug" element={<PropertyDetail />} />
+              <Route path="/qui-suis-je" element={<About />} />
               <Route path="/rejoindre-exp" element={
                 <Suspense fallback={<div>Loading...</div>}>
                   <RevShareSettingsProvider>
