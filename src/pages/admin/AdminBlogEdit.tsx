@@ -19,6 +19,10 @@ import { ArrowLeft, Loader } from 'lucide-react';
 const blogSchema = z.object({
   title_fr: z.string().min(1, 'Le titre français est requis'),
   title_en: z.string().optional(),
+  meta_title_fr: z.string().optional(),
+  meta_title_en: z.string().optional(),
+  meta_description_fr: z.string().optional(),
+  meta_description_en: z.string().optional(),
   content_fr: z.string().min(1, 'Le contenu français est requis'),
   content_en: z.string().optional(),
   excerpt_fr: z.string().optional(),
@@ -63,6 +67,10 @@ const AdminBlogEdit = () => {
           form.reset({
             title_fr: data.title_fr || '',
             title_en: data.title_en || '',
+            meta_title_fr: data.meta_title_fr || '',
+            meta_title_en: data.meta_title_en || '',
+            meta_description_fr: data.meta_description_fr || '',
+            meta_description_en: data.meta_description_en || '',
             content_fr: data.content_fr || '',
             content_en: data.content_en || '',
             excerpt_fr: '', // Will be auto-generated from content if empty
@@ -157,6 +165,10 @@ const AdminBlogEdit = () => {
       const updateData = {
         title_fr: data.title_fr,
         title_en: data.title_en || null,
+        meta_title_fr: data.meta_title_fr || null,
+        meta_title_en: data.meta_title_en || null,
+        meta_description_fr: data.meta_description_fr || null,
+        meta_description_en: data.meta_description_en || null,
         content_fr: data.content_fr,
         content_en: data.content_en || null,
         slug: data.slug,
@@ -330,6 +342,42 @@ const AdminBlogEdit = () => {
 
                     <FormField
                       control={form.control}
+                      name="meta_title_fr"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Meta Titre SEO (optionnel)</FormLabel>
+                          <FormControl>
+                            <Input 
+                              placeholder="Titre optimisé pour le SEO (max 60 caractères)" 
+                              {...field} 
+                              maxLength={60}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="meta_description_fr"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Meta Description SEO (optionnel)</FormLabel>
+                          <FormControl>
+                            <Input 
+                              placeholder="Description pour les moteurs de recherche (max 160 caractères)" 
+                              {...field} 
+                              maxLength={160}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
                       name="excerpt_fr"
                       render={({ field }) => (
                         <FormItem>
@@ -382,6 +430,42 @@ const AdminBlogEdit = () => {
                             <Input 
                               placeholder="Title of your article..." 
                               {...field} 
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="meta_title_en"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Meta Title SEO (optional)</FormLabel>
+                          <FormControl>
+                            <Input 
+                              placeholder="SEO optimized title (max 60 characters)" 
+                              {...field} 
+                              maxLength={60}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="meta_description_en"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Meta Description SEO (optional)</FormLabel>
+                          <FormControl>
+                            <Input 
+                              placeholder="Description for search engines (max 160 characters)" 
+                              {...field} 
+                              maxLength={160}
                             />
                           </FormControl>
                           <FormMessage />

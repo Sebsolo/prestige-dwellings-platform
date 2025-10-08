@@ -126,6 +126,10 @@ export type Database = {
           created_at: string | null
           created_by: string | null
           id: number
+          meta_description_en: string | null
+          meta_description_fr: string | null
+          meta_title_en: string | null
+          meta_title_fr: string | null
           published_at: string | null
           slug: string | null
           status: string | null
@@ -139,6 +143,10 @@ export type Database = {
           created_at?: string | null
           created_by?: string | null
           id?: never
+          meta_description_en?: string | null
+          meta_description_fr?: string | null
+          meta_title_en?: string | null
+          meta_title_fr?: string | null
           published_at?: string | null
           slug?: string | null
           status?: string | null
@@ -152,6 +160,10 @@ export type Database = {
           created_at?: string | null
           created_by?: string | null
           id?: never
+          meta_description_en?: string | null
+          meta_description_fr?: string | null
+          meta_title_en?: string | null
+          meta_title_fr?: string | null
           published_at?: string | null
           slug?: string | null
           status?: string | null
