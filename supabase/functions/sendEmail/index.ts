@@ -36,7 +36,7 @@ const handler = async (req: Request): Promise<Response> => {
       // Send notification to admin/agents
       const adminEmailResponse = await resend.emails.send({
         from: "Sebastien Pons Immobilier <no-reply@sebastien-pons-immobilier.fr>",
-        to: ["admin@sebastien-pons-immobilier.fr"], // Configure admin email
+        to: ["sebastien.pons@expfrance.fr"], // Admin notification email
         subject: `Nouveau contact - ${lead.firstname} ${lead.lastname}`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
