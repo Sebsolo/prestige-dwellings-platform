@@ -339,20 +339,20 @@ const Home = () => {
       </section>
 
       {/* Blog Preview - Actualités Immobilières */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-4">
-              {t('home.blog_title')}
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              {t('home.blog_subtitle')}
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {recentPosts.length > 0 ? (
-              recentPosts.map((post) => (
+      {recentPosts.length > 0 && (
+        <section className="py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-4">
+                {t('home.blog_title')}
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                {t('home.blog_subtitle')}
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {recentPosts.map((post) => (
                  <div key={post.id} className="bg-card rounded-lg shadow-card overflow-hidden group hover:shadow-lg transition-shadow">
                    <div className="h-48 bg-muted overflow-hidden">
                      {post.cover_path && post.cover_path !== '/placeholder.svg' ? (
@@ -395,33 +395,20 @@ const Home = () => {
                     </Link>
                   </div>
                 </div>
-              ))
-            ) : (
-              [1, 2, 3].map((i) => (
-                <div key={i} className="bg-card rounded-lg shadow-card overflow-hidden">
-                  <div className="h-48 bg-muted"></div>
-                  <div className="p-6">
-                    <h3 className="text-lg font-semibold mb-2">{t('home.article_preview', { number: i })}</h3>
-                    <p className="text-muted-foreground mb-4">
-                      {t('home.article_preview_description')}
-                    </p>
-                    <span className="text-primary font-medium">{t('common.comingSoon')}</span>
-                  </div>
-                </div>
-              ))
-            )}
+              ))}
+            </div>
+            
+            <div className="text-center mt-8">
+              <Link to="/blog">
+                <Button variant="outline" size="lg">
+                  {t('common.seeAll')}
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+            </div>
           </div>
-          
-          <div className="text-center mt-8">
-            <Link to="/blog">
-              <Button variant="outline" size="lg">
-                {t('common.seeAll')}
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
     </Layout>
   );
 };
