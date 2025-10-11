@@ -7,7 +7,8 @@ export const generatePropertySlug = (property: Property | PropertyWithMedia): st
   const type = property.type === 'apartment' ? 'appartement' : 
                property.type === 'house' ? 'maison' : 
                property.type === 'commercial' ? 'commercial' : 
-               property.type === 'land' ? 'terrain' : 'bien';
+               property.type === 'land' ? 'terrain' : 
+               property.type === 'garage' ? 'garage' : 'bien';
   const id = property.id;
   
   return postalCode ? `${type}-${postalCode}-${city}-${id}` : `${type}-${city}-${id}`;

@@ -25,7 +25,7 @@ export interface Property {
   pool?: boolean;
   total_floors?: number;
   monthly_charges?: number;
-  type: 'apartment' | 'house' | 'commercial' | 'land' | 'other';
+  type: 'apartment' | 'house' | 'commercial' | 'land' | 'garage' | 'other';
   transaction: 'sale' | 'rent';
   city: string;
   address?: string;

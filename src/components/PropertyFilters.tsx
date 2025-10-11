@@ -62,6 +62,7 @@ const PropertyFiltersComponent = ({ filters, onFiltersChange, transaction }: Pro
                 <SelectItem value="house">Maison</SelectItem>
                 <SelectItem value="commercial">Commercial</SelectItem>
                 <SelectItem value="land">Terrain</SelectItem>
+                <SelectItem value="garage">Garage / Parking</SelectItem>
               </SelectContent>
             </Select>
           </div>

@@ -132,7 +132,8 @@ Deno.serve(async (req) => {
         const type = property.type === 'apartment' ? 'appartement' : 
                      property.type === 'house' ? 'maison' : 
                      property.type === 'commercial' ? 'commercial' : 
-                     property.type === 'land' ? 'terrain' : 'bien';
+                     property.type === 'land' ? 'terrain' : 
+                     property.type === 'garage' ? 'garage' : 'bien';
         const transactionPath = property.transaction === 'sale' ? 'vente' : 'location';
         const slug = postalCode ? `${type}-${postalCode}-${city}-${property.id}` : `${type}-${city}-${property.id}`;
         const lastmod = new Date(property.updated_at).toISOString().split('T')[0];

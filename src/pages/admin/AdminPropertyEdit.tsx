@@ -21,7 +21,7 @@ import { propertiesApi } from '@/services/propertiesApi';
 
 const propertySchema = z.object({
   transaction: z.enum(['sale', 'rent']),
-  type: z.enum(['apartment', 'house', 'commercial', 'land', 'other']),
+  type: z.enum(['apartment', 'house', 'commercial', 'land', 'garage', 'other']),
   status: z.enum(['draft', 'published', 'under_offer', 'sold', 'rented']),
   ref: z.string().optional(),
   title_fr: z.string().min(1, 'Le titre français est requis'),
@@ -487,6 +487,7 @@ const AdminPropertyEdit = () => {
                                 <SelectItem value="house">Maison</SelectItem>
                                 <SelectItem value="commercial">Commercial</SelectItem>
                                 <SelectItem value="land">Terrain</SelectItem>
+                                <SelectItem value="garage">Garage / Parking</SelectItem>
                                 <SelectItem value="other">Autre</SelectItem>
                               </SelectContent>
                             </Select>

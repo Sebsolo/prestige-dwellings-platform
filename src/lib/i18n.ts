@@ -214,6 +214,7 @@ const resources = {
           house: 'Maison',
           commercial: 'Commercial',
           land: 'Terrain',
+          garage: 'Garage / Parking',
           other: 'Autre',
         },
         transaction: {
@@ -228,6 +229,7 @@ const resources = {
         card: {
           rooms: 'pièces',
           land: 'terrain',
+          garage: 'garage',
           perMonth: '/mois CC',
           seeDetails: 'Voir le détail',
         }
@@ -610,6 +612,7 @@ const resources = {
           house: 'House',
           commercial: 'Commercial',
           land: 'Land',
+          garage: 'Garage / Parking',
           other: 'Other',
         },
         transaction: {
@@ -624,6 +627,7 @@ const resources = {
         card: {
           rooms: 'rooms',
           land: 'land',
+          garage: 'garage',
           perMonth: '/month incl.',
           seeDetails: 'See details',
         }

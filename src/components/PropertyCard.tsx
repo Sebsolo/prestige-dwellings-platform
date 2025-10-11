@@ -86,6 +86,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
             property.type === 'house' ? t('property.type.house') : 
             property.type === 'commercial' ? t('property.type.commercial') : 
             property.type === 'land' ? t('property.type.land') : 
+            property.type === 'garage' ? t('property.type.garage') : 
             t('property.type.other')
           }</span>
         </div>
