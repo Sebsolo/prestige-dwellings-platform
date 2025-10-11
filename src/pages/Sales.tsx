@@ -59,6 +59,17 @@ const Sales = () => {
       return true;
     });
 
+    // Sort so non-sold properties appear first
+    filtered.sort((a, b) => {
+      // Properties with status 'sold' should come after others
+      const aIsSold = a.status === 'sold';
+      const bIsSold = b.status === 'sold';
+      
+      if (aIsSold && !bIsSold) return 1;
+      if (!aIsSold && bIsSold) return -1;
+      return 0;
+    });
+
     setFilteredProperties(filtered);
   }, [properties, filters]);
 
