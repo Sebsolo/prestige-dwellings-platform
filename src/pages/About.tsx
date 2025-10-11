@@ -107,6 +107,12 @@ const About = () => {
               </h2>
               <div className="prose prose-lg max-w-none text-foreground space-y-4">
                 <p className="text-lg leading-relaxed">{t('about.parcours.p1')}</p>
+                
+                <h3 className="text-xl font-semibold mt-8 mb-4 text-foreground">
+                  {t('about.parcours.international.title')}
+                </h3>
+                <p className="text-lg leading-relaxed">{t('about.parcours.international.text')}</p>
+                
                 <p className="text-lg leading-relaxed">{t('about.parcours.p2')}</p>
               </div>
             </section>

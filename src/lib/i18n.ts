@@ -40,6 +40,10 @@ const resources = {
         parcours: {
           title: 'Mon parcours',
           p1: 'Avant de me tourner vers l\'immobilier, j\'ai travaillé plusieurs années dans des environnements où la rigueur, la clarté et la fiabilité étaient essentielles. Ces expériences m\'ont appris à être précis, à bien préparer chaque dossier et à anticiper les imprévus. Ce sont ces compétences que j\'applique aujourd\'hui dans mon métier, au service de mes clients.',
+          international: {
+            title: 'Une expérience internationale utile',
+            text: 'J\'ai également vécu en Espagne et aux États-Unis. Cette exposition à d\'autres cultures et façons de communiquer m\'aide à travailler sereinement avec des profils variés (expatriés, investisseurs, familles en mobilité), à anticiper les attentes et à faciliter des échanges clairs, parfois en bilingue.'
+          },
           p2: 'J\'ai choisi l\'immobilier par goût du contact et par intérêt réel pour les lieux de vie. Derrière chaque projet, il y a une histoire, une transition, une envie d\'évolution. Mon rôle est d\'accompagner cette étape avec méthode, transparence et bienveillance.'
         },
         methode: {
@@ -432,6 +436,10 @@ const resources = {
         parcours: {
           title: 'My background',
           p1: 'Before turning to real estate, I worked for several years in environments where rigor, clarity, and reliability were essential. These experiences taught me to be precise, to prepare each file properly, and to anticipate unexpected events. These are the skills I apply today in my profession, serving my clients.',
+          international: {
+            title: 'Useful international experience',
+            text: 'I have also lived in Spain and the United States. This exposure to other cultures and ways of communicating helps me work smoothly with diverse profiles (expatriates, investors, families in mobility), anticipate expectations, and facilitate clear exchanges, sometimes bilingual.'
+          },
           p2: 'I chose real estate out of a love for contact and a genuine interest in living spaces. Behind every project, there is a story, a transition, a desire for evolution. My role is to accompany this step with method, transparency, and kindness.'
         },
         methode: {
