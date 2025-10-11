@@ -116,6 +116,20 @@ const PropertyDetail = () => {
                         className="w-full h-full object-cover"
                         onClick={() => setFullscreenImage(url)}
                       />
+                      {/* Status Badge Overlay */}
+                      {(property.status === 'sold' || property.status === 'rented') && (
+                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center pointer-events-none">
+                          <Badge 
+                            variant="secondary" 
+                            className="text-2xl md:text-4xl py-4 px-8 font-bold shadow-lg"
+                          >
+                            {property.status === 'sold' 
+                              ? (i18n.language === 'en' ? 'SOLD' : 'VENDU')
+                              : (i18n.language === 'en' ? 'RENTED' : 'LOUÉ')
+                            }
+                          </Badge>
+                        </div>
+                      )}
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
                         <Button 
                           variant="secondary" 
