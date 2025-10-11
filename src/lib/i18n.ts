@@ -16,9 +16,61 @@ const resources = {
       },
       about: {
         title: 'Qui suis-je ?',
-        meta_title: 'Qui suis-je ? - Sebastien Pons Immobilier',
-        meta_description: 'Découvrez Sebastien Pons, agent immobilier eXp Realty spécialisé dans les Yvelines et l\'Ouest parisien.',
-        content_placeholder: 'Le contenu de cette page sera ajouté prochainement.'
+        h1: 'Qui suis-je ?',
+        meta_title: 'Qui suis-je — Sébastien Pons Immobilier (Chavenay & Ouest Parisien)',
+        meta_description: 'Présentation de Sébastien Pons, conseiller immobilier à Chavenay depuis 2017. Transparence, rigueur, réactivité et accompagnement complet.',
+        nav: {
+          hero: 'Introduction',
+          intro: 'Présentation',
+          parcours: 'Mon parcours',
+          methode: 'Ma méthode',
+          ancrage: 'Ancrage local',
+          motivation: 'Motivation',
+          resume: 'En résumé',
+          contact: 'Contact'
+        },
+        hero: {
+          lead: 'Bonjour, je suis Sébastien Pons.',
+          cta_primary: 'Demander une estimation',
+          cta_secondary: 'Me contacter'
+        },
+        intro: {
+          p1: 'J\'habite à Chavenay depuis 2017, et j\'y exerce mon activité d\'agent immobilier. J\'ai choisi ce village pour sa tranquillité, sa qualité de vie et sa proximité avec les grands pôles de l\'Ouest parisien. C\'est un lieu à taille humaine, où il est encore possible de prendre le temps d\'échanger, d\'écouter et de comprendre les projets de chacun.'
+        },
+        parcours: {
+          title: 'Mon parcours',
+          p1: 'Avant de me tourner vers l\'immobilier, j\'ai travaillé plusieurs années dans des environnements où la rigueur, la clarté et la fiabilité étaient essentielles. Ces expériences m\'ont appris à être précis, à bien préparer chaque dossier et à anticiper les imprévus. Ce sont ces compétences que j\'applique aujourd\'hui dans mon métier, au service de mes clients.',
+          p2: 'J\'ai choisi l\'immobilier par goût du contact et par intérêt réel pour les lieux de vie. Derrière chaque projet, il y a une histoire, une transition, une envie d\'évolution. Mon rôle est d\'accompagner cette étape avec méthode, transparence et bienveillance.'
+        },
+        methode: {
+          title: 'Ma façon de travailler',
+          item1: 'Écouter avant de proposer. Je prends le temps de comprendre la situation, le rythme et les attentes de mes clients avant d\'agir.',
+          item2: 'Dire les choses simplement. Je décris les biens avec réalisme, sans exagération, et j\'explique les points techniques de manière accessible.',
+          item3: 'Être réactif et constant. Un message mérite une réponse claire et rapide. La disponibilité fait partie intégrante de mon travail.',
+          item4: 'Accompagner jusqu\'au bout. Je reste présent à chaque étape : estimation, stratégie, visites, négociation, signature et remise des clés.',
+          conclusion: 'Mon approche se veut à la fois professionnelle et humaine : l\'objectif n\'est pas seulement de vendre ou d\'acheter, mais de faire aboutir un projet dans les meilleures conditions possibles.'
+        },
+        ancrage: {
+          title: 'Mon ancrage local',
+          p1: 'Basé à Chavenay, j\'interviens sur un large secteur qui couvre l\'ouest des Yvelines et les communes voisines. De Saint-Germain-en-Laye à Montfort-l\'Amaury, de Feucherolles à Villennes-sur-Seine, je connais les spécificités de chaque environnement : les écoles, les transports, les quartiers calmes ou les zones plus dynamiques.',
+          p2: 'Vivre et travailler ici me permet d\'avoir un regard concret sur l\'évolution du marché, les opportunités réelles et les attentes des acheteurs. Je m\'appuie sur cette connaissance du terrain pour proposer des estimations justes et des conseils adaptés.'
+        },
+        motivation: {
+          title: 'Ce qui me motive',
+          p1: 'Chaque mission est différente, mais le fil conducteur reste le même : créer une relation de confiance. Je veux que mes clients se sentent accompagnés avec sérieux, qu\'ils comprennent chaque étape du processus, et qu\'ils aient la certitude d\'avancer dans la bonne direction.',
+          p2: 'La satisfaction de voir un projet se concrétiser, souvent après des semaines d\'échanges et de préparation, reste ce qui me motive le plus.'
+        },
+        resume: {
+          title: 'En résumé',
+          item: 'Je privilégie la transparence, la rigueur, la réactivité et le suivi personnalisé.',
+          conclusion: 'Mon objectif : que chaque client se sente écouté, compris et soutenu — du premier échange jusqu\'à la remise des clés.'
+        },
+        cta: {
+          title: 'Et si on faisait connaissance ?',
+          text: 'Que vous souhaitiez vendre, acheter ou simplement faire estimer un bien, je suis disponible pour en discuter. Un café, une visite ou un simple échange téléphonique permettent souvent d\'y voir plus clair.',
+          cta_primary: 'Demander une estimation',
+          cta_secondary: 'Me contacter'
+        }
       },
       common: {
         loading: 'Chargement...',
@@ -356,9 +408,61 @@ const resources = {
       },
       about: {
         title: 'About me',
-        meta_title: 'About me - Sebastien Pons Real Estate',
-        meta_description: 'Discover Sebastien Pons, eXp Realty real estate agent specialized in Yvelines and Western Paris.',
-        content_placeholder: 'The content of this page will be added soon.'
+        h1: 'About me',
+        meta_title: 'About me — Sébastien Pons Real Estate (Chavenay & Western Paris)',
+        meta_description: 'Meet Sébastien Pons, real estate advisor in Chavenay since 2017. Transparency, rigor, responsiveness and comprehensive support.',
+        nav: {
+          hero: 'Introduction',
+          intro: 'Presentation',
+          parcours: 'My background',
+          methode: 'My method',
+          ancrage: 'Local presence',
+          motivation: 'Motivation',
+          resume: 'In summary',
+          contact: 'Contact'
+        },
+        hero: {
+          lead: 'Hello, I am Sébastien Pons.',
+          cta_primary: 'Request a valuation',
+          cta_secondary: 'Contact me'
+        },
+        intro: {
+          p1: 'I have lived in Chavenay since 2017, where I work as a real estate agent. I chose this village for its tranquility, quality of life, and proximity to major hubs in Western Paris. It is a human-scale place where it is still possible to take time to discuss, listen, and understand everyone\'s projects.'
+        },
+        parcours: {
+          title: 'My background',
+          p1: 'Before turning to real estate, I worked for several years in environments where rigor, clarity, and reliability were essential. These experiences taught me to be precise, to prepare each file properly, and to anticipate unexpected events. These are the skills I apply today in my profession, serving my clients.',
+          p2: 'I chose real estate out of a love for contact and a genuine interest in living spaces. Behind every project, there is a story, a transition, a desire for evolution. My role is to accompany this step with method, transparency, and kindness.'
+        },
+        methode: {
+          title: 'How I work',
+          item1: 'Listen before proposing. I take the time to understand the situation, pace, and expectations of my clients before acting.',
+          item2: 'Say things simply. I describe properties with realism, without exaggeration, and I explain technical points in an accessible way.',
+          item3: 'Be responsive and consistent. A message deserves a clear and quick response. Availability is an integral part of my work.',
+          item4: 'Support until the end. I remain present at every step: valuation, strategy, visits, negotiation, signing, and key handover.',
+          conclusion: 'My approach aims to be both professional and human: the goal is not just to sell or buy, but to bring a project to fruition in the best possible conditions.'
+        },
+        ancrage: {
+          title: 'My local presence',
+          p1: 'Based in Chavenay, I work in a large area covering western Yvelines and neighboring municipalities. From Saint-Germain-en-Laye to Montfort-l\'Amaury, from Feucherolles to Villennes-sur-Seine, I know the specificities of each environment: schools, transport, quiet neighborhoods, or more dynamic areas.',
+          p2: 'Living and working here allows me to have a concrete view of market trends, real opportunities, and buyer expectations. I rely on this field knowledge to offer fair valuations and appropriate advice.'
+        },
+        motivation: {
+          title: 'What motivates me',
+          p1: 'Each mission is different, but the common thread remains the same: creating a relationship of trust. I want my clients to feel seriously supported, to understand each step of the process, and to have the certainty of moving in the right direction.',
+          p2: 'The satisfaction of seeing a project come to fruition, often after weeks of exchanges and preparation, is what motivates me the most.'
+        },
+        resume: {
+          title: 'In summary',
+          item: 'I prioritize transparency, rigor, responsiveness, and personalized follow-up.',
+          conclusion: 'My goal: for each client to feel heard, understood, and supported — from the first exchange to the key handover.'
+        },
+        cta: {
+          title: 'How about getting to know each other?',
+          text: 'Whether you want to sell, buy, or simply get a property valued, I am available to discuss it. A coffee, a visit, or a simple phone call often helps to clarify things.',
+          cta_primary: 'Request a valuation',
+          cta_secondary: 'Contact me'
+        }
       },
       common: {
         loading: 'Loading...',
