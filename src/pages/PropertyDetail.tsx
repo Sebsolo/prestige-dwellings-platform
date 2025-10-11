@@ -119,7 +119,7 @@ const PropertyDetail = () => {
                       {/* Status Badge */}
                       {(property.status === 'sold' || property.status === 'rented') && (
                         <div className="absolute top-3 left-3">
-                          <Badge variant="destructive">
+                          <Badge variant="destructive" className="text-xl py-3 px-6 font-bold">
                             {property.status === 'sold' 
                               ? t('property.status.sold')
                               : t('property.status.rented')
