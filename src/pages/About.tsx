@@ -88,17 +88,9 @@ const About = () => {
               <h1 className="text-4xl lg:text-5xl font-bold mb-4 text-foreground">
                 {t('about.h1')}
               </h1>
-              <p className="text-xl lg:text-2xl text-muted-foreground mb-8">
+              <p className="text-xl lg:text-2xl text-muted-foreground">
                 {t('about.hero.lead')}
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button asChild size="lg">
-                  <Link to="/estimation">{t('about.hero.cta_primary')}</Link>
-                </Button>
-                <Button asChild variant="secondary" size="lg">
-                  <Link to="/contact">{t('about.hero.cta_secondary')}</Link>
-                </Button>
-              </div>
             </section>
 
             {/* Intro */}
