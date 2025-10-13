@@ -61,8 +61,9 @@ const resources = {
           p2: 'Vivre et travailler ici me permet d\'avoir un regard concret sur l\'évolution du marché, les opportunités réelles et les attentes des acheteurs. Je m\'appuie sur cette connaissance du terrain pour proposer des estimations justes et des conseils adaptés.'
         },
         reseau: {
-          title: 'Mon réseau : eXp & Entrepreneur',
-          p1: 'Être acteur local n\'empêche pas de s\'appuyer sur des ressources d\'envergure. Au quotidien, je bénéficie de la plateforme eXp (diffusion internationale, données marché, marketing avancé) tout en préservant un suivi personnalisé avec un interlocuteur unique : moi. Je fais également partie de la team Entrepreneur (entrepreneur.com), un environnement qui stimule la veille, le partage d\'expérience et l\'exigence opérationnelle — pour des missions menées avec méthode, transparence et réactivité.'
+          title: 'Mon réseau : eXp',
+          p1: 'Être acteur local n\'empêche pas de s\'appuyer sur des ressources d\'envergure. Au quotidien, je bénéficie de la plateforme eXp (diffusion internationale, données marché, marketing avancé) tout en préservant un suivi personnalisé avec un interlocuteur unique : moi. Je fais également partie de la team ',
+          p2: ', un environnement qui stimule la veille, le partage d\'expérience et l\'exigence opérationnelle — pour des missions menées avec méthode, transparence et réactivité.'
         },
         motivation: {
           title: 'Ce qui me motive',

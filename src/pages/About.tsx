@@ -147,13 +147,24 @@ const About = () => {
               </div>
             </section>
 
-            {/* Mon réseau : eXp & Entrepreneur */}
+            {/* Mon réseau : eXp */}
             <section id="mon-reseau-exp-entrepreneur" className="mb-16 lg:mb-24">
               <h2 className="text-3xl font-bold mb-6 text-foreground">
                 {t('about.reseau.title')}
               </h2>
               <div className="prose prose-lg max-w-none text-foreground">
-                <p className="text-lg leading-relaxed">{t('about.reseau.p1')}</p>
+                <p className="text-lg leading-relaxed">
+                  {t('about.reseau.p1')}
+                  <a 
+                    href="https://entrprneur.com" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline"
+                  >
+                    Entrprneur
+                  </a>
+                  {t('about.reseau.p2')}
+                </p>
               </div>
             </section>
 
