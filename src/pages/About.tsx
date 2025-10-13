@@ -16,6 +16,7 @@ const About = () => {
     { id: 'mon-parcours', label: t('about.nav.parcours') },
     { id: 'ma-facon-de-travailler', label: t('about.nav.methode') },
     { id: 'ancrage-marche', label: t('about.nav.ancrage') },
+    { id: 'mon-reseau-exp-entrepreneur', label: t('about.nav.reseau') },
     { id: 'ce-qui-me-motive', label: t('about.nav.motivation') },
     { id: 'en-resume', label: t('about.nav.resume') },
     { id: 'cta-contact', label: t('about.nav.contact') }
@@ -143,6 +144,16 @@ const About = () => {
               <div className="prose prose-lg max-w-none text-foreground space-y-4">
                 <p className="text-lg leading-relaxed">{t('about.ancrage.p1')}</p>
                 <p className="text-lg leading-relaxed">{t('about.ancrage.p2')}</p>
+              </div>
+            </section>
+
+            {/* Mon réseau : eXp & Entrepreneur */}
+            <section id="mon-reseau-exp-entrepreneur" className="mb-16 lg:mb-24">
+              <h2 className="text-3xl font-bold mb-6 text-foreground">
+                {t('about.reseau.title')}
+              </h2>
+              <div className="prose prose-lg max-w-none text-foreground">
+                <p className="text-lg leading-relaxed">{t('about.reseau.p1')}</p>
               </div>
             </section>
 

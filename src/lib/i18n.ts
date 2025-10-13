@@ -25,6 +25,7 @@ const resources = {
           parcours: 'Mon parcours',
           methode: 'Ma méthode',
           ancrage: 'Ancrage local',
+          reseau: 'Mon réseau',
           motivation: 'Motivation',
           resume: 'En résumé',
           contact: 'Contact'
@@ -58,6 +59,10 @@ const resources = {
           title: 'Mon ancrage local',
           p1: 'Basé à Chavenay, j\'interviens sur un large secteur qui couvre l\'ouest des Yvelines et les communes voisines. De Saint-Germain-en-Laye à Montfort-l\'Amaury, de Feucherolles à Villennes-sur-Seine, je connais les spécificités de chaque environnement : les écoles, les transports, les quartiers calmes ou les zones plus dynamiques.',
           p2: 'Vivre et travailler ici me permet d\'avoir un regard concret sur l\'évolution du marché, les opportunités réelles et les attentes des acheteurs. Je m\'appuie sur cette connaissance du terrain pour proposer des estimations justes et des conseils adaptés.'
+        },
+        reseau: {
+          title: 'Mon réseau : eXp & Entrepreneur',
+          p1: 'Être acteur local n\'empêche pas de s\'appuyer sur des ressources d\'envergure. Au quotidien, je bénéficie de la plateforme eXp (diffusion internationale, données marché, marketing avancé) tout en préservant un suivi personnalisé avec un interlocuteur unique : moi. Je fais également partie de la team Entrepreneur (entrepreneur.com), un environnement qui stimule la veille, le partage d\'expérience et l\'exigence opérationnelle — pour des missions menées avec méthode, transparence et réactivité.'
         },
         motivation: {
           title: 'Ce qui me motive',
