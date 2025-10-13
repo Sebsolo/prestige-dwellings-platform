@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { useState, useEffect } from 'react';
+import profileImage from '@/assets/sebastien-pons-profile.avif';
 
 const About = () => {
   const { t, i18n } = useTranslation();
@@ -86,12 +87,23 @@ const About = () => {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
             {/* Hero Section */}
             <section id="qui-hero" className="mb-16 lg:mb-24">
-              <h1 className="text-4xl lg:text-5xl font-bold mb-4 text-foreground">
-                {t('about.h1')}
-              </h1>
-              <p className="text-xl lg:text-2xl text-muted-foreground">
-                {t('about.hero.lead')}
-              </p>
+              <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                <div>
+                  <h1 className="text-4xl lg:text-5xl font-serif font-bold mb-4 text-foreground">
+                    {t('about.h1')}
+                  </h1>
+                  <p className="text-xl lg:text-2xl text-muted-foreground">
+                    {t('about.hero.lead')}
+                  </p>
+                </div>
+                <div className="rounded-lg overflow-hidden shadow-card">
+                  <img 
+                    src={profileImage} 
+                    alt="Sebastien Pons"
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
+              </div>
             </section>
 
             {/* Intro */}
@@ -103,7 +115,7 @@ const About = () => {
 
             {/* Mon parcours */}
             <section id="mon-parcours" className="mb-16 lg:mb-24">
-              <h2 className="text-3xl font-bold mb-6 text-foreground">
+              <h2 className="text-3xl font-serif font-bold mb-6 text-foreground">
                 {t('about.parcours.title')}
               </h2>
               <div className="prose prose-lg max-w-none text-foreground space-y-4">
@@ -120,7 +132,7 @@ const About = () => {
 
             {/* Ma façon de travailler */}
             <section id="ma-facon-de-travailler" className="mb-16 lg:mb-24">
-              <h2 className="text-3xl font-bold mb-6 text-foreground">
+              <h2 className="text-3xl font-serif font-bold mb-6 text-foreground">
                 {t('about.methode.title')}
               </h2>
               <ul className="space-y-4 mb-6">
@@ -138,7 +150,7 @@ const About = () => {
 
             {/* Mon ancrage local */}
             <section id="ancrage-marche" className="mb-16 lg:mb-24">
-              <h2 className="text-3xl font-bold mb-6 text-foreground">
+              <h2 className="text-3xl font-serif font-bold mb-6 text-foreground">
                 {t('about.ancrage.title')}
               </h2>
               <div className="prose prose-lg max-w-none text-foreground space-y-4">
@@ -149,7 +161,7 @@ const About = () => {
 
             {/* Mon réseau : eXp */}
             <section id="mon-reseau-exp-entrepreneur" className="mb-16 lg:mb-24">
-              <h2 className="text-3xl font-bold mb-6 text-foreground">
+              <h2 className="text-3xl font-serif font-bold mb-6 text-foreground">
                 {t('about.reseau.title')}
               </h2>
               <div className="prose prose-lg max-w-none text-foreground">
@@ -170,7 +182,7 @@ const About = () => {
 
             {/* Ce qui me motive */}
             <section id="ce-qui-me-motive" className="mb-16 lg:mb-24">
-              <h2 className="text-3xl font-bold mb-6 text-foreground">
+              <h2 className="text-3xl font-serif font-bold mb-6 text-foreground">
                 {t('about.motivation.title')}
               </h2>
               <div className="prose prose-lg max-w-none text-foreground space-y-4">
@@ -181,7 +193,7 @@ const About = () => {
 
             {/* En résumé */}
             <section id="en-resume" className="mb-16 lg:mb-24">
-              <h2 className="text-3xl font-bold mb-6 text-foreground">
+              <h2 className="text-3xl font-serif font-bold mb-6 text-foreground">
                 {t('about.resume.title')}
               </h2>
               <ul className="mb-6">
@@ -198,7 +210,7 @@ const About = () => {
             {/* CTA Contact */}
             <section id="cta-contact" className="mb-16">
               <div className="bg-muted/50 rounded-lg p-8 lg:p-12">
-                <h2 className="text-3xl font-bold mb-6 text-foreground">
+                <h2 className="text-3xl font-serif font-bold mb-6 text-foreground">
                   {t('about.cta.title')}
                 </h2>
                 <div className="prose prose-lg max-w-none text-foreground mb-8">
