@@ -171,8 +171,7 @@ const BlogPost = () => {
             <div>
               <h3 className="font-semibold">Sebastien Pons</h3>
               <p className="text-muted-foreground">
-                Expert en immobilier de prestige depuis plus de 15 ans, 
-                Sebastien accompagne ses clients dans leurs projets immobiliers les plus ambitieux.
+                Je vous accompagne dans vos projets immobiliers, des plus simples aux plus ambitieux.
               </p>
             </div>
           </div>
