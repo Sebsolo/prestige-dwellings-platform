@@ -156,6 +156,7 @@ const About = () => {
               <div className="prose prose-lg max-w-none text-foreground space-y-4">
                 <p className="text-lg leading-relaxed">{t('about.ancrage.p1')}</p>
                 <p className="text-lg leading-relaxed">{t('about.ancrage.p2')}</p>
+                <p className="text-lg leading-relaxed">{t('about.ancrage.p3')}</p>
               </div>
             </section>
 

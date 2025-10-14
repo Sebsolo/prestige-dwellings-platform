@@ -127,11 +127,18 @@ const Footer = () => {
             
             {/* CTC Partnership */}
             <div className="flex flex-col items-center space-y-3 mt-6">
-              <img 
-                src={ctcLogo} 
-                alt="Club de Tennis de Chavenay" 
-                className="h-20 w-auto"
-              />
+              <a 
+                href="https://tenup.fft.fr/club/57780050?utm_source=gmb" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="transition-opacity hover:opacity-80"
+              >
+                <img 
+                  src={ctcLogo} 
+                  alt="Club de Tennis de Chavenay" 
+                  className="h-20 w-auto"
+                />
+              </a>
               <p className="text-sm text-muted-foreground text-center">
                 Fier d'être partenaire du Club de Tennis de Chavenay depuis 2024
               </p>

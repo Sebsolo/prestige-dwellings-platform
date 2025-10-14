@@ -58,7 +58,8 @@ const resources = {
         ancrage: {
           title: 'Mon ancrage local',
           p1: 'Basé à Chavenay, j\'interviens sur un large secteur qui couvre l\'ouest des Yvelines et les communes voisines. De Saint-Germain-en-Laye à Montfort-l\'Amaury, de Feucherolles à Villennes-sur-Seine, je connais les spécificités de chaque environnement : les écoles, les transports, les quartiers calmes ou les zones plus dynamiques.',
-          p2: 'Vivre et travailler ici me permet d\'avoir un regard concret sur l\'évolution du marché, les opportunités réelles et les attentes des acheteurs. Je m\'appuie sur cette connaissance du terrain pour proposer des estimations justes et des conseils adaptés. Je suis également engagé dans la vie locale : partenaire du club de tennis de Chavenay depuis 2024, je soutiens la vie associative du village.'
+          p2: 'Vivre et travailler ici me permet d\'avoir un regard concret sur l\'évolution du marché, les opportunités réelles et les attentes des acheteurs. Je m\'appuie sur cette connaissance du terrain pour proposer des estimations justes et des conseils adaptés.',
+          p3: 'Je suis également engagé dans la vie locale : partenaire du club de tennis de Chavenay depuis 2024, je soutiens la vie associative du village.'
         },
         reseau: {
           title: 'Mon réseau : eXp',
