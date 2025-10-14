@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
 import logo from '@/assets/new-logo.webp';
+import ctcLogo from '@/assets/logo-ctc.avif';
 const Footer = () => {
   const {
     t
@@ -122,6 +123,18 @@ const Footer = () => {
               >
                 <Youtube className="h-5 w-5 text-secondary-foreground" />
               </a>
+            </div>
+            
+            {/* CTC Partnership */}
+            <div className="flex flex-col items-center space-y-3 mt-6">
+              <img 
+                src={ctcLogo} 
+                alt="Club de Tennis de Chavenay" 
+                className="h-20 w-auto"
+              />
+              <p className="text-sm text-muted-foreground text-center">
+                Fier d'être partenaire du Club de Tennis de Chavenay depuis 2024
+              </p>
             </div>
           </div>
 
