@@ -125,11 +125,17 @@ const AdminProperties = () => {
                             {/* Property Image Preview */}
                             <div className="flex-shrink-0">
                               {property.media && property.media.length > 0 ? (
-                                <img
-                                  src={`https://gxzifrexmsouvfnriyym.supabase.co/storage/v1/object/public/property-images/${property.media[0].path}`}
-                                  alt={property.media[0].title || 'Property image'}
-                                  className="w-20 h-20 object-cover rounded-md border"
-                                />
+                                (() => {
+                                  const sortedMedia = [...property.media].sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+                                  const firstImage = sortedMedia[0];
+                                  return (
+                                    <img
+                                      src={`https://gxzifrexmsouvfnriyym.supabase.co/storage/v1/object/public/property-images/${firstImage.path}`}
+                                      alt={firstImage.title || 'Property image'}
+                                      className="w-20 h-20 object-cover rounded-md border"
+                                    />
+                                  );
+                                })()
                               ) : (
                                 <div className="w-20 h-20 bg-muted rounded-md border flex items-center justify-center">
                                   <span className="text-xs text-muted-foreground">No image</span>

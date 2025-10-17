@@ -14,7 +14,9 @@ interface PropertyCardProps {
 
 const PropertyCard = ({ property }: PropertyCardProps) => {
   const { t } = useTranslation();
-  const mainImage = property.media?.find(media => media.sort_order === 0) || property.media?.[0];
+  // Always use the first image from sorted media array
+  const sortedMedia = property.media ? [...property.media].sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0)) : [];
+  const mainImage = sortedMedia[0];
   
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('fr-FR', {
