@@ -90,6 +90,12 @@ export const propertiesApi = {
       .single();
 
     if (error) throw error;
+    
+    // Sort media by sort_order
+    if (data?.media) {
+      data.media = [...data.media].sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+    }
+    
     return data;
   },
 

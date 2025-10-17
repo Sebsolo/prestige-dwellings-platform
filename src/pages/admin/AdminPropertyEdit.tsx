@@ -142,10 +142,14 @@ const AdminPropertyEdit = () => {
         monthly_charges: property.monthly_charges ? Number(property.monthly_charges) : undefined,
       });
 
-      // Load existing images
+      // Load existing images sorted by sort_order
       if (property.media && property.media.length > 0) {
+        const sortedMedia = [...property.media].sort((a, b) => 
+          (a.sort_order || 0) - (b.sort_order || 0)
+        );
+        
         const images = await Promise.all(
-          property.media.map(async (media) => {
+          sortedMedia.map(async (media) => {
             const { data } = await supabase.storage
               .from('property-images')
               .createSignedUrl(media.path, 3600);
