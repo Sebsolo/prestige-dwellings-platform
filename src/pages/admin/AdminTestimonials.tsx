@@ -3,46 +3,178 @@ import AdminLayout from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Edit, Trash2, Eye, Star } from 'lucide-react';
+import { RefreshCw, Star, Check, X } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
-interface Testimonial {
-  id: string;
-  author: string;
-  city: string;
-  quote: string;
-  note: number;
-  published: boolean;
-  created_at: string;
+interface GoogleReview {
+  id?: number;
+  author_name: string;
+  rating: number;
+  text: string;
+  time: number;
+  relative_time_description: string;
+  profile_photo_url?: string;
+  author_url?: string;
+  sort_order?: number;
+  active?: boolean;
 }
 
 const AdminTestimonials = () => {
-  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [availableReviews, setAvailableReviews] = useState<GoogleReview[]>([]);
+  const [selectedReviews, setSelectedReviews] = useState<GoogleReview[]>([]);
   const [loading, setLoading] = useState(true);
+  const [fetchingFromGoogle, setFetchingFromGoogle] = useState(false);
 
   useEffect(() => {
-    // TODO: Load testimonials from API
-    setLoading(false);
+    loadData();
   }, []);
+
+  const loadData = async () => {
+    try {
+      setLoading(true);
+      
+      const { data: dbReviews, error } = await (supabase as any)
+        .from('google_reviews_display')
+        .select('*')
+        .order('sort_order');
+
+      if (error) throw error;
+      
+      const mappedReviews = (dbReviews || []).map((r: any) => ({
+        id: r.id,
+        author_name: r.author_name,
+        rating: r.rating,
+        text: r.text,
+        time: r.time,
+        relative_time_description: r.relative_time_description,
+        profile_photo_url: r.profile_photo_url,
+        author_url: r.author_url,
+        sort_order: r.sort_order,
+        active: r.active
+      }));
+      
+      setSelectedReviews(mappedReviews);
+      
+      await fetchFromGoogle();
+    } catch (error) {
+      console.error('Error loading data:', error);
+      toast.error('Erreur lors du chargement des données');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchFromGoogle = async () => {
+    try {
+      setFetchingFromGoogle(true);
+      
+      const { data: settings } = await supabase
+        .from('site_settings')
+        .select('google_place_id')
+        .single();
+
+      if (!settings?.google_place_id) {
+        toast.error('Place ID Google non configuré');
+        return;
+      }
+
+      const { data, error } = await supabase.functions.invoke('fetchGoogleReviews', {
+        body: { placeId: settings.google_place_id }
+      });
+
+      if (error) throw error;
+
+      setAvailableReviews(data?.reviews || []);
+    } catch (error) {
+      console.error('Error fetching from Google:', error);
+      toast.error('Erreur lors de la récupération des avis Google');
+    } finally {
+      setFetchingFromGoogle(false);
+    }
+  };
+
+  const toggleReviewSelection = async (review: GoogleReview) => {
+    try {
+      const isSelected = selectedReviews.some(r => r.author_name === review.author_name);
+
+      if (isSelected) {
+        const { error } = await (supabase as any)
+          .from('google_reviews_display')
+          .delete()
+          .eq('author_name', review.author_name);
+
+        if (error) throw error;
+
+        setSelectedReviews(prev => prev.filter(r => r.author_name !== review.author_name));
+        toast.success('Avis retiré de la page d\'accueil');
+      } else {
+        const { data, error } = await (supabase as any)
+          .from('google_reviews_display')
+          .insert({
+            author_name: review.author_name,
+            rating: review.rating,
+            text: review.text,
+            time: review.time,
+            relative_time_description: review.relative_time_description,
+            profile_photo_url: review.profile_photo_url,
+            author_url: review.author_url,
+            sort_order: selectedReviews.length,
+            active: true
+          })
+          .select()
+          .single();
+
+        if (error) throw error;
+
+        const newReview: GoogleReview = {
+          id: data.id,
+          author_name: data.author_name,
+          rating: data.rating,
+          text: data.text,
+          time: data.time,
+          relative_time_description: data.relative_time_description,
+          profile_photo_url: data.profile_photo_url,
+          author_url: data.author_url,
+          sort_order: data.sort_order,
+          active: data.active
+        };
+
+        setSelectedReviews(prev => [...prev, newReview]);
+        toast.success('Avis ajouté à la page d\'accueil');
+      }
+    } catch (error) {
+      console.error('Error toggling review:', error);
+      toast.error('Erreur lors de la modification');
+    }
+  };
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
         key={i}
-        className={`h-4 w-4 ${
-          i < rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
-        }`}
+        className={`h-4 w-4 ${i < rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`}
       />
     ));
   };
 
+  const isReviewSelected = (review: GoogleReview) => {
+    return selectedReviews.some(r => r.author_name === review.author_name);
+  };
+
   return (
-    <AdminLayout title="Gestion des Témoignages">
+    <AdminLayout title="Gestion des avis Google" description="Sélectionnez les avis à afficher sur la page d'accueil">
       <div className="space-y-6">
         <div className="flex justify-between items-center">
-          <h2 className="text-2xl font-bold text-foreground">Témoignages Clients</h2>
-          <Button>
-            <Plus className="h-4 w-4 mr-2" />
-            Nouveau Témoignage
+          <div>
+            <h2 className="text-3xl font-bold tracking-tight">Avis Google</h2>
+            <p className="text-muted-foreground mt-1">
+              {selectedReviews.length} avis sélectionnés pour la page d'accueil
+            </p>
+          </div>
+          <Button onClick={fetchFromGoogle} disabled={fetchingFromGoogle}>
+            <RefreshCw className={`mr-2 h-4 w-4 ${fetchingFromGoogle ? 'animate-spin' : ''}`} />
+            Actualiser depuis Google
           </Button>
         </div>
 
@@ -51,61 +183,66 @@ const AdminTestimonials = () => {
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
           </div>
         ) : (
-          <div className="grid gap-4">
-            {testimonials.length === 0 ? (
-              <Card>
-                <CardContent className="text-center py-8">
-                  <p className="text-muted-foreground">
-                    Aucun témoignage trouvé. Ajoutez votre premier témoignage !
-                  </p>
-                </CardContent>
-              </Card>
-            ) : (
-              testimonials.map((testimonial) => (
-                <Card key={testimonial.id}>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {availableReviews.map((review, index) => {
+              const selected = isReviewSelected(review);
+              return (
+                <Card key={index} className={selected ? 'border-primary' : ''}>
                   <CardHeader>
-                    <div className="flex justify-between items-start">
+                    <div className="flex items-start justify-between">
                       <div className="flex-1">
-                        <CardTitle className="text-lg flex items-center gap-2">
-                          {testimonial.author}
-                          <div className="flex">
-                            {renderStars(testimonial.note)}
-                          </div>
-                        </CardTitle>
-                        <CardDescription>
-                          {testimonial.city}
-                        </CardDescription>
+                        <CardTitle className="text-lg">{review.author_name}</CardTitle>
+                        <CardDescription>{review.relative_time_description}</CardDescription>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Badge variant={testimonial.published ? 'default' : 'secondary'}>
-                          {testimonial.published ? 'Publié' : 'Brouillon'}
-                        </Badge>
-                        <div className="flex gap-1">
-                          <Button size="sm" variant="outline">
-                            <Eye className="h-4 w-4" />
-                          </Button>
-                          <Button size="sm" variant="outline">
-                            <Edit className="h-4 w-4" />
-                          </Button>
-                          <Button size="sm" variant="outline">
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
+                      <div className="flex flex-col items-end gap-2">
+                        <div className="flex">{renderStars(review.rating)}</div>
+                        {selected && (
+                          <Badge variant="secondary" className="text-xs">
+                            Affiché
+                          </Badge>
+                        )}
                       </div>
                     </div>
                   </CardHeader>
-                  <CardContent>
-                    <p className="text-sm mb-4 line-clamp-3">
-                      "{testimonial.quote}"
+                  <CardContent className="space-y-4">
+                    <p className="text-sm text-muted-foreground line-clamp-4">
+                      {review.text}
                     </p>
-                    <div className="text-xs text-muted-foreground">
-                      Créé le {new Date(testimonial.created_at).toLocaleDateString()}
-                    </div>
+                    <Button
+                      onClick={() => toggleReviewSelection(review)}
+                      variant={selected ? 'destructive' : 'default'}
+                      size="sm"
+                      className="w-full"
+                    >
+                      {selected ? (
+                        <>
+                          <X className="mr-2 h-4 w-4" />
+                          Retirer de la page d'accueil
+                        </>
+                      ) : (
+                        <>
+                          <Check className="mr-2 h-4 w-4" />
+                          Afficher sur la page d'accueil
+                        </>
+                      )}
+                    </Button>
                   </CardContent>
                 </Card>
-              ))
-            )}
+              );
+            })}
           </div>
+        )}
+
+        {!loading && availableReviews.length === 0 && (
+          <Card>
+            <CardContent className="py-8 text-center">
+              <p className="text-muted-foreground">Aucun avis trouvé</p>
+              <Button onClick={fetchFromGoogle} className="mt-4" disabled={fetchingFromGoogle}>
+                <RefreshCw className={`mr-2 h-4 w-4 ${fetchingFromGoogle ? 'animate-spin' : ''}`} />
+                Charger les avis Google
+              </Button>
+            </CardContent>
+          </Card>
         )}
       </div>
     </AdminLayout>

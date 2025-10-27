@@ -58,86 +58,64 @@ const GoogleReviews = ({ placeId, maxReviews = 3, className = "" }: GoogleReview
   ];
 
   useEffect(() => {
-    // Defer Google Reviews to reduce critical path
     const timer = setTimeout(() => {
       const fetchReviews = async () => {
         try {
           setLoading(true);
           
-          // Try to get settings from localStorage first (fallback)
-          const fallbackBusinessUrl = 'https://share.google/LOxi7WwOzlRaYUVJj';
-          setGoogleBusinessUrl(fallbackBusinessUrl);
-          
-          // Try to get settings from database
-          try {
-            const { data: settings } = await supabase
-              .from('site_settings')
-              .select('google_business_url, google_place_id')
-              .single();
-            
-            if (settings?.google_business_url) {
-              setGoogleBusinessUrl(settings.google_business_url);
-            }
-            
-            const settingsPlaceId = settings?.google_place_id || placeId;
-            
-            if (!settingsPlaceId) {
-              // Use mock data if no Place ID configured
-              setReviews(mockReviews);
-              setError(null);
-              return;
-            }
+          const { data: dbReviews, error: dbError } = await (supabase as any)
+            .from('google_reviews_display')
+            .select('*')
+            .eq('active', true)
+            .order('sort_order')
+            .limit(maxReviews || 3);
 
-            // Call Supabase edge function to fetch Google reviews
-            const { data, error: functionError } = await supabase.functions.invoke('fetchGoogleReviews', {
-              body: { placeId: settingsPlaceId }
-            });
-
-            if (functionError) {
-              console.error('Error calling fetchGoogleReviews function:', functionError);
-              setReviews(mockReviews);
-              setError(null);
-              return;
-            }
-
-            // Select only the requested reviewers in fixed order
-            const allowedNames = ['Agnès Bourlon', 'Remi Destang', 'Floriane Chatelain'];
-            const apiReviews = (data?.reviews || []) as GoogleReview[];
-            const selectedFromApi = allowedNames
-              .map((name) => apiReviews.find((r) => r.author_name === name))
-              .filter(Boolean) as GoogleReview[];
-
-            if (selectedFromApi.length < 3) {
-              const mockFallback = allowedNames
-                .map((name) => mockReviews.find((r) => r.author_name === name))
-                .filter(Boolean) as GoogleReview[];
-              const seen = new Set(selectedFromApi.map((r) => r.author_name));
-              const combined = [...selectedFromApi, ...mockFallback.filter((r) => !seen.has(r.author_name))].slice(0, 3);
-              setReviews(combined);
-            } else {
-              setReviews(selectedFromApi);
-            }
-            setError(null);
-          } catch (dbError) {
-            console.log('Database not yet configured, using mock data:', dbError);
+          if (dbError) {
+            console.log('Database error, using mock data:', dbError);
             setReviews(mockReviews);
-            setError(null);
+            setGoogleBusinessUrl('https://share.google/LOxi7WwOzlRaYUVJj');
+            setLoading(false);
+            return;
           }
-          
-        } catch (err) {
-          console.error('Error fetching reviews:', err);
+
+          if (dbReviews && dbReviews.length > 0) {
+            const mappedReviews = dbReviews.map((r: any) => ({
+              id: r.id?.toString() || '',
+              author_name: r.author_name,
+              rating: r.rating,
+              text: r.text,
+              time: r.time,
+              relative_time_description: r.relative_time_description,
+              profile_photo_url: r.profile_photo_url,
+              author_url: r.author_url
+            }));
+            setReviews(mappedReviews);
+            setError(null);
+          } else {
+            setReviews(mockReviews);
+          }
+
+          const { data: settings } = await supabase
+            .from('site_settings')
+            .select('google_business_url')
+            .single();
+
+          setGoogleBusinessUrl(settings?.google_business_url || 'https://share.google/LOxi7WwOzlRaYUVJj');
+        } catch (error) {
+          console.error('Error fetching reviews:', error);
+          setReviews(mockReviews);
           setError('Erreur lors du chargement des avis');
-          setReviews(mockReviews); // Fallback to mock data
+          setGoogleBusinessUrl('https://share.google/LOxi7WwOzlRaYUVJj');
         } finally {
           setLoading(false);
         }
       };
 
       fetchReviews();
-    }, 200); // Defer by 200ms to prioritize critical content
+    }, 200);
 
     return () => clearTimeout(timer);
-  }, [placeId, maxReviews]);
+  }, [maxReviews]);
 
   const renderStars = (rating: number) => {
     return (
