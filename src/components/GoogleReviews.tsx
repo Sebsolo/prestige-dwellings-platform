@@ -48,7 +48,7 @@ const GoogleReviews = ({ placeId, maxReviews = 3, className = "" }: GoogleReview
     },
     {
       id: '3',
-      author_name: 'Floriane Chatelain',
+      author_name: 'Agnès Bourlon',
       rating: 5,
       relative_time_description: 'il y a 3 semaines',
       text: 'Excellent accompagnement pour notre premier achat immobilier. Sebastien a pris le temps de nous expliquer chaque étape.',
@@ -101,7 +101,7 @@ const GoogleReviews = ({ placeId, maxReviews = 3, className = "" }: GoogleReview
             }
 
             // Filter for priority reviewers first, then others, limited to 3
-            const priorityNames = ['Remi Destang', 'Julien Pelloile', 'Floriane Chatelain'];
+            const priorityNames = ['Remi Destang', 'Julien Pelloile', 'Agnès Bourlon'];
             const priorityReviews = data.reviews.filter((review: GoogleReview) => 
               priorityNames.includes(review.author_name)
             );
