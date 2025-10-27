@@ -39,20 +39,20 @@ const GoogleReviews = ({ placeId, maxReviews = 3, className = "" }: GoogleReview
     },
     {
       id: '2',
-      author_name: 'Julien Pelloile',
+      author_name: 'Floriane Chatelain',
       rating: 5,
-      relative_time_description: 'il y a 1 mois',
-      text: 'Agent immobilier de confiance, très professionnel. La vente de notre maison s\'est déroulée sans encombre grâce à son expertise.',
-      time: Date.now() - 2419200000,
+      relative_time_description: 'il y a 3 semaines',
+      text: 'Excellent accompagnement pour notre premier achat immobilier. Sebastien a pris le temps de nous expliquer chaque étape.',
+      time: Date.now() - 1814400000,
       profile_photo_url: '/placeholder.svg'
     },
     {
       id: '3',
       author_name: 'Agnès Bourlon',
       rating: 5,
-      relative_time_description: 'il y a 3 semaines',
-      text: 'Excellent accompagnement pour notre premier achat immobilier. Sebastien a pris le temps de nous expliquer chaque étape.',
-      time: Date.now() - 1814400000,
+      relative_time_description: 'il y a 1 mois',
+      text: 'Un suivi irréprochable et beaucoup de bienveillance. Nous recommandons vivement !',
+      time: Date.now() - 2419200000,
       profile_photo_url: '/placeholder.svg'
     }
   ];
@@ -100,17 +100,23 @@ const GoogleReviews = ({ placeId, maxReviews = 3, className = "" }: GoogleReview
               return;
             }
 
-            // Filter for priority reviewers first, then others, limited to 3
-            const priorityNames = ['Remi Destang', 'Julien Pelloile', 'Agnès Bourlon'];
-            const priorityReviews = data.reviews.filter((review: GoogleReview) => 
-              priorityNames.includes(review.author_name)
-            );
-            const otherReviews = data.reviews.filter((review: GoogleReview) => 
-              !priorityNames.includes(review.author_name)
-            );
-            
-            const finalReviews = [...priorityReviews, ...otherReviews].slice(0, 3);
-            setReviews(finalReviews);
+            // Select only the requested reviewers in fixed order
+            const allowedNames = ['Agnès Bourlon', 'Remi Destang', 'Floriane Chatelain'];
+            const apiReviews = (data?.reviews || []) as GoogleReview[];
+            const selectedFromApi = allowedNames
+              .map((name) => apiReviews.find((r) => r.author_name === name))
+              .filter(Boolean) as GoogleReview[];
+
+            if (selectedFromApi.length < 3) {
+              const mockFallback = allowedNames
+                .map((name) => mockReviews.find((r) => r.author_name === name))
+                .filter(Boolean) as GoogleReview[];
+              const seen = new Set(selectedFromApi.map((r) => r.author_name));
+              const combined = [...selectedFromApi, ...mockFallback.filter((r) => !seen.has(r.author_name))].slice(0, 3);
+              setReviews(combined);
+            } else {
+              setReviews(selectedFromApi);
+            }
             setError(null);
           } catch (dbError) {
             console.log('Database not yet configured, using mock data:', dbError);
