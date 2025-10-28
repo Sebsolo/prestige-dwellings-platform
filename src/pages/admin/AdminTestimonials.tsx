@@ -179,6 +179,13 @@ const AdminTestimonials = () => {
     return selectedReviews.some(r => r.author_name === review.author_name);
   };
 
+  console.log('Rendering AdminTestimonials:', { 
+    availableReviewsCount: availableReviews.length, 
+    selectedReviewsCount: selectedReviews.length,
+    loading,
+    fetchingFromGoogle 
+  });
+
   return (
     <AdminLayout title="Gestion des avis Google" description="Sélectionnez les avis à afficher sur la page d'accueil">
       <div className="space-y-6">
@@ -187,6 +194,9 @@ const AdminTestimonials = () => {
             <h2 className="text-3xl font-bold tracking-tight">Avis Google</h2>
             <p className="text-muted-foreground mt-1">
               {selectedReviews.length} avis sélectionnés pour la page d'accueil
+            </p>
+            <p className="text-sm text-muted-foreground">
+              {availableReviews.length} avis disponibles depuis Google
             </p>
           </div>
           <Button onClick={fetchFromGoogle} disabled={fetchingFromGoogle}>
