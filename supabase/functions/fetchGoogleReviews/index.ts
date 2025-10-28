@@ -71,15 +71,20 @@ serve(async (req) => {
     }
 
     // Construct Google Places API URL with French language parameter
-    const apiUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=name,rating,reviews&language=fr&key=${googleApiKey}`
+    // Note: Google Places API returns maximum of 5 most helpful reviews by default
+    // To get all reviews, we need to use reviews_sort parameter
+    const apiUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=name,rating,reviews,user_ratings_total&language=fr&reviews_sort=newest&key=${googleApiKey}`
     
+    console.log('Fetching reviews from Google Places API...')
     const response = await fetch(apiUrl)
     const data = await response.json()
     
+    console.log('API Response status:', data.status)
+    
     if (data.status !== 'OK') {
-      console.log('Google Places API error:', data.status)
+      console.log('Google Places API error:', data.status, data)
       return new Response(
-        JSON.stringify({ error: 'Failed to fetch reviews from Google Places API' }),
+        JSON.stringify({ error: 'Failed to fetch reviews from Google Places API', details: data }),
         { 
           status: 500, 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
@@ -88,6 +93,7 @@ serve(async (req) => {
     }
 
     const reviews = data.result.reviews || []
+    console.log(`Fetched ${reviews.length} reviews from Google (total ratings: ${data.result.user_ratings_total || 'unknown'})`)
     
     // Transform Google reviews to our format
     const transformedReviews = reviews.map((review: any, index: number) => ({
