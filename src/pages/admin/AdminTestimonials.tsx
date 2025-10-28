@@ -65,7 +65,45 @@ const AdminTestimonials = () => {
     }
   };
 
-  const fetchFromGoogle = async () => {
+  const authorizeGoogle = async () => {
+    try {
+      const { data, error } = await supabase.functions.invoke('initiateGoogleOAuth');
+      
+      if (error) throw error;
+      
+      if (data?.authUrl) {
+        // Open OAuth popup
+        const popup = window.open(data.authUrl, 'google-oauth', 'width=600,height=700');
+        
+        // Listen for OAuth callback
+        const handleMessage = (event: MessageEvent) => {
+          if (event.data.type === 'oauth-success') {
+            toast.success('Autorisation Google réussie');
+            window.removeEventListener('message', handleMessage);
+            fetchFromGoogle(true);
+          } else if (event.data.type === 'oauth-error') {
+            toast.error('Erreur d\'autorisation Google');
+            window.removeEventListener('message', handleMessage);
+          }
+        };
+        
+        window.addEventListener('message', handleMessage);
+        
+        // Check if popup was closed without completing OAuth
+        const checkClosed = setInterval(() => {
+          if (popup?.closed) {
+            clearInterval(checkClosed);
+            window.removeEventListener('message', handleMessage);
+          }
+        }, 500);
+      }
+    } catch (error) {
+      console.error('Error initiating OAuth:', error);
+      toast.error('Erreur lors de l\'autorisation Google');
+    }
+  };
+
+  const fetchFromGoogle = async (useMyBusiness = false) => {
     try {
       setFetchingFromGoogle(true);
       console.log('Fetching Google reviews...');
@@ -82,10 +120,13 @@ const AdminTestimonials = () => {
         return;
       }
 
-      console.log('Calling edge function with place ID:', settings.google_place_id);
+      console.log('Calling edge function with place ID:', settings.google_place_id, 'useMyBusiness:', useMyBusiness);
 
       const { data, error } = await supabase.functions.invoke('fetchGoogleReviews', {
-        body: { placeId: settings.google_place_id }
+        body: { 
+          placeId: settings.google_place_id,
+          useMyBusiness 
+        }
       });
 
       console.log('Edge function response:', { data, error });
@@ -93,6 +134,13 @@ const AdminTestimonials = () => {
       if (error) {
         console.error('Edge function error:', error);
         throw error;
+      }
+
+      // Check if OAuth authorization is needed
+      if (data?.needsAuth) {
+        toast.info('Autorisation Google My Business requise');
+        authorizeGoogle();
+        return;
       }
 
       if (data?.reviews) {
@@ -199,10 +247,16 @@ const AdminTestimonials = () => {
               {availableReviews.length} avis disponibles depuis Google
             </p>
           </div>
-          <Button onClick={fetchFromGoogle} disabled={fetchingFromGoogle}>
-            <RefreshCw className={`mr-2 h-4 w-4 ${fetchingFromGoogle ? 'animate-spin' : ''}`} />
-            Actualiser depuis Google
-          </Button>
+          <div className="flex gap-2">
+            <Button onClick={() => fetchFromGoogle(false)} disabled={fetchingFromGoogle} variant="outline">
+              <RefreshCw className={`mr-2 h-4 w-4 ${fetchingFromGoogle ? 'animate-spin' : ''}`} />
+              Google Places (5 avis max)
+            </Button>
+            <Button onClick={() => fetchFromGoogle(true)} disabled={fetchingFromGoogle}>
+              <RefreshCw className={`mr-2 h-4 w-4 ${fetchingFromGoogle ? 'animate-spin' : ''}`} />
+              Google My Business (tous)
+            </Button>
+          </div>
         </div>
 
         {loading ? (
@@ -264,10 +318,16 @@ const AdminTestimonials = () => {
           <Card>
             <CardContent className="py-8 text-center">
               <p className="text-muted-foreground">Aucun avis trouvé</p>
-              <Button onClick={fetchFromGoogle} className="mt-4" disabled={fetchingFromGoogle}>
-                <RefreshCw className={`mr-2 h-4 w-4 ${fetchingFromGoogle ? 'animate-spin' : ''}`} />
-                Charger les avis Google
-              </Button>
+              <div className="flex gap-2 justify-center mt-4">
+                <Button onClick={() => fetchFromGoogle(false)} variant="outline" disabled={fetchingFromGoogle}>
+                  <RefreshCw className={`mr-2 h-4 w-4 ${fetchingFromGoogle ? 'animate-spin' : ''}`} />
+                  Google Places
+                </Button>
+                <Button onClick={() => fetchFromGoogle(true)} disabled={fetchingFromGoogle}>
+                  <RefreshCw className={`mr-2 h-4 w-4 ${fetchingFromGoogle ? 'animate-spin' : ''}`} />
+                  Google My Business
+                </Button>
+              </div>
             </CardContent>
           </Card>
         )}

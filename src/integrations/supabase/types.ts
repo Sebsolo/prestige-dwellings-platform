@@ -14,6 +14,81 @@ export type Database = {
   }
   public: {
     Tables: {
+      google_oauth_tokens: {
+        Row: {
+          access_token: string
+          created_at: string
+          expires_at: string
+          id: string
+          refresh_token: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          access_token: string
+          created_at?: string
+          expires_at: string
+          id?: string
+          refresh_token?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          access_token?: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          refresh_token?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      google_reviews_display: {
+        Row: {
+          active: boolean | null
+          author_name: string
+          author_url: string | null
+          created_at: string | null
+          id: number
+          profile_photo_url: string | null
+          rating: number
+          relative_time_description: string
+          sort_order: number | null
+          text: string
+          time: number
+          updated_at: string | null
+        }
+        Insert: {
+          active?: boolean | null
+          author_name: string
+          author_url?: string | null
+          created_at?: string | null
+          id?: never
+          profile_photo_url?: string | null
+          rating: number
+          relative_time_description: string
+          sort_order?: number | null
+          text: string
+          time: number
+          updated_at?: string | null
+        }
+        Update: {
+          active?: boolean | null
+          author_name?: string
+          author_url?: string | null
+          created_at?: string | null
+          id?: never
+          profile_photo_url?: string | null
+          rating?: number
+          relative_time_description?: string
+          sort_order?: number | null
+          text?: string
+          time?: number
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       home_carousel_images: {
         Row: {
           active: boolean | null
@@ -531,18 +606,9 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      get_current_user_role: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      is_admin: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
-      is_team_member: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
+      get_current_user_role: { Args: never; Returns: string }
+      is_admin: { Args: never; Returns: boolean }
+      is_team_member: { Args: never; Returns: boolean }
     }
     Enums: {
       [_ in never]: never
