@@ -68,24 +68,41 @@ const AdminTestimonials = () => {
   const fetchFromGoogle = async () => {
     try {
       setFetchingFromGoogle(true);
+      console.log('Fetching Google reviews...');
       
       const { data: settings } = await supabase
         .from('site_settings')
         .select('google_place_id')
         .single();
 
+      console.log('Settings:', settings);
+
       if (!settings?.google_place_id) {
         toast.error('Place ID Google non configuré');
         return;
       }
 
+      console.log('Calling edge function with place ID:', settings.google_place_id);
+
       const { data, error } = await supabase.functions.invoke('fetchGoogleReviews', {
         body: { placeId: settings.google_place_id }
       });
 
-      if (error) throw error;
+      console.log('Edge function response:', { data, error });
 
-      setAvailableReviews(data?.reviews || []);
+      if (error) {
+        console.error('Edge function error:', error);
+        throw error;
+      }
+
+      if (data?.reviews) {
+        console.log('Setting available reviews:', data.reviews.length, 'reviews');
+        setAvailableReviews(data.reviews);
+        toast.success(`${data.reviews.length} avis chargés depuis Google`);
+      } else {
+        console.warn('No reviews in response');
+        setAvailableReviews([]);
+      }
     } catch (error) {
       console.error('Error fetching from Google:', error);
       toast.error('Erreur lors de la récupération des avis Google');
