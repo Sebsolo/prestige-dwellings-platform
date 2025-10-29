@@ -16,6 +16,10 @@ serve(async (req) => {
     
     const redirectUri = `${supabaseUrl}/functions/v1/googleOAuthCallback`
     
+    console.log('OAuth Configuration:')
+    console.log('- Client ID:', clientId?.substring(0, 20) + '...')
+    console.log('- Redirect URI:', redirectUri)
+    
     // Google My Business API scopes
     const scopes = [
       'https://www.googleapis.com/auth/business.manage',
@@ -30,8 +34,10 @@ serve(async (req) => {
     authUrl.searchParams.set('access_type', 'offline')
     authUrl.searchParams.set('prompt', 'consent')
 
+    console.log('Generated auth URL:', authUrl.toString())
+
     return new Response(
-      JSON.stringify({ authUrl: authUrl.toString() }),
+      JSON.stringify({ authUrl: authUrl.toString(), redirectUri }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
       }
