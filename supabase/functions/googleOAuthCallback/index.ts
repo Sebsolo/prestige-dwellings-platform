@@ -18,18 +18,11 @@ serve(async (req) => {
 
     if (error) {
       console.error('OAuth error:', error)
-      return new Response(
-        `<!DOCTYPE html>
-        <html>
-          <body>
-            <script>
-              window.opener.postMessage({ type: 'oauth-error', error: '${error}' }, '*');
-              window.close();
-            </script>
-          </body>
-        </html>`,
-        { headers: { ...corsHeaders, 'Content-Type': 'text/html' } }
-      )
+      const redirectUrl = `${url.origin.replace('.supabase.co', '.lovableproject.com')}/admin/testimonials`;
+      return new Response(null, {
+        status: 302,
+        headers: { ...corsHeaders, 'Location': redirectUrl }
+      })
     }
 
     if (!code) {
@@ -94,32 +87,19 @@ serve(async (req) => {
 
     console.log('Tokens stored successfully')
 
-    // Close the popup and notify the parent window
-    return new Response(
-      `<!DOCTYPE html>
-      <html>
-        <body>
-          <script>
-            window.opener.postMessage({ type: 'oauth-success' }, '*');
-            window.close();
-          </script>
-        </body>
-      </html>`,
-      { headers: { ...corsHeaders, 'Content-Type': 'text/html' } }
-    )
+    // Redirect back to the admin testimonials page
+    const redirectUrl = `${url.origin.replace('.supabase.co', '.lovableproject.com')}/admin/testimonials`;
+    return new Response(null, {
+      status: 302,
+      headers: { ...corsHeaders, 'Location': redirectUrl }
+    })
   } catch (error) {
     console.error('Error in OAuth callback:', error)
-    return new Response(
-      `<!DOCTYPE html>
-      <html>
-        <body>
-          <script>
-            window.opener.postMessage({ type: 'oauth-error', error: '${error.message}' }, '*');
-            window.close();
-          </script>
-        </body>
-      </html>`,
-      { headers: { ...corsHeaders, 'Content-Type': 'text/html' } }
-    )
+    const url = new URL(req.url)
+    const redirectUrl = `${url.origin.replace('.supabase.co', '.lovableproject.com')}/admin/testimonials`;
+    return new Response(null, {
+      status: 302,
+      headers: { ...corsHeaders, 'Location': redirectUrl }
+    })
   }
 })

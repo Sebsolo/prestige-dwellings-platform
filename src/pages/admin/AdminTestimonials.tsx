@@ -28,6 +28,17 @@ const AdminTestimonials = () => {
 
   useEffect(() => {
     loadData();
+    
+    // Check if we just returned from OAuth
+    const oauthPending = localStorage.getItem('oauth_pending');
+    if (oauthPending === 'true') {
+      localStorage.removeItem('oauth_pending');
+      toast.success('Autorisation Google réussie');
+      // Automatically fetch reviews with My Business API
+      setTimeout(() => {
+        fetchFromGoogle(true);
+      }, 1000);
+    }
   }, []);
 
   const loadData = async () => {
@@ -72,30 +83,10 @@ const AdminTestimonials = () => {
       if (error) throw error;
       
       if (data?.authUrl) {
-        // Open OAuth popup
-        const popup = window.open(data.authUrl, 'google-oauth', 'width=600,height=700');
-        
-        // Listen for OAuth callback
-        const handleMessage = (event: MessageEvent) => {
-          if (event.data.type === 'oauth-success') {
-            toast.success('Autorisation Google réussie');
-            window.removeEventListener('message', handleMessage);
-            fetchFromGoogle(true);
-          } else if (event.data.type === 'oauth-error') {
-            toast.error('Erreur d\'autorisation Google');
-            window.removeEventListener('message', handleMessage);
-          }
-        };
-        
-        window.addEventListener('message', handleMessage);
-        
-        // Check if popup was closed without completing OAuth
-        const checkClosed = setInterval(() => {
-          if (popup?.closed) {
-            clearInterval(checkClosed);
-            window.removeEventListener('message', handleMessage);
-          }
-        }, 500);
+        // Store a flag to retry fetching reviews after OAuth
+        localStorage.setItem('oauth_pending', 'true');
+        // Redirect to Google OAuth (full page redirect instead of popup)
+        window.location.href = data.authUrl;
       }
     } catch (error) {
       console.error('Error initiating OAuth:', error);
