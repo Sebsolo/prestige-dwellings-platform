@@ -65,9 +65,9 @@ serve(async (req) => {
       if (tokenError || !tokenData) {
         console.log('No OAuth tokens found, user needs to authorize')
         return new Response(
-          JSON.stringify({ error: 'OAuth authorization required', needsAuth: true }),
+          JSON.stringify({ needsAuth: true }),
           { 
-            status: 401, 
+            status: 200, 
             headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
           }
         )
@@ -84,9 +84,9 @@ serve(async (req) => {
         
         if (!tokens.refresh_token) {
           return new Response(
-            JSON.stringify({ error: 'Refresh token not available, re-authorization required', needsAuth: true }),
+            JSON.stringify({ needsAuth: true }),
             { 
-              status: 401, 
+              status: 200, 
               headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
             }
           )
@@ -111,9 +111,9 @@ serve(async (req) => {
         if (!refreshResponse.ok) {
           console.error('Token refresh failed:', refreshData)
           return new Response(
-            JSON.stringify({ error: 'Token refresh failed, re-authorization required', needsAuth: true }),
+            JSON.stringify({ needsAuth: true }),
             { 
-              status: 401, 
+              status: 200, 
               headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
             }
           )

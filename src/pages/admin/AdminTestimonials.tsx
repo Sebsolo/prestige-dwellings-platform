@@ -133,28 +133,13 @@ const AdminTestimonials = () => {
 
       if (error) {
         console.error('Edge function error:', error);
-        // If the Edge Function responded with 401 and a JSON body indicating OAuth is required,
-        // supabase-js exposes the underlying Response on `error.context`.
-        try {
-          const res = (error as any)?.context as Response | undefined;
-          if (res) {
-            const errBody = await res.clone().json().catch(() => null);
-            if (errBody?.needsAuth) {
-              toast.info('Autorisation Google My Business requise');
-              await authorizeGoogle();
-              return;
-            }
-          }
-        } catch (e) {
-          console.warn('Unable to parse error response from edge function', e);
-        }
         throw error;
       }
 
-      // Check if OAuth authorization is needed (in case backend returns 200 with flag)
+      // Check if OAuth authorization is needed
       if (data?.needsAuth) {
         toast.info('Autorisation Google My Business requise');
-        authorizeGoogle();
+        await authorizeGoogle();
         return;
       }
 
