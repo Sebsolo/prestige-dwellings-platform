@@ -21,10 +21,9 @@ serve(async (req) => {
     console.log('- Client ID:', clientId?.substring(0, 20) + '...')
     console.log('- Redirect URI:', redirectUri)
     
-    // Google My Business API scopes
+    // Business Profile API scope (Google My Business)
     const scopes = [
       'https://www.googleapis.com/auth/business.manage',
-      'https://www.googleapis.com/auth/plus.business.manage',
     ].join(' ')
 
     const authUrl = new URL('https://accounts.google.com/o/oauth2/v2/auth')
