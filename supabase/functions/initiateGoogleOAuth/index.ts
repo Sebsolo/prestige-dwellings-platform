@@ -11,7 +11,8 @@ serve(async (req) => {
   }
 
   try {
-    const clientId = Deno.env.get('GOOGLE_OAUTH_CLIENT_ID')
+    const rawClientId = Deno.env.get('GOOGLE_OAUTH_CLIENT_ID') || ''
+    const clientId = rawClientId.trim()
     const supabaseUrl = Deno.env.get('SUPABASE_URL')
     
     const redirectUri = `${supabaseUrl}/functions/v1/googleOAuthCallback`
