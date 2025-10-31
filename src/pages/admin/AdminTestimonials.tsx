@@ -28,17 +28,6 @@ const AdminTestimonials = () => {
 
   useEffect(() => {
     loadData();
-    
-    // Check if we just returned from OAuth
-    const oauthPending = localStorage.getItem('oauth_pending');
-    if (oauthPending === 'true') {
-      localStorage.removeItem('oauth_pending');
-      toast.success('Autorisation Google réussie');
-      // Automatically fetch reviews with My Business API
-      setTimeout(() => {
-        fetchFromGoogle(true);
-      }, 1000);
-    }
   }, []);
 
   const loadData = async () => {
@@ -76,70 +65,35 @@ const AdminTestimonials = () => {
     }
   };
 
-  const authorizeGoogle = async () => {
-    try {
-      const { data, error } = await supabase.functions.invoke('initiateGoogleOAuth');
-      
-      if (error) throw error;
-      
-      if (data?.authUrl) {
-        // Store a flag to retry fetching reviews after OAuth
-        localStorage.setItem('oauth_pending', 'true');
-        // Redirect to Google OAuth (full page redirect instead of popup)
-        window.location.href = data.authUrl;
-      }
-    } catch (error) {
-      console.error('Error initiating OAuth:', error);
-      toast.error('Erreur lors de l\'autorisation Google');
-    }
-  };
-
-  const fetchFromGoogle = async (useMyBusiness = false) => {
+  const fetchFromGoogle = async () => {
     try {
       setFetchingFromGoogle(true);
-      console.log('Fetching Google reviews...');
       
       const { data: settings } = await supabase
         .from('site_settings')
         .select('google_place_id')
         .single();
 
-      console.log('Settings:', settings);
-
       if (!settings?.google_place_id) {
         toast.error('Place ID Google non configuré');
         return;
       }
 
-      console.log('Calling edge function with place ID:', settings.google_place_id, 'useMyBusiness:', useMyBusiness);
-
       const { data, error } = await supabase.functions.invoke('fetchGoogleReviews', {
         body: { 
-          placeId: settings.google_place_id,
-          useMyBusiness 
+          placeId: settings.google_place_id
         }
       });
-
-      console.log('Edge function response:', { data, error });
 
       if (error) {
         console.error('Edge function error:', error);
         throw error;
       }
 
-      // Check if OAuth authorization is needed
-      if (data?.needsAuth) {
-        toast.info('Autorisation Google My Business requise');
-        await authorizeGoogle();
-        return;
-      }
-
       if (data?.reviews) {
-        console.log('Setting available reviews:', data.reviews.length, 'reviews');
         setAvailableReviews(data.reviews);
-        toast.success(`${data.reviews.length} avis chargés depuis Google`);
+        toast.success(`${data.reviews.length} avis chargés depuis Google Places`);
       } else {
-        console.warn('No reviews in response');
         setAvailableReviews([]);
       }
     } catch (error) {
@@ -238,16 +192,10 @@ const AdminTestimonials = () => {
               {availableReviews.length} avis disponibles depuis Google
             </p>
           </div>
-          <div className="flex gap-2">
-            <Button onClick={() => fetchFromGoogle(false)} disabled={fetchingFromGoogle} variant="outline">
-              <RefreshCw className={`mr-2 h-4 w-4 ${fetchingFromGoogle ? 'animate-spin' : ''}`} />
-              Google Places (5 avis max)
-            </Button>
-            <Button onClick={() => fetchFromGoogle(true)} disabled={fetchingFromGoogle}>
-              <RefreshCw className={`mr-2 h-4 w-4 ${fetchingFromGoogle ? 'animate-spin' : ''}`} />
-              Google My Business (tous)
-            </Button>
-          </div>
+          <Button onClick={fetchFromGoogle} disabled={fetchingFromGoogle}>
+            <RefreshCw className={`mr-2 h-4 w-4 ${fetchingFromGoogle ? 'animate-spin' : ''}`} />
+            Actualiser depuis Google Places
+          </Button>
         </div>
 
         {loading ? (
@@ -309,16 +257,10 @@ const AdminTestimonials = () => {
           <Card>
             <CardContent className="py-8 text-center">
               <p className="text-muted-foreground">Aucun avis trouvé</p>
-              <div className="flex gap-2 justify-center mt-4">
-                <Button onClick={() => fetchFromGoogle(false)} variant="outline" disabled={fetchingFromGoogle}>
-                  <RefreshCw className={`mr-2 h-4 w-4 ${fetchingFromGoogle ? 'animate-spin' : ''}`} />
-                  Google Places
-                </Button>
-                <Button onClick={() => fetchFromGoogle(true)} disabled={fetchingFromGoogle}>
-                  <RefreshCw className={`mr-2 h-4 w-4 ${fetchingFromGoogle ? 'animate-spin' : ''}`} />
-                  Google My Business
-                </Button>
-              </div>
+              <Button onClick={fetchFromGoogle} disabled={fetchingFromGoogle} className="mt-4">
+                <RefreshCw className={`mr-2 h-4 w-4 ${fetchingFromGoogle ? 'animate-spin' : ''}`} />
+                Actualiser depuis Google Places
+              </Button>
             </CardContent>
           </Card>
         )}
