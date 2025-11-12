@@ -125,3 +125,9 @@ All colors MUST be HSL.
     @apply text-primary mt-6 mb-3;
   }
 }
+@layer base {
+  /* Ensure single H1 per page: hide H1s inside rich content blocks */
+  article .prose h1 {
+    @apply hidden;
+  }
+}
