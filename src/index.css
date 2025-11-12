@@ -118,7 +118,7 @@ All colors MUST be HSL.
   }
   
   .prose h2 {
-    @apply text-foreground mt-8 mb-4 pb-2 border-b border-border;
+    @apply text-foreground border-l-4 border-primary pl-4 py-2 mt-8 mb-4;
   }
   
   .prose h3 {
