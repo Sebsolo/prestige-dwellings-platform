@@ -26,7 +26,7 @@ const SEO = ({
   const defaultTitle = 'Sebastien Pons Immobilier';
   const defaultDescription = 'Immobilier de prestige avec Sebastien Pons. Découvrez nos propriétés d\'exception en vente et location.';
   const defaultKeywords = 'immobilier, prestige, luxe, vente, location, propriété, maison, appartement';
-  const defaultImage = '/og-image.jpg';
+  const defaultImage = '/lovable-uploads/7d311420-c757-4cc6-b8a1-fda61618d79e.png';
   const siteUrl = window.location.origin;
 
   const seoTitle = title ? `${title} | ${defaultTitle}` : defaultTitle;
