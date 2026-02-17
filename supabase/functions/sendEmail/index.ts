@@ -35,8 +35,8 @@ const handler = async (req: Request): Promise<Response> => {
     if (type === 'lead_notification') {
       // Send notification to admin/agents
       const adminEmailResponse = await resend.emails.send({
-        from: "Sebastien Pons Immobilier <no-reply@sebastien-pons-immobilier.fr>",
-        to: ["sebastien.pons@expfrance.fr"], // Admin notification email
+        from: "Sebastien Pons Immobilier <no-reply@yvelines-immo.fr>",
+        to: ["sebastien.pons@expfrance.fr"],
         subject: `Nouveau contact - ${lead.firstname} ${lead.lastname}`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -71,7 +71,7 @@ const handler = async (req: Request): Promise<Response> => {
 
       // Send confirmation to the lead
       const confirmationEmailResponse = await resend.emails.send({
-        from: "Sebastien Pons Immobilier <no-reply@sebastien-pons-immobilier.fr>",
+        from: "Sebastien Pons Immobilier <no-reply@yvelines-immo.fr>",
         to: [lead.email],
         subject: "Votre message a bien été reçu",
         html: `
@@ -118,7 +118,7 @@ const handler = async (req: Request): Promise<Response> => {
             <div style="text-align: center; padding: 20px; color: #888; font-size: 12px;">
               <p style="margin: 0;">
                 Sebastien Pons Immobilier - Expert en immobilier de prestige<br>
-                <a href="mailto:contact@sebastien-pons-immobilier.fr" style="color: #D4AF37;">contact@sebastien-pons-immobilier.fr</a>
+                <a href="mailto:contact@yvelines-immo.fr" style="color: #D4AF37;">contact@yvelines-immo.fr</a>
               </p>
             </div>
           </div>
