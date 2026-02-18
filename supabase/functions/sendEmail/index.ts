@@ -50,7 +50,7 @@ const handler = async (req: Request): Promise<Response> => {
               <p><strong>Email :</strong> <a href="mailto:${lead.email}">${lead.email}</a></p>
               ${lead.phone ? `<p><strong>Téléphone :</strong> <a href="tel:${lead.phone}">${lead.phone}</a></p>` : ''}
               <p><strong>Source :</strong> ${lead.source}</p>
-              ${lead.propertyId ? `<p><strong>Propriété :</strong> ${lead.propertyId} — <a href="https://sebastien-pons-immobilier.fr/biens/${lead.propertyId}" style="color: #D4AF37;">Voir le bien</a></p>` : ''}
+              ${lead.propertyId ? `<p><strong>Propriété :</strong> ${lead.propertyId} — <a href="https://yvelines-immo.fr/biens/${lead.propertyId}" style="color: #D4AF37;">Voir le bien</a></p>` : ''}
             </div>
             
             <div style="background: #fff; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
