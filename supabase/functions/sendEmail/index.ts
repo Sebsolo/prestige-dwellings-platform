@@ -50,7 +50,7 @@ const handler = async (req: Request): Promise<Response> => {
               <p><strong>Email :</strong> <a href="mailto:${lead.email}">${lead.email}</a></p>
               ${lead.phone ? `<p><strong>Téléphone :</strong> <a href="tel:${lead.phone}">${lead.phone}</a></p>` : ''}
               <p><strong>Source :</strong> ${lead.source}</p>
-              ${lead.propertyId ? `<p><strong>Propriété :</strong> ${lead.propertyId}</p>` : ''}
+              ${lead.propertyId ? `<p><strong>Propriété :</strong> ${lead.propertyId} — <a href="https://sebastien-pons-immobilier.fr/biens/${lead.propertyId}" style="color: #D4AF37;">Voir le bien</a></p>` : ''}
             </div>
             
             <div style="background: #fff; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
@@ -105,7 +105,7 @@ const handler = async (req: Request): Promise<Response> => {
                   <strong>📞 Besoin d'un contact immédiat ?</strong>
                 </p>
                 <p style="margin: 10px 0 0 0;">
-                  Appelez-nous au : <strong>+33 1 XX XX XX XX</strong>
+                  Appelez-nous au : <strong>+33 6 01 77 10 11</strong>
                 </p>
               </div>
               
@@ -118,7 +118,7 @@ const handler = async (req: Request): Promise<Response> => {
             <div style="text-align: center; padding: 20px; color: #888; font-size: 12px;">
               <p style="margin: 0;">
                 Sebastien Pons Immobilier - Expert en immobilier de prestige<br>
-                <a href="mailto:contact@yvelines-immo.fr" style="color: #D4AF37;">contact@yvelines-immo.fr</a>
+                <a href="mailto:sebastien.pons@yvelines-immo.fr" style="color: #D4AF37;">sebastien.pons@yvelines-immo.fr</a>
               </p>
             </div>
           </div>
