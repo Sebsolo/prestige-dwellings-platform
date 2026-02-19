@@ -42,13 +42,13 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:block">
-            <div className="ml-10 flex items-baseline space-x-6">
+            <div className="ml-10 flex items-baseline space-x-4">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
                   to={item.href}
                   className={cn(
-                    'px-3 py-2 text-sm font-medium transition-colors hover:text-primary',
+                    'px-2 py-2 text-sm font-medium transition-colors hover:text-primary whitespace-nowrap',
                     isActive(item.href)
                       ? 'text-primary border-b-2 border-primary'
                       : 'text-muted-foreground'
