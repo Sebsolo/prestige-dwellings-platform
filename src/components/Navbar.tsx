@@ -19,6 +19,7 @@ const Navbar = () => {
     { href: '/rejoindre-exp', label: t('nav.joinExp') },
     { href: '/blog', label: t('nav.blog') },
     { href: '/estimation', label: t('nav.valuation') },
+    { href: '/parrainage', label: t('nav.referral') },
     { href: '/contact', label: t('nav.contact') },
   ];
 

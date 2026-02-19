@@ -12,7 +12,8 @@ const resources = {
         joinExp: 'Rejoindre eXp',
         blog: 'Blog',
         valuation: 'Estimation',
-        contact: 'Contact'
+        contact: 'Contact',
+        referral: 'Parrainage'
       },
       about: {
         title: 'Qui suis-je ?',
@@ -417,7 +418,8 @@ const resources = {
         joinExp: 'Join eXp',
         blog: 'Blog',
         valuation: 'Valuation',
-        contact: 'Contact'
+        contact: 'Contact',
+        referral: 'Referral'
       },
       about: {
         title: 'About me',

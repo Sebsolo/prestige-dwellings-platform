@@ -20,6 +20,7 @@ import About from "./pages/About";
 import JoinExp from "./pages/JoinExp";
 import Valuation from "./pages/Valuation";
 import Contact from "./pages/Contact";
+import Referral from "./pages/Referral";
 import LegalNotice from "./pages/LegalNotice";
 import Privacy from "./pages/Privacy";
 import Cookies from "./pages/Cookies";
@@ -120,6 +121,7 @@ const App = () => {
               <Route path="/blog/:slug" element={<Suspense fallback={null}><BlogPost /></Suspense>} />
               <Route path="/estimation" element={<Valuation />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/parrainage" element={<Referral />} />
               <Route path="/mentions-legales" element={<LegalNotice />} />
               <Route path="/rgpd" element={<Privacy />} />
               <Route path="/cookies" element={<Cookies />} />
