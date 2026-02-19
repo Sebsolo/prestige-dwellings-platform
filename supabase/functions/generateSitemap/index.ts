@@ -114,6 +114,14 @@ Deno.serve(async (req) => {
     <lastmod>${currentDate}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+
+  <!-- Referral -->
+  <url>
+    <loc>${baseUrl}/parrainage</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>`;
 
     // Add dynamic property pages
@@ -192,8 +200,8 @@ Deno.serve(async (req) => {
       headers: {
         ...corsHeaders,
         'Content-Type': 'application/xml; charset=utf-8',
-        'Cache-Control': 'public, max-age=1800, s-maxage=3600, stale-while-revalidate=86400', // Cache for 30min, CDN 1h, serve stale for 24h
-        'X-Robots-Tag': 'noindex', // Don't index the sitemap itself
+        'Cache-Control': 'public, max-age=1800, s-maxage=3600, stale-while-revalidate=86400',
+        'X-Robots-Tag': 'noindex',
       },
     });
 
