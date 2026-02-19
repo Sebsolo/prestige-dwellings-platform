@@ -42,6 +42,9 @@ const Footer = () => {
               <Link to="/rejoindre-exp" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
                 {t('nav.joinExp')}
               </Link>
+              <Link to="/parrainage" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+                {t('nav.referral')}
+              </Link>
             </div>
           </div>
 
