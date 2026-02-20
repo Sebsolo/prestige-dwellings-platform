@@ -2,7 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 
-  <!-- Homepage -->
   <url>
     <loc>https://yvelines-immo.fr/</loc>
     <lastmod>2026-02-20</lastmod>
@@ -10,7 +9,6 @@
     <priority>1.0</priority>
   </url>
 
-  <!-- Sales -->
   <url>
     <loc>https://yvelines-immo.fr/ventes</loc>
     <lastmod>2026-02-20</lastmod>
@@ -18,7 +16,6 @@
     <priority>0.9</priority>
   </url>
 
-  <!-- Rentals -->
   <url>
     <loc>https://yvelines-immo.fr/locations</loc>
     <lastmod>2026-02-20</lastmod>
@@ -26,7 +23,6 @@
     <priority>0.9</priority>
   </url>
 
-  <!-- Valuation -->
   <url>
     <loc>https://yvelines-immo.fr/estimation</loc>
     <lastmod>2026-02-20</lastmod>
@@ -34,7 +30,6 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- Blog -->
   <url>
     <loc>https://yvelines-immo.fr/blog</loc>
     <lastmod>2026-02-20</lastmod>
@@ -42,7 +37,6 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- Join Experience -->
   <url>
     <loc>https://yvelines-immo.fr/rejoindre-exp</loc>
     <lastmod>2026-02-20</lastmod>
@@ -50,7 +44,6 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- Contact -->
   <url>
     <loc>https://yvelines-immo.fr/contact</loc>
     <lastmod>2026-02-20</lastmod>
@@ -58,7 +51,6 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- Legal pages -->
   <url>
     <loc>https://yvelines-immo.fr/mentions-legales</loc>
     <lastmod>2026-02-20</lastmod>
@@ -78,6 +70,55 @@
     <lastmod>2026-02-20</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://yvelines-immo.fr/blog/immobilier-feucherolles-yvelines</loc>
+    <lastmod>2025-11-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://yvelines-immo.fr/blog/estimer-maison-yvelines</loc>
+    <lastmod>2025-11-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://yvelines-immo.fr/blog/vendre-maison-yvelines-2026-strategie-delais-erreurs</loc>
+    <lastmod>2026-01-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://yvelines-immo.fr/blog/immobilier-yvelines-2026-prix-taux-tendances-acheter-vendre</loc>
+    <lastmod>2025-11-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://yvelines-immo.fr/blog/immobilier-yvelines-chavenay-saint-nom-la-breteche</loc>
+    <lastmod>2025-12-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://yvelines-immo.fr/blog/immobilier-chavenay-yvelines</loc>
+    <lastmod>2025-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://yvelines-immo.fr/blog/immobilier-saint-nom-la-breteche-yvelines</loc>
+    <lastmod>2025-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 
 </urlset>
