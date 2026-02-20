@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://gxzifrexmsouvfnriyym.supabase.co/functions/v1/generateSitemap
+Sitemap: https://yvelines-immo.fr/sitemap.xml
