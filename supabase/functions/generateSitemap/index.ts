@@ -201,7 +201,6 @@ Deno.serve(async (req) => {
         ...corsHeaders,
         'Content-Type': 'application/xml; charset=utf-8',
         'Cache-Control': 'public, max-age=1800, s-maxage=3600, stale-while-revalidate=86400',
-        'X-Robots-Tag': 'noindex',
       },
     });
 
